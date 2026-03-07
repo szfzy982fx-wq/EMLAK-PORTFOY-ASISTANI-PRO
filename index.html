@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v74.2 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v74.3 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -111,7 +111,8 @@
         tr.row-rented { background-color: #fcf8e3; color: #777; }
         tr.row-selected { background-color: #d1f2eb !important; }
         .badge { padding: 2px 4px; border-radius: 3px; color: white; font-size: 9px; font-weight: bold; display:inline-block; margin-bottom: 2px; }
-        .satilik { background: #27ae60; } .kiralik { background: #e67e22; } .kirmizi-etiket { background: var(--sold) !important; } .kat-karsiligi { background: #8e44ad !important; }
+        .satilik { background: #27ae60; } .kiralik { background: #e67e22; } .kirmizi-etiket { background: var(--sold) !important; } 
+        .kat-karsiligi { background: #8e44ad !important; } .kentsel-donusum { background: #2c3e50 !important; }
         .badge-own { background: var(--secondary); } .badge-shared { background: var(--shared); }
         .type-text { display: block; font-weight: 900; text-transform: uppercase; font-size: 10px; margin-top: 2px; color: #444; }
         .direct-link-btn { display: inline-block; background-color: #3498db; color: white; text-decoration: none; padding: 3px 6px; border-radius: 3px; font-size: 10px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-weight: 600; }
@@ -223,7 +224,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.2 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.3 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -264,7 +265,8 @@
             <div class="form-grid">
                 <div class="form-group"><label>PORTFÖY SAHİBİ</label><select id="inpOwnership"><option>BANA AİT</option><option>PAYLAŞIMLI</option></select></div>
                 <div class="form-group"><label>Menkul Cinsi</label><select id="inpType"></select></div>
-                <div class="form-group"><label>İşlem Türü</label><select id="inpStatus"><option>Satılık</option><option>Kiralık</option><option>Devren</option><option>Kat Karşılığı</option><option style="color:red; font-weight:bold;">Satıldı</option><option style="color:red; font-weight:bold;">Kiralandı</option></select></div>
+                
+                <div class="form-group"><label>İşlem Türü</label><select id="inpStatus"><option>Satılık</option><option>Kiralık</option><option>Devren</option><option>Kat Karşılığı</option><option>Kentsel Dönüşüm</option><option style="color:red; font-weight:bold;">Satıldı</option><option style="color:red; font-weight:bold;">Kiralandı</option></select></div>
                 
                 <div class="form-group"><label>İL</label><select id="inpCity" onchange="handleCityChange('inpCity', 'inpDistrict', 'dl_mahalle_ekle')"><option value="Antalya">Antalya</option></select></div>
                 
@@ -280,7 +282,8 @@
                 
                 <div class="form-group"><label>Kat</label><select id="inpFloor"></select></div>
                 
-                <div class="form-group"><label>Kat Sayısı</label><input type="number" id="inpFloorCount"></div>
+                <div class="form-group"><label>Katlı / Oranlı</label><input type="text" list="dl_oran" id="inpFloorCount" placeholder="Seç/Yaz" autocomplete="off"><datalist id="dl_oran"></datalist></div>
+                
                 <div class="form-group"><label>Brüt m²</label><input type="number" id="inpGross"></div>
                 <div class="form-group"><label>Net m²</label><input type="number" id="inpNet"></div>
                 <div class="form-group"><label>Fiyat</label>
@@ -328,7 +331,8 @@
             <span>🔍</span> <input type="text" id="searchBox" placeholder="Ara..." onkeyup="renderTable()" style="width:90px;">
             <select id="filterOwnership" onchange="renderTable()"><option value="all">Tüm</option><option>BANA AİT</option><option>PAYLAŞIMLI</option></select>
             <select id="filterType" onchange="renderTable()"><option value="all">Tüm Tür</option></select>
-            <select id="filterStatus" onchange="renderTable()"><option value="all">Durum</option><option>Satılık</option><option>Kiralık</option><option>Devren</option><option>Kat Karşılığı</option><option style="color:red;">Satıldı</option><option style="color:red;">Kiralandı</option></select>
+            
+            <select id="filterStatus" onchange="renderTable()"><option value="all">Durum</option><option>Satılık</option><option>Kiralık</option><option>Devren</option><option>Kat Karşılığı</option><option>Kentsel Dönüşüm</option><option style="color:red;">Satıldı</option><option style="color:red;">Kiralandı</option></select>
             
             <select id="filterCity" onchange="handleCityChange('filterCity', 'filterDistrict', 'dl_mahalle_filtre'); renderTable();">
                 </select>
@@ -386,7 +390,7 @@
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.2 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.3 PRO)</div>
     </div>
 </div>
 
@@ -650,7 +654,7 @@
         renderChecklist();
         initImarLinks();
         loadKDVSetting();
-        fetchCurrencySilent(); // Otomatik Kur Çekimi
+        fetchCurrencySilent(); 
     };
 
     // --- DEĞİŞKENLER ---
@@ -660,6 +664,7 @@
     const turkiyeData = { "Adana": [], "Adıyaman": [], "Afyonkarahisar": [], "Ağrı": [], "Aksaray": [], "Amasya": [], "Ankara": ["Çankaya","Keçiören","Yenimahalle","Mamak","Etimesgut","Sincan","Altındağ","Pursaklar","Gölbaşı"], "Antalya": Object.keys(antalyaData).sort(), "Ardahan": [], "Artvin": [], "Aydın": [], "Balıkesir": [], "Bartın": [], "Batman": [], "Bayburt": [], "Bilecik": [], "Bingöl": [], "Bitlis": [], "Bolu": [], "Burdur": [], "Bursa": [], "Çanakkale": [], "Çankırı": [], "Çorum": [], "Denizli": [], "Diyarbakır": [], "Düzce": [], "Edirne": [], "Elazığ": [], "Erzincan": [], "Erzurum": [], "Eskişehir": [], "Gaziantep": [], "Giresun": [], "Gümüşhane": [], "Hakkari": [], "Hatay": [], "Iğdır": [], "Isparta": [], "İstanbul": ["Esenyurt","Küçükçekmece","Bağcılar","Ümraniye","Pendik","Bahçelievler","Üsküdar","Kadıköy","Kartal","Gaziosmanpaşa","Şişli","Beşiktaş","Sarıyer","Fatih"], "İzmir": ["Buca","Karabağlar","Bornova","Karşıyaka","Konak","Bayraklı","Çiğli","Menemen","Torbalı"], "Kahramanmaraş": [], "Karabük": [], "Karaman": [], "Kars": [], "Kastamonu": [], "Kayseri": [], "Kırıkkale": [], "Kırklareli": [], "Kırşehir": [], "Kilis": [], "Kocaeli": [], "Konya": [], "Kütahya": [], "Malatya": [], "Manisa": [], "Mardin": [], "Mersin": [], "Muğla": ["Bodrum","Fethiye","Marmaris","Datça","Menteşe","Milas"], "Muş": [], "Nevşehir": [], "Niğde": [], "Ordu": [], "Osmaniye": [], "Rize": [], "Sakarya": [], "Samsun": [], "Siirt": [], "Sinop": [], "Sivas": [], "Şanlıurfa": [], "Şırnak": [], "Tekirdağ": [], "Tokat": [], "Trabzon": [], "Tunceli": [], "Uşak": [], "Van": [], "Yalova": [], "Yozgat": [], "Zonguldak": [] };
     const typeList = ["Daire","Villa","Proje","Arsa","İşyeri","Devre Mülk","Turistik Tesis","Otel","Komple Bina","Bahçe","Tarla","Zeytinlik"];
     const odaListesi = ["Stüdyo (1+0)", "1+1", "1.5+1", "2+0", "2+1", "2.5+1", "2+2", "3+0", "3+1", "3.5+1", "3+2", "3+3", "4+0", "4+1", "4.5+1", "4.5+2", "4+2", "4+3", "4+4", "5+1", "5.5+1", "5+2", "5+3", "5+4", "6+1", "6+2", "6.5+1", "6+3", "6+4", "7+1", "7+2", "7+3", "8+1", "8+2", "8+3", "8+4", "9+1", "9+2", "9+3", "9+4", "9+5", "9+6", "10+1", "10+2", "10 Üzeri"];
+    const oranListesi = ["%30", "%35", "%40", "%45", "%50", "Yarı Yarıya", "1 Katlı", "2 Katlı", "3 Katlı", "4 Katlı", "5 Katlı", "Müstakil"];
 
     let crmData = { investors: [], network: [] };
     let portfolio = [];
@@ -674,7 +679,7 @@
     try { const sCh = localStorage.getItem('KaracabayRE_CHK_v1'); if(sCh) checklist = JSON.parse(sCh); } catch(e){}
     try { const sIm = localStorage.getItem('KaracabayRE_IMAR_v1'); if(sIm) imarLinks = JSON.parse(sIm); } catch(e){}
     
-    // GİZLİLİK MODU (Müşteri Yanımda)
+    // GİZLİLİK MODU
     function togglePrivacy() {
         document.body.classList.toggle('privacy-active', document.getElementById('privacyMode').checked);
     }
@@ -754,10 +759,13 @@
         const tS=document.getElementById('inpType'), fT=document.getElementById('filterType'); typeList.forEach(t=>{tS.innerHTML+=`<option>${t}</option>`;fT.innerHTML+=`<option>${t}</option>`;});
         const fL = document.getElementById('inpFloor'); fL.innerHTML = '<option value="">SEÇİNİZ</option>'; floorList.forEach(f => { const opt = document.createElement('option'); opt.value = f; opt.innerText = f; fL.appendChild(opt); });
         
-        // AKILLI ODA LİSTESİ DOLDURMA
         const dlOda = document.getElementById('dl_oda');
         dlOda.innerHTML = '';
         odaListesi.forEach(o => { const opt = document.createElement('option'); opt.value = o; dlOda.appendChild(opt); });
+
+        const dlOran = document.getElementById('dl_oran');
+        dlOran.innerHTML = '';
+        oranListesi.forEach(o => { const opt = document.createElement('option'); opt.value = o; dlOran.appendChild(opt); });
     }
 
     function saveToDisk() { localStorage.setItem('KaracabayRE_EST_DB_v19', JSON.stringify(portfolio)); localStorage.setItem('KaracabayRE_CRM_v19', JSON.stringify(crmData)); localStorage.setItem('KaracabayRE_CHK_v1', JSON.stringify(checklist)); localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); updateDashboard(); }
@@ -794,7 +802,6 @@
     function printSelected() { const selectedCount = document.querySelectorAll('.row-selected').length; if(selectedCount === 0) { alert("⚠️ Yazdırılacak kayıt seçiniz."); return; } document.body.classList.add('print-selected-mode'); setTimeout(function() { window.print(); setTimeout(function() { document.body.classList.remove('print-selected-mode'); }, 2000); }, 100); }
     function sendSelectedToWhatsapp() { const selectedCheckboxes = document.querySelectorAll('.row-selected input[type="checkbox"]'); if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } let msg = "*📢 SEÇİLEN PORTFÖYLER*\n\n"; const filterCityVal = document.getElementById('filterCity').value; selectedCheckboxes.forEach(cb => { const row = cb.closest('tr'); const editBtn = row.querySelector('button[onclick^="editRecord"]'); if(editBtn) { const idMatch = editBtn.getAttribute('onclick').match(/\d+/); if(idMatch) { const id = parseInt(idMatch[0]); const item = portfolio.find(p => p.id === id); if(item) { const cityToUse = (filterCityVal !== 'all') ? filterCityVal : (item.city || 'Antalya'); const netInfo = item.net ? ` | 📏 NET ${item.net} m²` : ''; msg += `🏠 *${item.status} ${item.type}*\n📍 ${cityToUse} / ${item.district} / ${item.neighborhood}\n🔢 ${item.rooms}${netInfo} | 💰 ${item.price} ${item.currency||'₺'}\n-------------------\n`; } } } }); window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank'); }
     
-    // EXCEL EXPORT (GİZLİLİK KORUMALI)
     function exportSelectedToExcel() { 
         const selectedRows = document.querySelectorAll('#tableBody tr.row-selected'); 
         if(selectedRows.length === 0) { alert("⚠️ Lütfen Excel'e aktarmak istediğiniz kayıtları soldaki kutucuktan seçin."); return; } 
@@ -806,11 +813,11 @@
             let row = tableClone.rows[i]; 
             if(i > 0) { if(!row.classList.contains('row-selected')) { tableClone.deleteRow(i); continue; } } 
             if(row.cells.length > 0) { 
-                row.deleteCell(10); // İşlem
-                row.deleteCell(9);  // Not
-                row.deleteCell(8);  // Link
-                if(isPrivacyActive) { row.deleteCell(6); } // GİZLİLİK MODU: Müşteri sütununu Excel'den sil
-                row.deleteCell(0);  // Checkbox
+                row.deleteCell(10); 
+                row.deleteCell(9);  
+                row.deleteCell(8);  
+                if(isPrivacyActive) { row.deleteCell(6); } 
+                row.deleteCell(0);  
                 for(let cell of row.cells) { cell.innerText = cell.innerText.replace(/\n/g, ' ').trim(); } 
             } 
         } 
@@ -823,16 +830,13 @@
         const tbody = document.getElementById('tableBody'); tbody.innerHTML = '';
         const term = document.getElementById('searchBox').value.toLowerCase();
         const fOwn = document.getElementById('filterOwnership').value; const fStatus = document.getElementById('filterStatus').value; const fType = document.getElementById('filterType').value; const fCity = document.getElementById('filterCity').value; const fDist = document.getElementById('filterDistrict').value; const fNeigh = document.getElementById('filterNeighborhood').value.toLowerCase(); const fRoom = document.getElementById('filterRooms').value.toLowerCase(); const minP = parsePrice(document.getElementById('filterMinPrice').value); const maxP = parsePrice(document.getElementById('filterMaxPrice').value);
-        const fSort = document.getElementById('filterSort').value; // SIRALAMA TERCİHİ
+        const fSort = document.getElementById('filterSort').value; 
 
         const filtered = portfolio.filter(item => { const txt = (item.district + item.neighborhood + item.ref + item.phone + item.desc + item.type + (item.city||'')).toLowerCase(); const p = parsePrice(item.price); const own = item.ownership || 'BANA AİT'; const roomVal = (item.rooms || '').toLowerCase(); const cityVal = item.city || "Antalya"; return txt.includes(term) && ((fOwn === 'all') || (own === fOwn)) && ((fType === 'all') || (item.type === fType)) && ((fStatus === 'all') || (item.status === fStatus)) && ((fCity === 'all') || (cityVal === fCity)) && ((fDist === 'all') || (item.district === fDist)) && (fNeigh === '' || item.neighborhood.toLowerCase().includes(fNeigh)) && (fRoom === '' || roomVal.includes(fRoom)) && (minP === 0 || p >= minP) && (maxP === 0 || p <= maxP); });
         
-        // AKILLI SIRALAMA
         filtered.sort((a, b) => { 
             if (fSort === 'asc') return parsePrice(a.price) - parsePrice(b.price);
             if (fSort === 'desc') return parsePrice(b.price) - parsePrice(a.price);
-
-            // Varsayılan Sıralama (Satılanlar altta, yeniler üstte)
             const getStatusScore = (s) => { if (s === 'Satıldı') return 3; if (s === 'Kiralandı') return 2; return 1; }; 
             const scoreA = getStatusScore(a.status); const scoreB = getStatusScore(b.status); 
             if (scoreA !== scoreB) return scoreA - scoreB; 
@@ -841,12 +845,12 @@
         });
 
         filtered.forEach(item => { 
-            let badgeClass = item.status.includes('Satıldı')||item.status.includes('Kiralandı') ? 'kirmizi-etiket' : (item.status==='Kiralık'?'kiralik':(item.status==='Kat Karşılığı'?'kat-karsiligi':'satilik')); 
+            let badgeClass = item.status.includes('Satıldı')||item.status.includes('Kiralandı') ? 'kirmizi-etiket' : (item.status==='Kiralık'?'kiralik':(item.status==='Kat Karşılığı'?'kat-karsiligi':(item.status==='Kentsel Dönüşüm'?'kentsel-donusum':'satilik'))); 
             let rowClass = item.status === 'Satıldı' ? 'row-sold' : (item.status === 'Kiralandı' ? 'row-rented' : ''); 
             
             let floorInfo = "";
             if (item.floor && item.floor !== "SEÇİNİZ") { floorInfo = `<br><small>${item.floor}</small>`; }
-            if(item.floorCount) floorInfo += `<br><small>Top: ${item.floorCount}</small>`; 
+            if(item.floorCount) floorInfo += `<br>${item.floorCount}`; 
             
             let currSymbol = item.currency || '₺'; 
             let btnDesc = item.desc ? `<button onclick="document.getElementById('modalText').innerText='${item.desc.replace(/\n/g,'\\n').replace(/'/g, "\\'")}'; document.getElementById('descModal').style.display='block';" class="btn-icon no-print" style="background:#9b59b6;border:none;color:white;border-radius:3px;cursor:pointer;">📝</button>` : '-'; 
@@ -884,7 +888,6 @@
 
     let calcExp = ""; function calcInput(v) { if(v === '%') { calcExp += '/100'; } else { calcExp += v; } document.getElementById('calcDisplay').value = calcExp; } function calcClear() { calcExp = ""; document.getElementById('calcDisplay').value = ""; } function calcResult() { try { calcExp = eval(calcExp).toString(); document.getElementById('calcDisplay').value = calcExp; } catch(e) { document.getElementById('calcDisplay').value = "Hata"; calcExp=""; } }
     
-    // OTOMATİK SESSİZ KUR ÇEKİMİ
     async function fetchCurrencySilent() { 
         try { 
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/TRY'); 
@@ -895,7 +898,7 @@
             formatCurrency(document.getElementById('inpPrice'));
         } catch(e) {} 
     }
-    async function fetchCurrency() { await fetchCurrencySilent(); } // Modal açılınca da aynı fonksiyonu kullansın
+    async function fetchCurrency() { await fetchCurrencySilent(); } 
     
     function calculateCurrencyTotal() { let amount = parseFloat(document.getElementById('calcCurrAmount').value); let type = document.getElementById('calcCurrType').value; let rate = type === 'USD' ? parseFloat(document.getElementById('usdRate').value) : parseFloat(document.getElementById('eurRate').value); if(!amount || !rate) return; document.getElementById('currResText').innerText = (amount * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL"; document.getElementById('currencyTotalRes').style.display = 'block'; }
     function switchTab(id) { document.querySelectorAll('.tab-content').forEach(d => d.style.display='none'); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).style.display = 'block'; event.currentTarget.classList.add('active'); }
@@ -954,7 +957,6 @@
         return isNaN(val) ? 0 : val;
     }
     
-    // GÜNCELLENMİŞ OTOMATİK DÖVİZ>TL KOMİSYON HESABI
     function formatCurrency(input) { 
         let v = input.value.replace(/\D/g, ''); 
         if(v) {
