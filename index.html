@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.7 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.8 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -244,7 +244,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.7 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.8 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -408,7 +408,7 @@
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.7 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.8 PRO - Güçlendirilmiş Kurtarma)</div>
     </div>
 </div>
 
@@ -883,52 +883,85 @@
         document.body.appendChild(a); a.click(); a.remove(); 
     }
     
-    // --- AKILLI YÜKLEME VE HATA AYIKLAMA MOTORU ---
+    // ----------------------------------------------------------------------
+    // YENİ KARAKTER KARAKTER OKUYAN (INVINCIBLE) YÜKLEME MOTORU
+    // ----------------------------------------------------------------------
     function uploadData(input) {
         const f = input.files[0]; 
         if(!f) return; 
         const r = new FileReader(); 
         r.onload = e => { 
-            try { 
-                let raw = e.target.result; 
-                // 1. BOM Temizliği
-                if (raw.charCodeAt(0) === 0xFEFF) raw = raw.slice(1); 
-                
-                let d;
+            let raw = e.target.result; 
+            
+            // BOM Karakterini Temizle
+            if (raw.charCodeAt(0) === 0xFEFF) raw = raw.slice(1); 
+            
+            let d;
+            try {
+                // 1. Şans: Dosya aslında bozulmamışsa normal oku
+                d = JSON.parse(raw);
+            } catch(err1) {
+                // 2. Şans: Dosya içinde gerçek enter/alt satır karakteri kalmış (Dosya bozuk)
+                console.log("Gizli satır kırılmaları tespit edildi. Kusursuz tamir motoru devrede...");
                 try {
-                    // Normal parse denemesi
-                    d = JSON.parse(raw);
-                } catch(err1) {
-                    // JSON bozuksa (örn: string içinde enter basılmışsa) akıllı temizleme
-                    console.log("Normal ayrıştırma başarısız. Akıllı onarım devrede...");
-                    raw = raw.replace(/[\n\r]/g, "\\n"); // Satır sonlarını kaçış karakterine çevir
-                    d = JSON.parse(raw);
-                }
+                    let inString = false;
+                    let fixed = "";
+                    let escapeNext = false;
 
-                if (confirm("Yedek verileri sisteme yüklensin mi?\nMevcut veriler güncellenecektir.")) { 
-                    if (Array.isArray(d)) { 
-                        portfolio = d; 
-                        crmData = { investors: [], network: [] }; 
-                        checklist = []; 
-                        imarLinks = []; 
-                    } else { 
-                        portfolio = d.portfolio || []; 
-                        crmData = d.crm || { investors: [], network: [] }; 
-                        checklist = d.checklist || []; 
-                        imarLinks = d.imarLinks || []; 
-                    } 
-                    
-                    saveToDisk(); 
-                    alert("✅ Yükleme Başarılı! Verileriniz %100 kurtarıldı."); 
-                    window.location.reload(); 
+                    // Dosyayı karakter karakter tara ve string içindeki enter'ları onar
+                    for (let i = 0; i < raw.length; i++) {
+                        let char = raw[i];
+                        if (escapeNext) {
+                            fixed += char;
+                            escapeNext = false;
+                            continue;
+                        }
+                        
+                        if (char === '\\') {
+                            escapeNext = true;
+                            fixed += char;
+                        } else if (char === '"') {
+                            inString = !inString;
+                            fixed += char;
+                        } else if (inString && (char === '\n' || char === '\r' || char === '\t')) {
+                            // String içindeysek ve gerçek bir enter karakteriyse bunu json'a uygun \n yap
+                            if (char === '\n') fixed += "\\n";
+                            else if (char === '\r') fixed += "\\r";
+                            else if (char === '\t') fixed += "\\t";
+                        } else {
+                            fixed += char;
+                        }
+                    }
+                    d = JSON.parse(fixed);
+                } catch(err2) {
+                    alert("❌ Ciddi Dosya Bozulması!\nDosyanızın şifreleme veya format yapısında tamamen çözülemez bir hasar var.");
+                    input.value = ''; 
+                    return;
+                }
+            }
+
+            if (confirm("Verileriniz %100 oranında kurtarıldı ve okundu!\nSisteme yüklensin mi?")) { 
+                if (Array.isArray(d)) { 
+                    portfolio = d; 
+                    crmData = { investors: [], network: [] }; 
+                    checklist = []; 
+                    imarLinks = []; 
+                } else { 
+                    portfolio = d.portfolio || []; 
+                    crmData = d.crm || { investors: [], network: [] }; 
+                    checklist = d.checklist || []; 
+                    imarLinks = d.imarLinks || []; 
                 } 
-            } catch(err) { 
-                alert("❌ Yükleme Hatası: Dosya yapısında onarılamaz bir bozulma var.\nDetay: " + err.message); 
+                
+                saveToDisk(); 
+                alert("✅ Sistem başarıyla güncellendi. Yenileniyor..."); 
+                window.location.reload(); 
             } 
             input.value = ''; 
         }; 
         r.readAsText(f, 'UTF-8'); 
     }
+    // ----------------------------------------------------------------------
 
     function initImarLinks() { if (imarLinks.length === 0) { const defaults = [ {name: "Muratpaşa (Resmi)", url: "https://muratpasa-bld.gov.tr/"}, {name: "Muratpaşa (Alt)", url: "https://www.muratpasa.bel.tr/"}, {name: "Kepez", url: "https://www.kepez-bld.gov.tr/"}, {name: "Konyaaltı", url: "https://www.konyaalti.bel.tr/"}, {name: "Döşemealtı", url: "https://dosemealti.bel.tr/"}, {name: "Aksu", url: "https://www.aksu.bel.tr/"}, {name: "Alanya", url: "https://www.alanya.bel.tr/"} ]; imarLinks = defaults; localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); } }
     function renderImarButtons() { const container = document.getElementById('imarListContainer'); container.innerHTML = ''; imarLinks.forEach((link, index) => { const div = document.createElement('div'); div.style.display = 'flex'; div.style.alignItems = 'center'; div.innerHTML = ` <button class="btn-imar-select" style="flex:1;" onclick="window.open('${link.url}', '_blank')"> ${link.name} <i class="fa-solid fa-arrow-up-right-from-square"></i> </button> <button class="btn-imar-delete" onclick="deleteImarLink(${index})" title="Sil"><i class="fa-solid fa-trash"></i></button> `; container.appendChild(div); }); }
