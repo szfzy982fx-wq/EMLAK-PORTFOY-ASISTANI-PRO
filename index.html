@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.4 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.5 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- GÜVENLİK KİLİDİ STİLLERİ --- */
+        /* --- GÜVENLİK KİLİDİ --- */
         #lockScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #2c3e50 0%, #000 100%); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; text-align: center; }
         .lock-card { background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); width: 90%; max-width: 400px; box-shadow: 0 50px 100px rgba(0,0,0,0.5); color: white; }
         .device-id-box { background: white; color: #333; font-family: monospace; font-size: 24px; font-weight: bold; letter-spacing: 2px; padding: 15px; margin: 20px 0; border-radius: 8px; border: 2px dashed #f39c12; cursor: pointer; user-select: all; }
@@ -19,7 +19,7 @@
         .lock-btn:active { transform: scale(0.98); }
         #appContainer { display: none; }
 
-        /* --- ANA STİLLER --- */
+        /* --- ANA TASARIM --- */
         :root {
             --primary: #2c3e50;
             --secondary: #3498db; 
@@ -33,31 +33,21 @@
             --whatsapp: #25D366;
         }
         body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; margin: 0; padding: 10px; color: #333; }
-        
         .container { max-width: 1800px; margin: 0 auto; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* HEADER & SAAT */
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #eee; padding-bottom: 15px; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
         .app-title-group h1 { margin: 0; line-height: 1; font-size: 24px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
         .app-subtitle { font-size: 12px; font-weight: 600; color: #7f8c8d; letter-spacing: 2px; margin-top: 5px; }
         .header-logo { height: 45px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); object-fit: contain; }
 
-        /* MODERN SAAT */
-        .clock-container {
-            display: flex; align-items: center; gap: 12px;
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: #fff; padding: 8px 20px; border-radius: 50px; 
-            font-weight: 600; font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
+        .clock-container { display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg, #2c3e50, #34495e); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
         .clock-container:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
         .clock-input { background: rgba(255,255,255,0.9); border: none; padding: 4px; border-radius: 4px; font-size: 14px; width: 90px; color:#333; display:none; outline:none; }
         .alarm-btn { background: rgba(255,255,255,0.1); border: none; color: white; cursor: pointer; font-size: 16px; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .alarm-active { background: linear-gradient(135deg, #c0392b, #e74c3c) !important; animation: pulse-red 1s infinite; }
         @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(192, 57, 43, 0); } 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); } }
 
-        /* --- DASHBOARD & İSTATİSTİK ÇUBUKLARI --- */
+        /* İSTATİSTİKLER */
         .dashboard-stats { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
         .stat-card { flex: 1; min-width: 100px; background: #f8f9fa; padding: 10px; border-radius: 6px; border-left: 5px solid #ccc; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
         .stat-card.s-satilik { border-color: var(--accent); }
@@ -74,7 +64,7 @@
         .fill-satilik { background-color: var(--primary); }
         .fill-kiralik { background-color: var(--secondary); }
 
-        /* Toolbar & Form */
+        /* FORM & ARAÇLAR */
         .tools-bar { display: flex; gap: 8px; background: var(--tool-bg); padding: 8px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #ddd; flex-wrap: wrap; }
         .tool-btn { border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 700; color: white; display: flex; align-items: center; gap: 6px; transition: all 0.2s; text-decoration: none; position: relative; }
         .tool-btn:hover { opacity: 0.9; transform: translateY(-1px); }
@@ -103,7 +93,7 @@
         .btn-delete-rec { background: var(--danger); color: white; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold; display: none; height: 42px; }
         .btn-cancel { background: #7f8c8d; color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; display: none; margin-left: auto; }
 
-        /* Tablo */
+        /* TABLO & ROZETLER */
         table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 12px; table-layout: fixed; }
         th { background: #34495e; color: white; padding: 8px 4px; text-align: left; vertical-align: middle; word-wrap: break-word; font-size: 11px; }
         td { padding: 6px 4px; border-bottom: 1px solid #eee; vertical-align: top; word-wrap: break-word; }
@@ -122,7 +112,7 @@
         .link-sahibinden { background-color: #f1c40f; color: black; } .link-hepsi { background-color: #e74c3c; } 
         .link-maps { background-color: #27ae60; color: white; } .link-dosya { background-color: #95a5a6; border: 1px solid #7f8c8d; }
 
-        /* Filtre ve Gizlilik Modu */
+        /* FİLTRE & GİZLİLİK */
         .filter-bar { background: var(--primary); padding: 12px; border-radius: 6px; display: flex; gap: 8px; flex-wrap: wrap; color: white; align-items: center; }
         .filter-bar input, .filter-bar select { padding: 6px; border: none; border-radius: 4px; color: #333; font-size: 12px; }
         .btn-clear-filter { background: #95a5a6; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: auto; }
@@ -140,7 +130,7 @@
         .badge-crm-danger { background: #c0392b; color:white; font-size:13px; font-weight:900; padding:6px 10px; border-radius:4px; display:inline-block; min-width:80px; text-align:center; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Modals */
+        /* MODALS */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: hidden; }
         .modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; max-height: 90vh; display: flex; flex-direction: column; overflow-y: auto; }
         .crm-modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
@@ -184,6 +174,7 @@
             .detailed-stats-container { grid-template-columns: 1fr; }
         }
 
+        /* YAZDIRMA */
         @media print { 
             body, .container, #appContainer { background-color: white !important; margin: 0; padding: 0; }
             .input-panel, .filter-bar, .backup-controls, .tools-bar, .clock-container, .dashboard-stats, .detailed-stats-container, .no-print { display: none !important; } 
@@ -243,7 +234,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.4 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.5 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -407,7 +398,7 @@
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.4 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.5 PRO)</div>
     </div>
 </div>
 
@@ -484,8 +475,7 @@
                         <div class="form-group"><label>Telefon</label><input type="text" id="invPhone" placeholder="05XX..." oninput="formatPhone(this)"></div>
                         <div class="form-group"><label>Talep Tipi</label><select id="invType"><option>Daire</option><option>Villa</option><option>Arsa</option><option>İşyeri</option><option>Yatırımlık</option></select></div>
                         <div class="form-group"><label>Bölge Tercihi</label><input type="text" id="invRegion" placeholder="Lara, Konyaaltı..."></div>
-                        <div class="form-group"><label>Min Bütçe</label><input type="text" id="invBudgetMin" placeholder="Alt Limit" oninput="formatCurrency(this)"></div>
-                        <div class="form-group"><label>Max Bütçe</label><input type="text" id="invBudgetMax" placeholder="Üst Limit" oninput="formatCurrency(this)"></div>
+                        <div class="form-group"><label>Bütçe (TL)</label><input type="text" id="invBudget" oninput="formatCurrency(this)"></div>
                         <div class="form-group" style="grid-column: span 2;"><label>Notlar / Detay</label><textarea id="invNote" rows="1" class="auto-expand"></textarea></div>
                     </div>
                     <div class="crm-buttons">
@@ -501,7 +491,7 @@
                             <th width="20%" class="crm-col-hide">Ad Soyad</th>
                             <th width="15%" class="crm-col-hide">Telefon</th>
                             <th width="20%">Talep / Bölge</th>
-                            <th width="15%">Bütçe Aralığı</th>
+                            <th width="15%">Bütçe</th>
                             <th width="25%">Notlar</th>
                             <th width="10%" class="no-print">İşlem</th>
                         </tr></thead>
@@ -784,13 +774,8 @@
     try { const sCh = localStorage.getItem('KaracabayRE_CHK_v1'); if(sCh) checklist = JSON.parse(sCh); } catch(e){}
     try { const sIm = localStorage.getItem('KaracabayRE_IMAR_v1'); if(sIm) imarLinks = JSON.parse(sIm); } catch(e){}
     
-    function togglePrivacy() {
-        document.body.classList.toggle('privacy-active', document.getElementById('privacyMode').checked);
-    }
-    
-    function toggleCRMPrivacy() {
-        document.body.classList.toggle('crm-privacy-active', document.getElementById('crmPrivacyMode').checked);
-    }
+    function togglePrivacy() { document.body.classList.toggle('privacy-active', document.getElementById('privacyMode').checked); }
+    function toggleCRMPrivacy() { document.body.classList.toggle('crm-privacy-active', document.getElementById('crmPrivacyMode').checked); }
 
     function loadKDVSetting() {
         const storedVAT = localStorage.getItem('KaracabayRE_VAT_v1');
@@ -879,54 +864,36 @@
     function saveToDisk() { localStorage.setItem('KaracabayRE_EST_DB_v19', JSON.stringify(portfolio)); localStorage.setItem('KaracabayRE_CRM_v19', JSON.stringify(crmData)); localStorage.setItem('KaracabayRE_CHK_v1', JSON.stringify(checklist)); localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); updateDashboard(); }
     function downloadData() { const d = { portfolio: portfolio, crm: crmData, checklist: checklist, imarLinks: imarLinks }; const a = document.createElement('a'); a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(d)); let now = new Date(); let dateStr = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0') + "_" + String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0'); a.download = "Karacabay_Yedek_" + dateStr + ".json"; document.body.appendChild(a); a.click(); a.remove(); }
     
-    // YENİ: AKILLI VERİ ÇEVİRİCİ YÜKLEME FONKSİYONU (ESKİ YEDEKLERİ KURTARIR)
+    // GÜVENLİ YÜKLEME (TEKLİ BÜTÇEYE GERİ DÖNÜLDÜ)
     function uploadData(input) {
-        const f = input.files[0]; 
-        if(!f) return; 
-        const r = new FileReader(); 
-        r.onload = e => { 
-            try { 
-                let raw = e.target.result; 
-                if (raw.charCodeAt(0) === 0xFEFF) raw = raw.slice(1); 
-                if(!raw || raw.trim() === "") { alert("Dosya boş!"); return; } 
-                const d = JSON.parse(raw); 
-                if (confirm("Yedek verileri sisteme yüklensin mi?\nMevcut veriler güncellenecektir.")) { 
-                    if (Array.isArray(d)) { 
-                        portfolio = d; 
-                        crmData = { investors: [], network: [] }; 
-                        checklist = []; 
-                        imarLinks = []; 
-                    } else { 
-                        if(d.portfolio) portfolio = d.portfolio; 
-                        if(d.crm) { 
-                            crmData = d.crm; 
-                            // ESKİ VERSİYON YEDEKLERİNİ YENİ BÜTÇE SİSTEMİNE OTOMATİK ÇEVİR (MIGRATION)
-                            if(crmData.investors) {
-                                crmData.investors.forEach(inv => {
-                                    if(inv.budget !== undefined && inv.budgetMax === undefined) {
-                                        inv.budgetMax = inv.budget;
-                                    }
-                                });
-                            }
-                        } 
-                        if(d.checklist) checklist = d.checklist; 
-                        if(d.imarLinks) imarLinks = d.imarLinks; 
-                    } 
-                    // GÜVENLİK: Eğer veri yoksa boş dizi ata ki program çökmesin
-                    if(!portfolio) portfolio = [];
-                    if(!crmData.investors) crmData.investors = [];
-                    if(!crmData.network) crmData.network = [];
-
-                    saveToDisk(); 
-                    alert("✅ Yükleme Başarılı! Verileriniz güvende. Sayfa yenileniyor..."); 
-                    window.location.reload(); 
-                } 
-            } catch(err) { 
-                alert("❌ Yükleme Hatası: " + err.message); 
-            } 
-            input.value = ''; 
-        }; 
-        r.readAsText(f, 'UTF-8'); 
+        const f = input.files[0];
+        if(!f) return;
+        const r = new FileReader();
+        r.onload = e => {
+            try {
+                let raw = e.target.result;
+                if (raw.charCodeAt(0) === 0xFEFF) raw = raw.slice(1);
+                const d = JSON.parse(raw);
+                if (confirm("Yedek verileri sisteme yüklensin mi?\nMevcut veriler güncellenecektir.")) {
+                    if (Array.isArray(d)) {
+                        portfolio = d;
+                        crmData = { investors: [], network: [] };
+                    } else {
+                        portfolio = d.portfolio || [];
+                        crmData = d.crm || { investors: [], network: [] };
+                        checklist = d.checklist || [];
+                        imarLinks = d.imarLinks || [];
+                    }
+                    saveToDisk();
+                    alert("✅ Yükleme Başarılı! Sayfa yenileniyor...");
+                    window.location.reload();
+                }
+            } catch(err) {
+                alert("❌ Yükleme Hatası (Dosya formatı bozuk olabilir): " + err.message);
+            }
+            input.value = '';
+        };
+        r.readAsText(f, 'UTF-8');
     }
 
     function initImarLinks() { if (imarLinks.length === 0) { const defaults = [ {name: "Muratpaşa (Resmi)", url: "https://muratpasa-bld.gov.tr/"}, {name: "Muratpaşa (Alt)", url: "https://www.muratpasa.bel.tr/"}, {name: "Kepez", url: "https://www.kepez-bld.gov.tr/"}, {name: "Konyaaltı", url: "https://www.konyaalti.bel.tr/"}, {name: "Döşemealtı", url: "https://dosemealti.bel.tr/"}, {name: "Aksu", url: "https://www.aksu.bel.tr/"}, {name: "Alanya", url: "https://www.alanya.bel.tr/"} ]; imarLinks = defaults; localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); } }
@@ -1106,15 +1073,9 @@
                 if(idMatch) { 
                     const id = parseInt(idMatch[0]); const inv = crmData.investors.find(p => p.id === id); 
                     if(inv) { 
-                        let bRange = "";
-                        if(inv.budgetMin && inv.budgetMax) bRange = `${inv.budgetMin} TL - ${inv.budgetMax} TL`;
-                        else if(inv.budgetMax) bRange = `Maksimum ${inv.budgetMax} TL`;
-                        else if(inv.budgetMin) bRange = `Minimum ${inv.budgetMin} TL`;
-                        else bRange = "Belirtilmedi";
-
                         msg += `\uD83C\uDFAF *ARANAN:* ${inv.type}\n`;
                         msg += `\uD83D\uDCCD *B\u00D6LGE:* ${inv.region}\n`;
-                        msg += `\uD83D\uDCB0 *B\u00DCT\u00C7E:* ${bRange}\n`;
+                        msg += `\uD83D\uDCB0 *B\u00DCT\u00C7E:* ${inv.budget || 'Belirtilmedi'}\n`;
                         if(inv.note) msg += `\uD83D\uDCDD *DETAY:* ${inv.note}\n`;
                         msg += `-------------------\n`; 
                     } 
@@ -1128,7 +1089,8 @@
     }
 
     function saveCRMInvestor() { 
-        const inv = { id: crmEditingId ? crmEditingId : Date.now(), name: document.getElementById('invName').value, phone: document.getElementById('invPhone').value, type: document.getElementById('invType').value, region: document.getElementById('invRegion').value, budgetMin: document.getElementById('invBudgetMin').value, budgetMax: document.getElementById('invBudgetMax').value, note: document.getElementById('invNote').value }; 
+        // BÜTÇE ALANI TEK KUTUYA ÇEVRİLDİ
+        const inv = { id: crmEditingId ? crmEditingId : Date.now(), name: document.getElementById('invName').value, phone: document.getElementById('invPhone').value, type: document.getElementById('invType').value, region: document.getElementById('invRegion').value, budget: document.getElementById('invBudget').value, note: document.getElementById('invNote').value }; 
         if(!inv.name) return; 
         if(crmEditingId) crmData.investors[crmData.investors.findIndex(i => i.id === crmEditingId)] = inv; else crmData.investors.push(inv); 
         saveCRM(); renderInvestors(); resetCRMForm('investors'); 
@@ -1142,13 +1104,7 @@
     function renderInvestors() { 
         const tbody = document.getElementById('investorTableBody'); tbody.innerHTML = ''; 
         crmData.investors.forEach(inv => { 
-            let bRange = "";
-            if(inv.budgetMin && inv.budgetMax) bRange = `${inv.budgetMin} - ${inv.budgetMax} TL`;
-            else if(inv.budgetMax) bRange = `Max ${inv.budgetMax} TL`;
-            else if(inv.budgetMin) bRange = `Min ${inv.budgetMin} TL`;
-            else bRange = "-";
-
-            tbody.innerHTML += `<tr><td class="no-print"><input type="checkbox" onchange="toggleRowSelection(this)"></td><td class="crm-col-hide"><b>${inv.name}</b></td><td class="crm-col-hide">${inv.phone}</td><td><b>${inv.type}</b><br><small>${inv.region}</small></td><td style="color:#27ae60; font-weight:bold;">${bRange}</td><td><small>${inv.note || '-'}</small></td><td class="no-print"><button onclick="editCRMInvestor(${inv.id})" style="background:#3498db;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">✎</button></td></tr>`; 
+            tbody.innerHTML += `<tr><td class="no-print"><input type="checkbox" onchange="toggleRowSelection(this)"></td><td class="crm-col-hide"><b>${inv.name}</b></td><td class="crm-col-hide">${inv.phone}</td><td><b>${inv.type}</b><br><small>${inv.region}</small></td><td><strong style="color:#27ae60;">${inv.budget || '-'}</strong></td><td><small>${inv.note || '-'}</small></td><td class="no-print"><button onclick="editCRMInvestor(${inv.id})" style="background:#3498db;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">✎</button></td></tr>`; 
         }); 
     }
     
@@ -1163,7 +1119,7 @@
     
     function resetNetworkTimer(id) { if(confirm("Görüşme yapıldı olarak işaretlensin mi? Tarih bugün olacak.")) { const idx = crmData.network.findIndex(n => n.id === id); if(idx > -1) { crmData.network[idx].lastCall = new Date().toISOString().split('T')[0]; saveCRM(); renderNetwork(); } } }
     
-    function editCRMInvestor(id) { const i = crmData.investors.find(x => x.id === id); if(!i) return; crmEditingId = id; document.getElementById('invName').value = i.name; document.getElementById('invPhone').value = i.phone; document.getElementById('invType').value = i.type; document.getElementById('invRegion').value = i.region; document.getElementById('invBudgetMin').value = i.budgetMin || ""; document.getElementById('invBudgetMax').value = i.budgetMax || ""; document.getElementById('invNote').value = i.note; document.getElementById('btnInvSave').innerText = "GÜNCELLE"; document.getElementById('btnInvDelete').style.display = "inline-block"; window.scrollTo(0,0); }
+    function editCRMInvestor(id) { const i = crmData.investors.find(x => x.id === id); if(!i) return; crmEditingId = id; document.getElementById('invName').value = i.name; document.getElementById('invPhone').value = i.phone; document.getElementById('invType').value = i.type; document.getElementById('invRegion').value = i.region; document.getElementById('invBudget').value = i.budget || ""; document.getElementById('invNote').value = i.note; document.getElementById('btnInvSave').innerText = "GÜNCELLE"; document.getElementById('btnInvDelete').style.display = "inline-block"; window.scrollTo(0,0); }
     function editCRMNetwork(id) { const n = crmData.network.find(x => x.id === id); if(!n) return; crmEditingId = id; document.getElementById('netName').value = n.name; document.getElementById('netPhone').value = n.phone; document.getElementById('netJob').value = n.job; document.getElementById('netCity').value = n.city; document.getElementById('netRelation').value = n.relation; document.getElementById('netNote').value = n.note; document.getElementById('netLastCall').value = n.lastCall; document.getElementById('btnNetSave').innerText = "GÜNCELLE"; document.getElementById('btnNetDelete').style.display = "inline-block"; }
     function saveCRM() { localStorage.setItem('KaracabayRE_CRM_v19', JSON.stringify(crmData)); }
 
