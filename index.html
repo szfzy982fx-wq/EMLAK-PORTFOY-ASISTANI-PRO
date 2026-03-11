@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v74.6 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v74.7 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -240,7 +240,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.6 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.7 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -413,7 +413,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.6 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.7 PRO)</div>
     </div>
 </div>
 
@@ -963,7 +963,7 @@
     function toggleRowSelection(checkbox) { const row = checkbox.closest('tr'); if(checkbox.checked) row.classList.add('row-selected'); else row.classList.remove('row-selected'); }
     function printSelected() { const selectedCount = document.querySelectorAll('#tableBody tr.row-selected').length; if(selectedCount === 0) { alert("⚠️ Yazdırılacak kayıt seçiniz."); return; } document.body.classList.add('print-selected-mode'); setTimeout(function() { window.print(); setTimeout(function() { document.body.classList.remove('print-selected-mode'); }, 2000); }, 100); }
     
-    // PORTFÖY WP PAYLAŞIMI (v74.3 Sade Format + Yeni Profil İmza)
+    // PORTFÖY WP PAYLAŞIMI (Tamamen Yeşil Tik Formatı, Açıklamalar Kaldırıldı)
     function sendSelectedToWhatsapp() { 
         const selectedCheckboxes = document.querySelectorAll('#tableBody tr.row-selected input[type="checkbox"]'); 
         if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } 
@@ -981,12 +981,12 @@
                     const item = portfolio.find(p => p.id === id); 
                     if(item) { 
                         const cityToUse = (filterCityVal !== 'all') ? filterCityVal : (item.city || 'Antalya'); 
-                        const netInfo = item.net ? ` | 📏 NET ${item.net} m²` : ''; 
-                        msg += `🏠 *${item.status} ${item.type}*\n`;
-                        msg += `📍 ${cityToUse} / ${item.district} / ${item.neighborhood}\n`;
-                        if(item.rooms) msg += `🔢 ${item.rooms}${netInfo}\n`;
-                        msg += `💰 *${item.price} ${item.currency||'₺'}*\n`;
-                        if(item.desc && item.desc.trim() !== '') msg += `📝 ${item.desc}\n`;
+                        const netInfo = item.net ? ` | Net: ${item.net} m²` : ''; 
+                        msg += `✅ *Tür:* ${item.status} ${item.type}\n`;
+                        msg += `✅ *Lokasyon:* ${cityToUse} / ${item.district} / ${item.neighborhood}\n`;
+                        if(item.rooms) msg += `✅ *Oda:* ${item.rooms}${netInfo}\n`;
+                        msg += `✅ *Fiyat:* ${item.price} ${item.currency||'₺'}\n`;
+                        // AÇIKLAMA/NOT KISMI TAMAMEN KALDIRILDI!
                         msg += `-------------------\n\n`; 
                     } 
                 } 
@@ -1141,10 +1141,10 @@
             const butce = tds[4].innerText;
             const notlar = tds[5].innerText;
             
-            msg += `🎯 *Aranan:* ${aranan}\n`;
-            msg += `📍 *Bölge:* ${bolge}\n`;
-            msg += `💰 *Bütçe:* ${butce}\n`;
-            if(notlar && notlar !== '-') msg += `📝 *Detaylar:* ${notlar}\n`;
+            msg += `✅ *Aranan:* ${aranan}\n`;
+            msg += `✅ *Bölge:* ${bolge}\n`;
+            msg += `✅ *Bütçe:* ${butce}\n`;
+            if(notlar && notlar !== '-') msg += `✅ *Detaylar:* ${notlar}\n`;
             msg += `-------------------\n\n`;
         });
         
