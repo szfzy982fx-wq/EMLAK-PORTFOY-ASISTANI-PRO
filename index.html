@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v74.7 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v74.8 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -240,7 +240,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.7 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.8 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -413,7 +413,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.7 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.8 PRO)</div>
     </div>
 </div>
 
@@ -480,12 +480,7 @@
                         <div class="form-group"><label>Telefon</label><input type="text" id="invPhone" placeholder="05XX..." oninput="formatPhone(this)"></div>
                         <div class="form-group"><label>Talep Tipi</label><select id="invType"><option>Daire</option><option>Villa</option><option>Arsa</option><option>İşyeri</option><option>Yatırımlık</option></select></div>
                         <div class="form-group"><label>Bölge Tercihi</label><input type="text" id="invRegion" placeholder="Lara, Konyaaltı..."></div>
-                        
-                        <div class="form-group">
-                            <label>Bütçe</label>
-                            <input type="text" id="invBudget" placeholder="Bütçe Aralığı/Miktar" oninput="formatCurrency(this)">
-                        </div>
-                        
+                        <div class="form-group"><label>Bütçe</label><input type="text" id="invBudget" placeholder="Bütçe Aralığı/Miktar" oninput="formatCurrency(this)"></div>
                         <div class="form-group" style="grid-column: span 2;"><label>Notlar</label><textarea id="invNote" rows="1" class="auto-expand"></textarea></div>
                     </div>
                     <div class="crm-buttons">
@@ -516,6 +511,7 @@
                     </table>
                 </div>
             </div>
+            
             <div id="crmNetwork" class="crm-section" style="display:none;">
                 <div class="crm-input-panel">
                     <div class="crm-input-grid" style="grid-template-columns: repeat(3, 1fr);">
@@ -525,7 +521,6 @@
                         <div class="form-group"><label>Şehir</label><input type="text" id="netCity" value="Antalya"></div>
                         <div class="form-group"><label>Yakınlık / Ref.</label><input type="text" id="netRelation" placeholder="Arkadaş, Eski Müşteri..."></div>
                         <div class="form-group"><label>Son Arama</label><input type="date" id="netLastCall"></div>
-                        <div class="form-group" style="grid-column: span 3;"><label>Açıklama / Potansiyel</label><textarea id="netNote" rows="1" class="auto-expand"></textarea></div>
                     </div>
                     <div class="crm-buttons">
                         <button class="btn-save" onclick="saveCRMNetwork()" id="btnNetSave">KAYDET</button>
@@ -535,7 +530,7 @@
                 </div>
                 <div class="crm-table-container">
                     <table class="crm-table">
-                        <thead><tr><th width="16%">Ad Soyad</th><th width="12%">Meslek/Şehir</th><th width="12%">Telefon</th><th width="10%">Yakınlık</th><th width="10%">Son Arama</th><th width="8%">Durum</th><th width="14%">Notlar</th><th width="18%">İşlem</th></tr></thead>
+                        <thead><tr><th width="20%">Ad Soyad</th><th width="15%">Meslek/Şehir</th><th width="15%">Telefon</th><th width="15%">Yakınlık</th><th width="15%">Son Arama</th><th width="10%">Durum</th><th width="10%">İşlem</th></tr></thead>
                         <tbody id="networkTableBody"></tbody>
                     </table>
                 </div>
@@ -968,7 +963,7 @@
         const selectedCheckboxes = document.querySelectorAll('#tableBody tr.row-selected input[type="checkbox"]'); 
         if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } 
         
-        let msg = "🌟 *SİZE ÖZEL SEÇTİĞİM PORTFÖYLER* 🌟\n\n"; 
+        let msg = "SİZE ÖZEL SEÇTİĞİM PORTFÖYLER\n\n"; 
         const filterCityVal = document.getElementById('filterCity').value; 
         
         selectedCheckboxes.forEach(cb => { 
@@ -995,11 +990,11 @@
         
         msg += `Detaylı bilgi ve sunum için benimle iletişime geçebilirsiniz.\n\n`;
         msg += `Saygılarımla,\n`;
-        msg += `👤 *${userProfile.name || 'Ad Soyad'}*\n`;
-        msg += `🏢 ${userProfile.title || 'Unvan'}\n`;
-        if(userProfile.company) msg += `📌 ${userProfile.company}\n`;
-        if(userProfile.phone) msg += `📱 İletişim: ${userProfile.phone}\n`;
-        if(userProfile.social) msg += `🌐 Sosyal: ${userProfile.social}`;
+        msg += `▪️ *${userProfile.name || 'Ad Soyad'}*\n`;
+        msg += `▪️ ${userProfile.title || 'Unvan'}\n`;
+        if(userProfile.company) msg += `▪️ ${userProfile.company}\n`;
+        if(userProfile.phone) msg += `▪️ İletişim: ${userProfile.phone}\n`;
+        if(userProfile.social) msg += `▪️ Sosyal Medya: ${userProfile.social}`;
         
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank'); 
     }
@@ -1130,7 +1125,7 @@
         const checkboxes = document.querySelectorAll('.crm-chk:checked');
         if(checkboxes.length === 0) { alert("Lütfen gönderilecek müşteri taleplerini seçin."); return; }
         
-        let msg = "📣 *[ALICI TALEBİ / YENİ MÜŞTERİ]* 📣\n\n";
+        let msg = "[ALICI TALEBİ / YENİ MÜŞTERİ]\n\n";
         checkboxes.forEach(cb => {
             const row = cb.closest('tr');
             const tds = row.querySelectorAll('td');
@@ -1148,11 +1143,11 @@
             msg += `-------------------\n\n`;
         });
         
-        msg += `🤝 Elinizde bu kriterlere uygun, güncel ve doğrudan yetkili olduğunuz portföyünüz varsa lütfen iletişime geçiniz. Sunum yapmaya hazırız.\n\n`;
-        msg += `👤 *${userProfile.name || 'Ad Soyad'}*\n`;
-        msg += `🏢 ${userProfile.title || 'Unvan'} - ${userProfile.company || 'Firma'}\n`;
-        if(userProfile.phone) msg += `📱 İletişim: ${userProfile.phone}\n`;
-        if(userProfile.social) msg += `🌐 Sosyal: ${userProfile.social}`;
+        msg += `Elinizde bu kriterlere uygun, güncel ve doğrudan yetkili olduğunuz portföyünüz varsa lütfen iletişime geçiniz. Sunum yapmaya hazırız.\n\n`;
+        msg += `▪️ *${userProfile.name || 'Ad Soyad'}*\n`;
+        msg += `▪️ ${userProfile.title || 'Unvan'} - ${userProfile.company || 'Firma'}\n`;
+        if(userProfile.phone) msg += `▪️ İletişim: ${userProfile.phone}\n`;
+        if(userProfile.social) msg += `▪️ Sosyal Medya: ${userProfile.social}`;
         
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
     }
@@ -1173,7 +1168,22 @@
         saveCRM(); renderInvestors(); resetCRMForm('investors'); 
     }
     
-    function saveCRMNetwork() { const net = { id: crmEditingId ? crmEditingId : Date.now(), name: document.getElementById('netName').value, phone: document.getElementById('netPhone').value, job: document.getElementById('netJob').value, city: document.getElementById('netCity').value, relation: document.getElementById('netRelation').value, lastCall: document.getElementById('netLastCall').value || new Date().toISOString().split('T')[0], note: document.getElementById('netNote').value }; if(!net.name) return; if(crmEditingId) crmData.network[crmData.network.findIndex(n => n.id === crmEditingId)] = net; else crmData.network.push(net); saveCRM(); renderNetwork(); resetCRMForm('network'); }
+    // CRM ETKİ ÇEVRESİ NOTLAR KALDIRILDI
+    function saveCRMNetwork() { 
+        const net = { 
+            id: crmEditingId ? crmEditingId : Date.now(), 
+            name: document.getElementById('netName').value, 
+            phone: document.getElementById('netPhone').value, 
+            job: document.getElementById('netJob').value, 
+            city: document.getElementById('netCity').value, 
+            relation: document.getElementById('netRelation').value, 
+            lastCall: document.getElementById('netLastCall').value || new Date().toISOString().split('T')[0] 
+        }; 
+        if(!net.name) return; 
+        if(crmEditingId) crmData.network[crmData.network.findIndex(n => n.id === crmEditingId)] = net; 
+        else crmData.network.push(net); 
+        saveCRM(); renderNetwork(); resetCRMForm('network'); 
+    }
     function deleteCRMInvestor() { if(confirm('Sil?')) { crmData.investors = crmData.investors.filter(i => i.id !== crmEditingId); saveCRM(); renderInvestors(); resetCRMForm('investors'); } }
     function deleteCRMNetwork() { if(confirm('Sil?')) { crmData.network = crmData.network.filter(n => n.id !== crmEditingId); saveCRM(); renderNetwork(); resetCRMForm('network'); } }
     function resetCRMForm(type) { crmEditingId = null; if(type === 'investors') { document.querySelectorAll('#crmInvestors input:not([type="checkbox"]), #crmInvestors textarea').forEach(i=>i.value=''); document.getElementById('btnInvSave').innerText = "KAYDET"; document.getElementById('btnInvDelete').style.display = "none"; } else { document.querySelectorAll('#crmNetwork input, #crmNetwork textarea').forEach(i=>i.value=''); document.getElementById('netCity').value = 'Antalya'; document.getElementById('netLastCall').valueAsDate = new Date(); document.getElementById('btnNetSave').innerText = "KAYDET"; document.getElementById('btnNetDelete').style.display = "none"; } }
@@ -1185,7 +1195,15 @@
         }); 
     }
     
-    function renderNetwork() { const tbody = document.getElementById('networkTableBody'); tbody.innerHTML = ''; const today = new Date(); crmData.network.forEach(net => { let lastCallDate = new Date(net.lastCall || today); let diffTime = Math.abs(today - lastCallDate); let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); let statusBadge = ''; if(diffDays >= 45) { statusBadge = `<span class="badge-crm-danger">📞 ARA</span>`; } else { statusBadge = `<span class="badge-crm-safe">${diffDays} Gün Oldu</span>`; } tbody.innerHTML += ` <tr> <td><b>${net.name}</b></td> <td>${net.job}<br><small>${net.city}</small></td> <td>${net.phone}</td> <td>${net.relation}</td> <td>${net.lastCall}</td> <td style="text-align:center;">${statusBadge}</td> <td><small>${net.note || '-'}</small></td> <td style="display:flex; gap:5px; justify-content:center;"> <button onclick="resetNetworkTimer(${net.id})" style="background:#3498db; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px;">📞 GÖRÜŞTÜM</button> <button onclick="editCRMNetwork(${net.id})" style="background:#f39c12; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px;">DÜZENLE</button> </td> </tr>`; }); }
+    // CRM ETKİ ÇEVRESİ TABLOSU GÜNCELLENDİ
+    function renderNetwork() { 
+        const tbody = document.getElementById('networkTableBody'); tbody.innerHTML = ''; const today = new Date(); 
+        crmData.network.forEach(net => { 
+            let lastCallDate = new Date(net.lastCall || today); let diffTime = Math.abs(today - lastCallDate); let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); let statusBadge = ''; 
+            if(diffDays >= 45) { statusBadge = `<span class="badge-crm-danger">📞 ARA</span>`; } else { statusBadge = `<span class="badge-crm-safe">${diffDays} Gün Oldu</span>`; } 
+            tbody.innerHTML += ` <tr> <td><b>${net.name}</b></td> <td>${net.job}<br><small>${net.city}</small></td> <td>${net.phone}</td> <td>${net.relation}</td> <td>${net.lastCall}</td> <td style="text-align:center;">${statusBadge}</td> <td style="display:flex; gap:5px; justify-content:center;"> <button onclick="resetNetworkTimer(${net.id})" style="background:#3498db; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px;">📞 GÖRÜŞTÜM</button> <button onclick="editCRMNetwork(${net.id})" style="background:#f39c12; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px;">DÜZENLE</button> </td> </tr>`; 
+        }); 
+    }
     function resetNetworkTimer(id) { if(confirm("Görüşme yapıldı olarak işaretlensin mi? Tarih bugün olacak.")) { const idx = crmData.network.findIndex(n => n.id === id); if(idx > -1) { crmData.network[idx].lastCall = new Date().toISOString().split('T')[0]; saveCRM(); renderNetwork(); } } }
     
     function editCRMInvestor(id) { 
@@ -1201,7 +1219,17 @@
         document.getElementById('btnInvDelete').style.display = "inline-block"; 
     }
     
-    function editCRMNetwork(id) { const n = crmData.network.find(x => x.id === id); if(!n) return; crmEditingId = id; document.getElementById('netName').value = n.name; document.getElementById('netPhone').value = n.phone; document.getElementById('netJob').value = n.job; document.getElementById('netCity').value = n.city; document.getElementById('netRelation').value = n.relation; document.getElementById('netNote').value = n.note; document.getElementById('netLastCall').value = n.lastCall; document.getElementById('btnNetSave').innerText = "GÜNCELLE"; document.getElementById('btnNetDelete').style.display = "inline-block"; }
+    function editCRMNetwork(id) { 
+        const n = crmData.network.find(x => x.id === id); if(!n) return; 
+        crmEditingId = id; 
+        document.getElementById('netName').value = n.name; 
+        document.getElementById('netPhone').value = n.phone; 
+        document.getElementById('netJob').value = n.job; 
+        document.getElementById('netCity').value = n.city; 
+        document.getElementById('netRelation').value = n.relation; 
+        document.getElementById('netLastCall').value = n.lastCall; 
+        document.getElementById('btnNetSave').innerText = "GÜNCELLE"; document.getElementById('btnNetDelete').style.display = "inline-block"; 
+    }
     function saveCRM() { localStorage.setItem('KaracabayRE_CRM_v19', JSON.stringify(crmData)); }
 
     let calcExp = ""; function calcInput(v) { if(v === '%') { calcExp += '/100'; } else { calcExp += v; } document.getElementById('calcDisplay').value = calcExp; } function calcClear() { calcExp = ""; document.getElementById('calcDisplay').value = ""; } function calcResult() { try { calcExp = eval(calcExp).toString(); document.getElementById('calcDisplay').value = calcExp; } catch(e) { document.getElementById('calcDisplay').value = "Hata"; calcExp=""; } }
