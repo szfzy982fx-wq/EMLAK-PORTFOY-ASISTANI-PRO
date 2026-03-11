@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v74.9 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.0 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -240,7 +240,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.9 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.0 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -413,7 +413,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.9 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.0 PRO)</div>
     </div>
 </div>
 
@@ -955,12 +955,12 @@
     function toggleRowSelection(checkbox) { const row = checkbox.closest('tr'); if(checkbox.checked) row.classList.add('row-selected'); else row.classList.remove('row-selected'); }
     function printSelected() { const selectedCount = document.querySelectorAll('#tableBody tr.row-selected').length; if(selectedCount === 0) { alert("⚠️ Yazdırılacak kayıt seçiniz."); return; } document.body.classList.add('print-selected-mode'); setTimeout(function() { window.print(); setTimeout(function() { document.body.classList.remove('print-selected-mode'); }, 2000); }, 100); }
     
-    // PORTFÖY WP PAYLAŞIMI (Tam Evrensel Unicode Şifreleme İle Emojiler)
+    // PORTFÖY WP PAYLAŞIMI (Tamamen Kurumsal ASCII Klavye İşaretleri)
     function sendSelectedToWhatsapp() { 
         const selectedCheckboxes = document.querySelectorAll('#tableBody tr.row-selected input[type="checkbox"]'); 
         if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } 
         
-        let msg = "\uD83C\uDF1F *S\u0130ZE \u00D6ZEL SE\u00C7T\u0130\u011E\u0130M PORTF\u00D6YLER* \uD83C\uDF1F\n\n"; 
+        let msg = "*** SİZE ÖZEL SEÇTİĞİM PORTFÖYLER ***\n\n"; 
         const filterCityVal = document.getElementById('filterCity').value; 
         
         selectedCheckboxes.forEach(cb => { 
@@ -974,23 +974,23 @@
                     if(item) { 
                         const cityToUse = (filterCityVal !== 'all') ? filterCityVal : (item.city || 'Antalya'); 
                         const netInfo = item.net ? ` | Net: ${item.net} m²` : ''; 
-                        msg += "\uD83C\uDFE0 *T\u00FCr:* " + item.status + " " + item.type + "\n";
-                        msg += "\uD83D\uDCCD *Lokasyon:* " + cityToUse + " / " + item.district + " / " + item.neighborhood + "\n";
-                        if(item.rooms) msg += "\uD83D\uDD22 *Oda:* " + item.rooms + netInfo + "\n";
-                        msg += "\uD83D\uDCB0 *Fiyat:* " + item.price + " " + (item.currency||'\u20BA') + "\n";
+                        msg += ">> *Tür:* " + item.status + " " + item.type + "\n";
+                        msg += ">> *Lokasyon:* " + cityToUse + " / " + item.district + " / " + item.neighborhood + "\n";
+                        if(item.rooms) msg += ">> *Oda:* " + item.rooms + netInfo + "\n";
+                        msg += ">> *Fiyat:* " + item.price + " " + (item.currency||'₺') + "\n";
                         msg += "-------------------\n\n"; 
                     } 
                 } 
             } 
         }); 
         
-        msg += "Detayl\u0131 bilgi ve sunum i\u00E7in benimle ileti\u015Fime ge\u00E7ebilirsiniz.\n\n";
-        msg += "Sayg\u0131lar\u0131mla,\n";
-        msg += "\uD83D\uDC64 *" + (userProfile.name || 'Ad Soyad') + "*\n";
-        msg += "\uD83C\uDFE2 " + (userProfile.title || 'Unvan') + "\n";
-        if(userProfile.company) msg += "\uD83D\uDCCC " + userProfile.company + "\n";
-        if(userProfile.phone) msg += "\uD83D\uDCF1 \u0130leti\u015Fim: " + userProfile.phone + "\n";
-        if(userProfile.social) msg += "\uD83C\uDF10 Sosyal Medya: " + userProfile.social;
+        msg += "Detaylı bilgi ve sunum için benimle iletişime geçebilirsiniz.\n\n";
+        msg += "Saygılarımla,\n";
+        msg += "-- *" + (userProfile.name || 'Ad Soyad') + "*\n";
+        msg += "-- " + (userProfile.title || 'Unvan') + "\n";
+        if(userProfile.company) msg += "-- " + userProfile.company + "\n";
+        if(userProfile.phone) msg += "-- İletişim: " + userProfile.phone + "\n";
+        if(userProfile.social) msg += "-- Sosyal Medya: " + userProfile.social;
         
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank'); 
     }
@@ -1116,12 +1116,12 @@
         setTimeout(() => { printWindow.print(); }, 250);
     }
     
-    // CRM WP PAYLAŞIMI (Tam Evrensel Unicode Şifreleme İle Emojiler)
+    // CRM WP PAYLAŞIMI (Tamamen Kurumsal ASCII Klavye İşaretleri)
     function sendCRMToWhatsapp() {
         const checkboxes = document.querySelectorAll('.crm-chk:checked');
         if(checkboxes.length === 0) { alert("Lütfen gönderilecek müşteri taleplerini seçin."); return; }
         
-        let msg = "\uD83D\uDCE3 *[ALICI TALEB\u0130 / YEN\u0130 M\u00DC\u015ETER\u0130]* \uD83D\uDCE3\n\n";
+        let msg = "*** [ALICI TALEBİ / YENİ MÜŞTERİ] ***\n\n";
         checkboxes.forEach(cb => {
             const row = cb.closest('tr');
             const tds = row.querySelectorAll('td');
@@ -1132,18 +1132,18 @@
             const butce = tds[4].innerText;
             const notlar = tds[5].innerText;
             
-            msg += "\uD83C\uDFAF *Aranan:* " + aranan + "\n";
-            msg += "\uD83D\uDCCD *B\u00F6lge:* " + bolge + "\n";
-            msg += "\uD83D\uDCB0 *B\u00FCt\u00E7e:* " + butce + "\n";
-            if(notlar && notlar !== '-') msg += "\uD83D\uDCDD *Detaylar:* " + notlar + "\n";
+            msg += ">> *Aranan:* " + aranan + "\n";
+            msg += ">> *Bölge:* " + bolge + "\n";
+            msg += ">> *Bütçe:* " + butce + "\n";
+            if(notlar && notlar !== '-') msg += ">> *Detaylar:* " + notlar + "\n";
             msg += "-------------------\n\n";
         });
         
-        msg += "\uD83E\uDD1D Elinizde bu kriterlere uygun, g\u00FCncel ve do\u011Frudan yetkili oldu\u011Funuz portf\u00F6y\u00FCn\u00FCz varsa l\u00FCtfen ileti\u015Fime ge\u00E7iniz. Sunum yapmaya haz\u0131r\u0131z.\n\n";
-        msg += "\uD83D\uDC64 *" + (userProfile.name || 'Ad Soyad') + "*\n";
-        msg += "\uD83C\uDFE2 " + (userProfile.title || 'Unvan') + " - " + (userProfile.company || 'Firma') + "\n";
-        if(userProfile.phone) msg += "\uD83D\uDCF1 \u0130leti\u015Fim: " + userProfile.phone + "\n";
-        if(userProfile.social) msg += "\uD83C\uDF10 Sosyal Medya: " + userProfile.social;
+        msg += "Elinizde bu kriterlere uygun, güncel ve doğrudan yetkili olduğunuz portföyünüz varsa lütfen iletişime geçiniz. Sunum yapmaya hazırız.\n\n";
+        msg += "-- *" + (userProfile.name || 'Ad Soyad') + "*\n";
+        msg += "-- " + (userProfile.title || 'Unvan') + " - " + (userProfile.company || 'Firma') + "\n";
+        if(userProfile.phone) msg += "-- İletişim: " + userProfile.phone + "\n";
+        if(userProfile.social) msg += "-- Sosyal Medya: " + userProfile.social;
         
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
     }
