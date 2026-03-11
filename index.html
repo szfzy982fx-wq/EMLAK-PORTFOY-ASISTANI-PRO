@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v74.5 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v74.6 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -133,15 +133,21 @@
         .btn-whatsapp-selected { background: var(--whatsapp); color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; display:flex; align-items:center; gap:5px; font-size: 11px; }
         .btn-excel { background: #217346; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; display:flex; align-items:center; gap:5px; font-size: 11px; }
 
-        /* GİZLİLİK MODU CSS */
+        /* GİZLİLİK MODU CSS (PORTFÖY İÇİN) */
         body.privacy-active th:nth-child(7),
         body.privacy-active td:nth-child(7) { display: none !important; }
+
+        /* CRM GİZLİLİK MODU CSS (CRM İÇİN 2. VE 3. SÜTUN) */
+        body.crm-privacy-active #crmTableTarget th:nth-child(2),
+        body.crm-privacy-active #crmTableTarget td:nth-child(2),
+        body.crm-privacy-active #crmTableTarget th:nth-child(3),
+        body.crm-privacy-active #crmTableTarget td:nth-child(3) { display: none !important; }
 
         /* CRM Badges & Actions */
         .badge-crm-safe { background: #27ae60; color:white; font-size:12px; padding:6px 10px; border-radius:4px; display:inline-block; min-width:80px; text-align:center; }
         .badge-crm-danger { background: #c0392b; color:white; font-size:13px; font-weight:900; padding:6px 10px; border-radius:4px; display:inline-block; min-width:80px; text-align:center; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .crm-action-bar { display:flex; gap:10px; margin-bottom:10px; background:#e8f4f8; padding:10px; border-radius:6px; align-items:center; border: 1px dashed #3498db; }
+        .crm-action-bar { display:flex; gap:10px; margin-bottom:10px; background:#e8f4f8; padding:10px; border-radius:6px; align-items:center; border: 1px dashed #3498db; flex-wrap: wrap; }
         .hidden-row { display: none !important; }
 
         /* Modals */
@@ -193,7 +199,7 @@
         /* YAZDIRMA AYARLARI */
         @media print { 
             body, .container, #appContainer { background-color: white !important; margin: 0; padding: 0; }
-            .input-panel, .filter-bar, .backup-controls, .tools-bar, .clock-container, .dashboard-stats, .detailed-stats-container, .no-print { display: none !important; } 
+            .input-panel, .filter-bar, .backup-controls, .tools-bar, .clock-container, .dashboard-stats, .detailed-stats-container, .no-print, .crm-action-bar, .crm-input-panel, .crm-header { display: none !important; } 
             .badge-own, .badge-shared { display: none !important; } 
             .print-only { display: table-cell !important; } 
             #appContainer { display: block !important; } 
@@ -205,7 +211,7 @@
             tr { page-break-inside: avoid; }
             thead { display: table-header-group !important; }
             tr { display: table-row !important; }
-            body.print-selected-mode tbody tr:not(.row-selected) { display: none !important; }
+            body.print-selected-mode #portfolioTable tbody tr:not(.row-selected) { display: none !important; }
             body.print-selected-mode .select-col-header, body.print-selected-mode .select-col-cell { display: none !important; }
             #lockScreen { display: none !important; }
         }
@@ -234,7 +240,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.5 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v74.6 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -407,7 +413,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.5 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v74.6 PRO)</div>
     </div>
 </div>
 
@@ -421,6 +427,9 @@
         <div class="form-group"><label>Ad Soyad</label><input type="text" id="profName" placeholder="Örn: Yılmaz KARACABAY"></div>
         <div class="form-group"><label>Unvan / Meslek</label><input type="text" id="profTitle" placeholder="Örn: Gayrimenkul Yatırım Danışmanı"></div>
         <div class="form-group"><label>Firma / Marka Adı</label><input type="text" id="profCompany" placeholder="Örn: Karacabay RE/EST"></div>
+        <div class="form-group"><label>İletişim Numarası</label><input type="text" id="profPhone" placeholder="Örn: 0544 349 35 35"></div>
+        <div class="form-group"><label>E-Posta Adresi</label><input type="text" id="profEmail" placeholder="Örn: mailiniz@gmail.com"></div>
+        <div class="form-group"><label>Sosyal Medya Hesabı</label><input type="text" id="profSocial" placeholder="Örn: @karacabayre.est"></div>
         <button class="btn-save" style="width:100%; margin-top:15px; background:#8e44ad;" onclick="saveProfile()">KAYDET</button>
     </div>
 </div>
@@ -472,12 +481,9 @@
                         <div class="form-group"><label>Talep Tipi</label><select id="invType"><option>Daire</option><option>Villa</option><option>Arsa</option><option>İşyeri</option><option>Yatırımlık</option></select></div>
                         <div class="form-group"><label>Bölge Tercihi</label><input type="text" id="invRegion" placeholder="Lara, Konyaaltı..."></div>
                         
-                        <div class="form-group" style="grid-column: span 2;">
-                            <label>Bütçe (Min - Max TL)</label>
-                            <div style="display:flex; gap:5px;">
-                                <input type="text" id="invBudgetMin" placeholder="Min Bütçe" oninput="formatCurrency(this)" style="width:50%;">
-                                <input type="text" id="invBudgetMax" placeholder="Max Bütçe" oninput="formatCurrency(this)" style="width:50%;">
-                            </div>
+                        <div class="form-group">
+                            <label>Bütçe</label>
+                            <input type="text" id="invBudget" placeholder="Bütçe Aralığı/Miktar" oninput="formatCurrency(this)">
                         </div>
                         
                         <div class="form-group" style="grid-column: span 2;"><label>Notlar</label><textarea id="invNote" rows="1" class="auto-expand"></textarea></div>
@@ -490,8 +496,11 @@
                 </div>
                 
                 <div class="crm-action-bar">
-                    <button class="btn-save" style="height:30px; font-size:11px; padding:0 10px; background:#7f8c8d;" onclick="hideCRMSelected()">👁️‍🗨️ Seçilenleri Gizle</button>
-                    <button class="btn-print-selected" style="height:30px; margin-left:auto;" onclick="printCRM()"><i class="fa-solid fa-print"></i> PDF Yazdır</button>
+                    <label style="display:flex; align-items:center; gap:5px; background:#c0392b; color:white; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:bold; font-size:11px;">
+                        <input type="checkbox" id="crmPrivacyMode" onchange="toggleCRMPrivacy()" style="margin:0; cursor:pointer;">
+                        👁️ MÜŞTERİ YANIMDA
+                    </label>
+                    <button class="btn-print-selected" style="height:30px; margin-left:auto;" onclick="printCRM()"><i class="fa-solid fa-print"></i> YAZDIR PDF</button>
                     <button class="btn-whatsapp-selected" style="height:30px;" onclick="sendCRMToWhatsapp()"><i class="fa-brands fa-whatsapp"></i> WP Gönder</button>
                 </div>
                 
@@ -500,7 +509,7 @@
                         <thead>
                             <tr>
                                 <th width="20" class="no-print"><input type="checkbox" onchange="toggleAllCRMSelections(this)"></th>
-                                <th width="20%">Ad Soyad</th><th width="15%">Telefon</th><th width="20%">Talep / Bölge</th><th width="20%">Bütçe Aralığı</th><th width="15%">Notlar</th><th width="10%" class="no-print">İşlem</th>
+                                <th width="20%">Ad Soyad</th><th width="15%">Telefon</th><th width="20%">Talep / Bölge</th><th width="15%">Bütçe</th><th width="20%">Notlar</th><th width="10%" class="no-print">İşlem</th>
                             </tr>
                         </thead>
                         <tbody id="investorTableBody"></tbody>
@@ -688,7 +697,7 @@
         updateDashboard();
         renderDetailedStats();
         checkExpiryDates();
-        applyProfileSignature(); // Yazdırma için profili footer'a ekle
+        applyProfileSignature();
     }
 
     window.onload = async function() {
@@ -701,7 +710,7 @@
                 unlockApp();
             }
         }
-        loadProfile(); // PROFİL VERİLERİNİ YÜKLE
+        loadProfile(); 
         populateSelects(); 
         renderTable(); 
         renderChecklist();
@@ -726,7 +735,7 @@
     let globalVAT = 20;
     
     // YENİ: Profil Bilgileri
-    let userProfile = { name: "", title: "", company: "" };
+    let userProfile = { name: "", title: "", company: "", phone: "", email: "", social: "" };
     
     let alarmTime = null;
 
@@ -735,7 +744,6 @@
     try { const sCh = localStorage.getItem('KaracabayRE_CHK_v1'); if(sCh) checklist = JSON.parse(sCh); } catch(e){}
     try { const sIm = localStorage.getItem('KaracabayRE_IMAR_v1'); if(sIm) imarLinks = JSON.parse(sIm); } catch(e){}
     
-    // YENİ: PROFİL FÖNKSİYONLARI
     function loadProfile() {
         try { const sp = localStorage.getItem('KaracabayRE_Profile_v1'); if(sp) userProfile = JSON.parse(sp); } catch(e){}
     }
@@ -743,12 +751,18 @@
         document.getElementById('profName').value = userProfile.name || "";
         document.getElementById('profTitle').value = userProfile.title || "";
         document.getElementById('profCompany').value = userProfile.company || "";
+        document.getElementById('profPhone').value = userProfile.phone || "";
+        document.getElementById('profEmail').value = userProfile.email || "";
+        document.getElementById('profSocial').value = userProfile.social || "";
         openModal('profileModal');
     }
     function saveProfile() {
         userProfile.name = document.getElementById('profName').value;
         userProfile.title = document.getElementById('profTitle').value;
         userProfile.company = document.getElementById('profCompany').value;
+        userProfile.phone = document.getElementById('profPhone').value;
+        userProfile.email = document.getElementById('profEmail').value;
+        userProfile.social = document.getElementById('profSocial').value;
         localStorage.setItem('KaracabayRE_Profile_v1', JSON.stringify(userProfile));
         applyProfileSignature();
         closeModal('profileModal');
@@ -757,13 +771,18 @@
     function applyProfileSignature() {
         const footer = document.getElementById('printProfileFooter');
         if(userProfile.name) {
-            footer.innerHTML = `<strong>${userProfile.name}</strong><br>${userProfile.title}<br>${userProfile.company}`;
+            footer.innerHTML = `<strong>${userProfile.name}</strong><br>${userProfile.title}<br>${userProfile.company}<br>${userProfile.phone} - ${userProfile.email}`;
         }
     }
 
-    // GİZLİLİK MODU
+    // GİZLİLİK MODU (PORTFÖY İÇİN)
     function togglePrivacy() {
         document.body.classList.toggle('privacy-active', document.getElementById('privacyMode').checked);
+    }
+    
+    // CRM MÜŞTERİ YANIMDA MODU
+    function toggleCRMPrivacy() {
+        document.body.classList.toggle('crm-privacy-active', document.getElementById('crmPrivacyMode').checked);
     }
 
     function loadKDVSetting() {
@@ -853,7 +872,6 @@
     function saveToDisk() { localStorage.setItem('KaracabayRE_EST_DB_v19', JSON.stringify(portfolio)); localStorage.setItem('KaracabayRE_CRM_v19', JSON.stringify(crmData)); localStorage.setItem('KaracabayRE_CHK_v1', JSON.stringify(checklist)); localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); updateDashboard(); }
     function downloadData() { const d = { portfolio: portfolio, crm: crmData, checklist: checklist, imarLinks: imarLinks }; const a = document.createElement('a'); a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(d)); let now = new Date(); let dateStr = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0') + "_" + String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0'); a.download = "Karacabay_Yedek_" + dateStr + ".json"; document.body.appendChild(a); a.click(); a.remove(); }
     
-    // AKILLI ONARICI YÜKLEME MOTORU 
     function uploadData(input) {
         const f = input.files[0];
         if(!f) return;
@@ -904,17 +922,6 @@
                         if(d.checklist) checklist = d.checklist;
                         if(d.imarLinks) imarLinks = d.imarLinks;
                     }
-                    
-                    if(crmData && crmData.investors) {
-                        crmData.investors = crmData.investors.map(inv => {
-                            if(inv.budgetMin === undefined && inv.budget !== undefined) {
-                                inv.budgetMin = inv.budget;
-                                inv.budgetMax = "";
-                            }
-                            return inv;
-                        });
-                    }
-
                     saveToDisk();
                     alert("✅ Yükleme Başarılı! Verileriniz Kurtarıldı. Sayfa yenileniyor...");
                     window.location.reload();
@@ -956,7 +963,7 @@
     function toggleRowSelection(checkbox) { const row = checkbox.closest('tr'); if(checkbox.checked) row.classList.add('row-selected'); else row.classList.remove('row-selected'); }
     function printSelected() { const selectedCount = document.querySelectorAll('#tableBody tr.row-selected').length; if(selectedCount === 0) { alert("⚠️ Yazdırılacak kayıt seçiniz."); return; } document.body.classList.add('print-selected-mode'); setTimeout(function() { window.print(); setTimeout(function() { document.body.classList.remove('print-selected-mode'); }, 2000); }, 100); }
     
-    // YENİ: WHATSAPP EMOJİLERİ VE OTOMATİK İMZA
+    // PORTFÖY WP PAYLAŞIMI (v74.3 Sade Format + Yeni Profil İmza)
     function sendSelectedToWhatsapp() { 
         const selectedCheckboxes = document.querySelectorAll('#tableBody tr.row-selected input[type="checkbox"]'); 
         if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } 
@@ -975,10 +982,10 @@
                     if(item) { 
                         const cityToUse = (filterCityVal !== 'all') ? filterCityVal : (item.city || 'Antalya'); 
                         const netInfo = item.net ? ` | 📏 NET ${item.net} m²` : ''; 
-                        msg += `🏢 *${item.status} ${item.type}*\n`;
+                        msg += `🏠 *${item.status} ${item.type}*\n`;
                         msg += `📍 ${cityToUse} / ${item.district} / ${item.neighborhood}\n`;
-                        if(item.rooms) msg += `🛏️ ${item.rooms}${netInfo}\n`;
-                        msg += `💵 *${item.price} ${item.currency||'₺'}*\n`;
+                        if(item.rooms) msg += `🔢 ${item.rooms}${netInfo}\n`;
+                        msg += `💰 *${item.price} ${item.currency||'₺'}*\n`;
                         if(item.desc && item.desc.trim() !== '') msg += `📝 ${item.desc}\n`;
                         msg += `-------------------\n\n`; 
                     } 
@@ -986,11 +993,13 @@
             } 
         }); 
         
-        msg += `Detaylı bilgi ve sunum için iletişime geçebilirsiniz.\n\n`;
+        msg += `Detaylı bilgi ve sunum için benimle iletişime geçebilirsiniz.\n\n`;
         msg += `Saygılarımla,\n`;
-        msg += `*${userProfile.name || 'Ad Soyad'}*\n`;
-        msg += `${userProfile.title || 'Unvan'}\n`;
-        msg += `${userProfile.company || 'Firma Adı'}`;
+        msg += `👤 *${userProfile.name || 'Ad Soyad'}*\n`;
+        msg += `🏢 ${userProfile.title || 'Unvan'}\n`;
+        if(userProfile.company) msg += `📌 ${userProfile.company}\n`;
+        if(userProfile.phone) msg += `📱 İletişim: ${userProfile.phone}\n`;
+        if(userProfile.social) msg += `🌐 Sosyal: ${userProfile.social}`;
         
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank'); 
     }
@@ -1052,7 +1061,6 @@
             let authWarningStyle = ""; if (item.authEnd) { const endDate = new Date(item.authEnd); const diffDays = Math.ceil((endDate - new Date()) / (1000 * 60 * 60 * 24)); if (diffDays < 0) authWarningStyle = "color: white; background: #c0392b; padding: 2px 5px; border-radius: 3px;"; else if (diffDays <= 7) authWarningStyle = "color: black; background: #f1c40f; padding: 2px 5px; border-radius: 3px;"; } let authHtml = item.authEnd ? `<span style="${authWarningStyle}">${item.authEnd}</span>` : '-'; 
             let btnLinkHtml = '-'; if (item.link && item.link.trim() !== "") { btnLinkHtml = ''; item.link.split('\n').forEach(l => { let r = l.trim(); if(r){ let lbl="Link"; let cls=""; let isF=false; let icon = "fa-link"; if(r.includes("maps") || r.includes("goo.gl")) { lbl="KONUM"; cls="link-maps"; icon="fa-location-dot"; } else if(r.includes("sahibinden")) {lbl="Sahibinden";cls="link-sahibinden";} else if(r.includes("hepsi")) {lbl="HepsiEmlak";cls="link-hepsi";} else if(r.includes("facebook")||r.includes("instagram")){lbl="Sosyal";cls="link-sosyal";} else if(r.includes("▸")||/\.(pdf|docx?|txt|jpg|png)$/i.test(r)){lbl="Dosya";cls="link-dosya";isF=true;} let href=r; if(!isF && !href.startsWith('http')) href='https://'+href; if(isF) btnLinkHtml += `<button onclick="alert('Dosya Yolu:\\n${r.replace(/\\/g,'\\\\')}')" class="direct-link-btn ${cls} no-print" style="border:none;cursor:pointer;">${lbl}</button><br>`; else btnLinkHtml += `<a href="${href}" target="_blank" class="direct-link-btn ${cls} no-print"><i class="fa-solid ${icon}"></i> ${lbl}</a><br>`; } }); } 
             
-            // YENİ: TAKSİ SARISI ROZET TÜR ALANI (Daire, Arsa vs.)
             let typeBadgeHtml = `<span class="type-badge-yellow">${item.type}</span>`;
             
             tbody.innerHTML += ` <tr class="${rowClass}"> <td class="select-col-cell no-print"><input type="checkbox" onchange="toggleRowSelection(this)"></td> <td><span class="badge ${badgeClass}">${item.status}</span><br><span class="badge ${ownBadgeClass}">${ownLabel}</span><br>${typeBadgeHtml}</td> <td>${cityDisplay}<b>${item.district}</b><br><small>${item.neighborhood}</small></td> <td>${item.rooms}${floorInfo}</td> <td>${item.gross}/${item.net}</td> <td style="color:#27ae60;font-weight:bold;">${item.price} ${currSymbol}</td> <td>${item.ref}<br><small>${item.phone}</small></td> <td>${authHtml}</td> <td class="no-print">${btnLinkHtml}</td> <td class="no-print">${btnDesc}</td> <td class="no-print"><button onclick="editRecord(${item.id})" style="background:#3498db;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">✎</button></td> <td class="print-only">${item.desc}</td> </tr>`; 
@@ -1073,50 +1081,79 @@
         const checkboxes = document.querySelectorAll('.crm-chk');
         checkboxes.forEach(cb => cb.checked = source.checked);
     }
-    function hideCRMSelected() {
-        const checkboxes = document.querySelectorAll('.crm-chk:checked');
-        if(checkboxes.length === 0) { alert("Gizlenecek kayıt seçilmedi."); return; }
-        checkboxes.forEach(cb => {
-            const row = cb.closest('tr');
-            row.classList.add('hidden-row');
-            cb.checked = false;
-        });
-        document.querySelector('#crmTableTarget th input[type="checkbox"]').checked = false;
-    }
+
     function printCRM() {
+        const selectedCount = document.querySelectorAll('.crm-chk:checked').length;
+        if(selectedCount === 0) { alert("Lütfen yazdırmak istediğiniz talepleri sol taraftan seçin."); return; }
+        
         const tableHtml = document.getElementById('crmTableTarget').outerHTML;
         const printWindow = window.open('', '', 'height=600,width=800');
-        printWindow.document.write('<html><head><title>Müşteri Talepleri</title>');
-        printWindow.document.write('<style>body{font-family:sans-serif;} table{width:100%;border-collapse:collapse;font-size:12px;} th,td{border:1px solid #ddd;padding:8px;} th{background:#eee;} .no-print{display:none;} .hidden-row{display:none;}</style>');
-        printWindow.document.write('</head><body><h2>CRM - Talep Havuzu</h2>');
-        printWindow.document.write(tableHtml);
+        printWindow.document.write('<html><head><title>Alıcı Talepleri Bülteni</title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { font-family: "Segoe UI", sans-serif; color:#333; }');
+        printWindow.document.write('table { width:100%; border-collapse:collapse; font-size:12px; margin-top:20px; }');
+        printWindow.document.write('th, td { border:1px solid #ccc; padding:10px; text-align:left; vertical-align:top; }');
+        printWindow.document.write('th { background:#f4f6f7; color:#2c3e50; font-weight:bold; }');
+        printWindow.document.write('.no-print { display:none !important; }');
+        // Seçilmeyenleri gizle
+        printWindow.document.write('tbody tr:not(.row-selected) { display: none !important; }');
+        // Gizlilik Modu aktifse 2. ve 3. sütunları (Ad ve Telefon) gizle
+        if(document.body.classList.contains('crm-privacy-active')) {
+            printWindow.document.write('th:nth-child(2), td:nth-child(2), th:nth-child(3), td:nth-child(3) { display: none !important; }');
+        }
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<h2 style="color:#2c3e50; border-bottom:2px solid #27ae60; padding-bottom:10px;">GÜNCEL ALICI TALEPLERİ</h2>');
+        
+        // Tabloyu yazdırılacak alana kopyalarken seçili satırlara class ekle
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = tableHtml;
+        const rows = tempDiv.querySelectorAll('tbody tr');
+        const checkboxes = document.querySelectorAll('.crm-chk');
+        checkboxes.forEach((cb, index) => {
+            if(cb.checked) rows[index].classList.add('row-selected');
+        });
+        
+        printWindow.document.write(tempDiv.innerHTML);
+        
         if(userProfile.name) {
-            printWindow.document.write(`<div style="margin-top:30px; font-size:14px;"><strong>${userProfile.name}</strong><br>${userProfile.title}<br>${userProfile.company}</div>`);
+            printWindow.document.write(`<div style="margin-top:40px; border-top:1px solid #eee; padding-top:20px; font-size:13px; color:#555;">`);
+            printWindow.document.write(`<strong>${userProfile.name}</strong><br>${userProfile.title}<br>${userProfile.company}<br>${userProfile.phone} - ${userProfile.email}`);
+            printWindow.document.write(`</div>`);
         }
         printWindow.document.write('</body></html>');
         printWindow.document.close();
-        printWindow.print();
+        setTimeout(() => { printWindow.print(); }, 250);
     }
+    
     function sendCRMToWhatsapp() {
         const checkboxes = document.querySelectorAll('.crm-chk:checked');
-        if(checkboxes.length === 0) { alert("Gönderilecek müşteri talebi seçilmedi."); return; }
+        if(checkboxes.length === 0) { alert("Lütfen gönderilecek müşteri taleplerini seçin."); return; }
         
-        let msg = "👥 *GÜNCEL MÜŞTERİ TALEPLERİMİZ*\n\n";
+        let msg = "📣 *[ALICI TALEBİ / YENİ MÜŞTERİ]* 📣\n\n";
         checkboxes.forEach(cb => {
             const row = cb.closest('tr');
-            if(!row.classList.contains('hidden-row')) {
-                const tds = row.querySelectorAll('td');
-                const name = tds[1].innerText;
-                const talep = tds[3].innerText;
-                const butce = tds[4].innerText;
-                
-                msg += `👤 *Müşteri:* ${name}\n`;
-                msg += `📌 *Talep:* ${talep}\n`;
-                msg += `💰 *Bütçe:* ${butce}\n`;
-                msg += `-------------------\n\n`;
-            }
+            const tds = row.querySelectorAll('td');
+            // Indexler: 0:Chk, 1:Ad, 2:Tel, 3:Talep/Bölge, 4:Bütçe, 5:Notlar
+            const talepBolge = tds[3].innerText.split(' - ');
+            const aranan = talepBolge[0] || '';
+            const bolge = talepBolge[1] || tds[3].innerText;
+            const butce = tds[4].innerText;
+            const notlar = tds[5].innerText;
+            
+            msg += `🎯 *Aranan:* ${aranan}\n`;
+            msg += `📍 *Bölge:* ${bolge}\n`;
+            msg += `💰 *Bütçe:* ${butce}\n`;
+            if(notlar && notlar !== '-') msg += `📝 *Detaylar:* ${notlar}\n`;
+            msg += `-------------------\n\n`;
         });
-        msg += `Saygılarımla,\n*${userProfile.name || 'Ad Soyad'}*\n${userProfile.company || ''}`;
+        
+        msg += `🤝 Elinizde bu kriterlere uygun, güncel ve doğrudan yetkili olduğunuz portföyünüz varsa lütfen iletişime geçiniz. Sunum yapmaya hazırız.\n\n`;
+        msg += `👤 *${userProfile.name || 'Ad Soyad'}*\n`;
+        msg += `🏢 ${userProfile.title || 'Unvan'} - ${userProfile.company || 'Firma'}\n`;
+        if(userProfile.phone) msg += `📱 İletişim: ${userProfile.phone}\n`;
+        if(userProfile.social) msg += `🌐 Sosyal: ${userProfile.social}`;
+        
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
     }
 
@@ -1127,8 +1164,7 @@
             phone: document.getElementById('invPhone').value, 
             type: document.getElementById('invType').value, 
             region: document.getElementById('invRegion').value, 
-            budgetMin: document.getElementById('invBudgetMin').value, 
-            budgetMax: document.getElementById('invBudgetMax').value, 
+            budget: document.getElementById('invBudget').value,  // TEK BÜTÇE
             note: document.getElementById('invNote').value 
         }; 
         if(!inv.name) return; 
@@ -1145,13 +1181,7 @@
     function renderInvestors() { 
         const tbody = document.getElementById('investorTableBody'); tbody.innerHTML = ''; 
         crmData.investors.forEach(inv => { 
-            let budgetText = "";
-            if(inv.budgetMin && inv.budgetMax) budgetText = `${inv.budgetMin} - ${inv.budgetMax}`;
-            else if(inv.budgetMin) budgetText = `Min: ${inv.budgetMin}`;
-            else if(inv.budgetMax) budgetText = `Max: ${inv.budgetMax}`;
-            else budgetText = "Belirtilmedi";
-            
-            tbody.innerHTML += `<tr><td class="no-print" style="text-align:center;"><input type="checkbox" class="crm-chk" value="${inv.id}"></td><td><b>${inv.name}</b></td><td>${inv.phone}</td><td>${inv.type} - ${inv.region}</td><td style="color:#27ae60; font-weight:bold;">${budgetText}</td><td><small>${inv.note || '-'}</small></td><td class="no-print"><button onclick="editCRMInvestor(${inv.id})">DÜZENLE</button></td></tr>`; 
+            tbody.innerHTML += `<tr><td class="no-print" style="text-align:center;"><input type="checkbox" class="crm-chk" value="${inv.id}"></td><td><b>${inv.name}</b></td><td>${inv.phone}</td><td>${inv.type} - ${inv.region}</td><td style="color:#27ae60; font-weight:bold;">${inv.budget || ''}</td><td><small>${inv.note || '-'}</small></td><td class="no-print"><button onclick="editCRMInvestor(${inv.id})">DÜZENLE</button></td></tr>`; 
         }); 
     }
     
@@ -1165,8 +1195,7 @@
         document.getElementById('invPhone').value = i.phone; 
         document.getElementById('invType').value = i.type; 
         document.getElementById('invRegion').value = i.region; 
-        document.getElementById('invBudgetMin').value = i.budgetMin || i.budget || ""; 
-        document.getElementById('invBudgetMax').value = i.budgetMax || ""; 
+        document.getElementById('invBudget').value = i.budget || i.budgetMin || ""; 
         document.getElementById('invNote').value = i.note; 
         document.getElementById('btnInvSave').innerText = "GÜNCELLE"; 
         document.getElementById('btnInvDelete').style.display = "inline-block"; 
