@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.0 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.1 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -240,7 +240,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.0 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.1 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -413,7 +413,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.0 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.1 PRO)</div>
     </div>
 </div>
 
@@ -423,13 +423,31 @@
             <h3 style="color:#8e44ad; margin:0;"><i class="fa-solid fa-id-badge"></i> Profil ve İmza Ayarları</h3>
             <span onclick="closeModal('profileModal')" style="cursor:pointer;font-size:24px;">&times;</span>
         </div>
-        <p style="font-size:12px; color:#666; margin-bottom:15px;">Bu bilgiler WhatsApp gönderimlerinde ve PDF çıktılarının altında otomatik profesyonel imza olarak kullanılır.</p>
-        <div class="form-group"><label>Ad Soyad</label><input type="text" id="profName" placeholder="Örn: Yılmaz KARACABAY"></div>
-        <div class="form-group"><label>Unvan / Meslek</label><input type="text" id="profTitle" placeholder="Örn: Gayrimenkul Yatırım Danışmanı"></div>
-        <div class="form-group"><label>Firma / Marka Adı</label><input type="text" id="profCompany" placeholder="Örn: Karacabay RE/EST"></div>
-        <div class="form-group"><label>İletişim Numarası</label><input type="text" id="profPhone" placeholder="Örn: 0544 349 35 35"></div>
-        <div class="form-group"><label>E-Posta Adresi</label><input type="text" id="profEmail" placeholder="Örn: mailiniz@gmail.com"></div>
-        <div class="form-group"><label>Sosyal Medya Hesabı</label><input type="text" id="profSocial" placeholder="Örn: @karacabayre.est"></div>
+        <p style="font-size:12px; color:#666; margin-bottom:15px;">Kutucuğunu işaretlediğiniz bilgiler WhatsApp ve PDF imzalarınıza otomatik olarak eklenir.</p>
+        <div class="form-group">
+            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfName" checked> Ad Soyad</label>
+            <input type="text" id="profName" placeholder="Örn: Ad Soyad">
+        </div>
+        <div class="form-group">
+            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfTitle" checked> Unvan / Meslek</label>
+            <input type="text" id="profTitle" placeholder="Örn: Unvan / Meslek">
+        </div>
+        <div class="form-group">
+            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfComp" checked> Firma / Marka Adı</label>
+            <input type="text" id="profCompany" placeholder="Örn: Firma / Marka Adı">
+        </div>
+        <div class="form-group">
+            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfPhone" checked> İletişim Numarası</label>
+            <input type="text" id="profPhone" placeholder="Örn: 053X XXX XX XX">
+        </div>
+        <div class="form-group">
+            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfEmail" checked> E-Posta Adresi</label>
+            <input type="text" id="profEmail" placeholder="Örn: ornek@gmail.com">
+        </div>
+        <div class="form-group">
+            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfSocial" checked> Sosyal Medya Hesabı</label>
+            <input type="text" id="profSocial" placeholder="Örn: @kullaniciadi">
+        </div>
         <button class="btn-save" style="width:100%; margin-top:15px; background:#8e44ad;" onclick="saveProfile()">KAYDET</button>
     </div>
 </div>
@@ -729,7 +747,7 @@
     let imarLinks = [];
     let globalVAT = 20;
     
-    let userProfile = { name: "", title: "", company: "", phone: "", email: "", social: "" };
+    let userProfile = { name: "", title: "", company: "", phone: "", email: "", social: "", nameChk: true, titleChk: true, compChk: true, phoneChk: true, emailChk: true, socialChk: true };
     
     let alarmTime = null;
 
@@ -739,34 +757,69 @@
     try { const sIm = localStorage.getItem('KaracabayRE_IMAR_v1'); if(sIm) imarLinks = JSON.parse(sIm); } catch(e){}
     
     function loadProfile() {
-        try { const sp = localStorage.getItem('KaracabayRE_Profile_v1'); if(sp) userProfile = JSON.parse(sp); } catch(e){}
+        try { const sp = localStorage.getItem('KaracabayRE_Profile_v1'); if(sp) userProfile = Object.assign(userProfile, JSON.parse(sp)); } catch(e){}
     }
+    
     function openProfileModal() {
         document.getElementById('profName').value = userProfile.name || "";
+        document.getElementById('chkProfName').checked = userProfile.nameChk !== false;
+        
         document.getElementById('profTitle').value = userProfile.title || "";
+        document.getElementById('chkProfTitle').checked = userProfile.titleChk !== false;
+        
         document.getElementById('profCompany').value = userProfile.company || "";
+        document.getElementById('chkProfComp').checked = userProfile.compChk !== false;
+        
         document.getElementById('profPhone').value = userProfile.phone || "";
+        document.getElementById('chkProfPhone').checked = userProfile.phoneChk !== false;
+        
         document.getElementById('profEmail').value = userProfile.email || "";
+        document.getElementById('chkProfEmail').checked = userProfile.emailChk !== false;
+        
         document.getElementById('profSocial').value = userProfile.social || "";
+        document.getElementById('chkProfSocial').checked = userProfile.socialChk !== false;
+        
         openModal('profileModal');
     }
+    
     function saveProfile() {
         userProfile.name = document.getElementById('profName').value;
+        userProfile.nameChk = document.getElementById('chkProfName').checked;
+        
         userProfile.title = document.getElementById('profTitle').value;
+        userProfile.titleChk = document.getElementById('chkProfTitle').checked;
+        
         userProfile.company = document.getElementById('profCompany').value;
+        userProfile.compChk = document.getElementById('chkProfComp').checked;
+        
         userProfile.phone = document.getElementById('profPhone').value;
+        userProfile.phoneChk = document.getElementById('chkProfPhone').checked;
+        
         userProfile.email = document.getElementById('profEmail').value;
+        userProfile.emailChk = document.getElementById('chkProfEmail').checked;
+        
         userProfile.social = document.getElementById('profSocial').value;
+        userProfile.socialChk = document.getElementById('chkProfSocial').checked;
+        
         localStorage.setItem('KaracabayRE_Profile_v1', JSON.stringify(userProfile));
         applyProfileSignature();
         closeModal('profileModal');
         alert("Profil bilgileriniz başarıyla kaydedildi.");
     }
+    
     function applyProfileSignature() {
         const footer = document.getElementById('printProfileFooter');
-        if(userProfile.name) {
-            footer.innerHTML = `<strong>${userProfile.name}</strong><br>${userProfile.title}<br>${userProfile.company}<br>${userProfile.phone} - ${userProfile.email}`;
-        }
+        let html = "";
+        if(userProfile.name && userProfile.nameChk !== false) html += `<strong>${userProfile.name}</strong><br>`;
+        if(userProfile.title && userProfile.titleChk !== false) html += `${userProfile.title}<br>`;
+        if(userProfile.company && userProfile.compChk !== false) html += `${userProfile.company}<br>`;
+        
+        let contact = [];
+        if(userProfile.phone && userProfile.phoneChk !== false) contact.push(userProfile.phone);
+        if(userProfile.email && userProfile.emailChk !== false) contact.push(userProfile.email);
+        if(contact.length > 0) html += contact.join(' - ');
+        
+        footer.innerHTML = html;
     }
 
     function togglePrivacy() {
@@ -955,7 +1008,7 @@
     function toggleRowSelection(checkbox) { const row = checkbox.closest('tr'); if(checkbox.checked) row.classList.add('row-selected'); else row.classList.remove('row-selected'); }
     function printSelected() { const selectedCount = document.querySelectorAll('#tableBody tr.row-selected').length; if(selectedCount === 0) { alert("⚠️ Yazdırılacak kayıt seçiniz."); return; } document.body.classList.add('print-selected-mode'); setTimeout(function() { window.print(); setTimeout(function() { document.body.classList.remove('print-selected-mode'); }, 2000); }, 100); }
     
-    // PORTFÖY WP PAYLAŞIMI (Tamamen Kurumsal ASCII Klavye İşaretleri)
+    // PORTFÖY WP PAYLAŞIMI (Tamamen Kurumsal ve Sade, Etiketler Kaldırıldı)
     function sendSelectedToWhatsapp() { 
         const selectedCheckboxes = document.querySelectorAll('#tableBody tr.row-selected input[type="checkbox"]'); 
         if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } 
@@ -974,10 +1027,10 @@
                     if(item) { 
                         const cityToUse = (filterCityVal !== 'all') ? filterCityVal : (item.city || 'Antalya'); 
                         const netInfo = item.net ? ` | Net: ${item.net} m²` : ''; 
-                        msg += ">> *Tür:* " + item.status + " " + item.type + "\n";
-                        msg += ">> *Lokasyon:* " + cityToUse + " / " + item.district + " / " + item.neighborhood + "\n";
-                        if(item.rooms) msg += ">> *Oda:* " + item.rooms + netInfo + "\n";
-                        msg += ">> *Fiyat:* " + item.price + " " + (item.currency||'₺') + "\n";
+                        msg += ">> " + item.status + " " + item.type + "\n";
+                        msg += ">> " + cityToUse + " / " + item.district + " / " + item.neighborhood + "\n";
+                        if(item.rooms) msg += ">> " + item.rooms + netInfo + "\n";
+                        msg += ">> " + item.price + " " + (item.currency||'₺') + "\n";
                         msg += "-------------------\n\n"; 
                     } 
                 } 
@@ -986,11 +1039,11 @@
         
         msg += "Detaylı bilgi ve sunum için benimle iletişime geçebilirsiniz.\n\n";
         msg += "Saygılarımla,\n";
-        msg += "-- *" + (userProfile.name || 'Ad Soyad') + "*\n";
-        msg += "-- " + (userProfile.title || 'Unvan') + "\n";
-        if(userProfile.company) msg += "-- " + userProfile.company + "\n";
-        if(userProfile.phone) msg += "-- İletişim: " + userProfile.phone + "\n";
-        if(userProfile.social) msg += "-- Sosyal Medya: " + userProfile.social;
+        if(userProfile.name && userProfile.nameChk !== false) msg += "-- *" + userProfile.name + "*\n";
+        if(userProfile.title && userProfile.titleChk !== false) msg += "-- " + userProfile.title + "\n";
+        if(userProfile.company && userProfile.compChk !== false) msg += "-- " + userProfile.company + "\n";
+        if(userProfile.phone && userProfile.phoneChk !== false) msg += "-- " + userProfile.phone + "\n";
+        if(userProfile.social && userProfile.socialChk !== false) msg += "-- " + userProfile.social;
         
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank'); 
     }
@@ -1106,17 +1159,22 @@
         
         printWindow.document.write(tempDiv.innerHTML);
         
-        if(userProfile.name) {
-            printWindow.document.write(`<div style="margin-top:40px; border-top:1px solid #eee; padding-top:20px; font-size:13px; color:#555;">`);
-            printWindow.document.write(`<strong>${userProfile.name}</strong><br>${userProfile.title}<br>${userProfile.company}<br>${userProfile.phone} - ${userProfile.email}`);
-            printWindow.document.write(`</div>`);
-        }
+        printWindow.document.write(`<div style="margin-top:40px; border-top:1px solid #eee; padding-top:20px; font-size:13px; color:#555;">`);
+        if(userProfile.name && userProfile.nameChk !== false) printWindow.document.write(`<strong>${userProfile.name}</strong><br>`);
+        if(userProfile.title && userProfile.titleChk !== false) printWindow.document.write(`${userProfile.title}<br>`);
+        if(userProfile.company && userProfile.compChk !== false) printWindow.document.write(`${userProfile.company}<br>`);
+        let printContact = [];
+        if(userProfile.phone && userProfile.phoneChk !== false) printContact.push(userProfile.phone);
+        if(userProfile.email && userProfile.emailChk !== false) printContact.push(userProfile.email);
+        if(printContact.length > 0) printWindow.document.write(printContact.join(' - '));
+        printWindow.document.write(`</div>`);
+        
         printWindow.document.write('</body></html>');
         printWindow.document.close();
         setTimeout(() => { printWindow.print(); }, 250);
     }
     
-    // CRM WP PAYLAŞIMI (Tamamen Kurumsal ASCII Klavye İşaretleri)
+    // CRM WP PAYLAŞIMI (Tamamen Kurumsal ve Sade, Etiketler Kaldırıldı)
     function sendCRMToWhatsapp() {
         const checkboxes = document.querySelectorAll('.crm-chk:checked');
         if(checkboxes.length === 0) { alert("Lütfen gönderilecek müşteri taleplerini seçin."); return; }
@@ -1132,18 +1190,22 @@
             const butce = tds[4].innerText;
             const notlar = tds[5].innerText;
             
-            msg += ">> *Aranan:* " + aranan + "\n";
-            msg += ">> *Bölge:* " + bolge + "\n";
-            msg += ">> *Bütçe:* " + butce + "\n";
-            if(notlar && notlar !== '-') msg += ">> *Detaylar:* " + notlar + "\n";
+            msg += ">> " + aranan + "\n";
+            msg += ">> " + bolge + "\n";
+            msg += ">> " + butce + "\n";
+            if(notlar && notlar !== '-') msg += ">> " + notlar + "\n";
             msg += "-------------------\n\n";
         });
         
         msg += "Elinizde bu kriterlere uygun, güncel ve doğrudan yetkili olduğunuz portföyünüz varsa lütfen iletişime geçiniz. Sunum yapmaya hazırız.\n\n";
-        msg += "-- *" + (userProfile.name || 'Ad Soyad') + "*\n";
-        msg += "-- " + (userProfile.title || 'Unvan') + " - " + (userProfile.company || 'Firma') + "\n";
-        if(userProfile.phone) msg += "-- İletişim: " + userProfile.phone + "\n";
-        if(userProfile.social) msg += "-- Sosyal Medya: " + userProfile.social;
+        
+        if(userProfile.name && userProfile.nameChk !== false) msg += "-- *" + userProfile.name + "*\n";
+        let crmTitleComp = [];
+        if(userProfile.title && userProfile.titleChk !== false) crmTitleComp.push(userProfile.title);
+        if(userProfile.company && userProfile.compChk !== false) crmTitleComp.push(userProfile.company);
+        if(crmTitleComp.length > 0) msg += "-- " + crmTitleComp.join(" - ") + "\n";
+        if(userProfile.phone && userProfile.phoneChk !== false) msg += "-- " + userProfile.phone + "\n";
+        if(userProfile.social && userProfile.socialChk !== false) msg += "-- " + userProfile.social;
         
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
     }
@@ -1186,7 +1248,7 @@
     function renderInvestors() { 
         const tbody = document.getElementById('investorTableBody'); tbody.innerHTML = ''; 
         crmData.investors.forEach(inv => { 
-            tbody.innerHTML += `<tr><td class="no-print" style="text-align:center;"><input type="checkbox" class="crm-chk" value="${inv.id}"></td><td><b>${inv.name}</b></td><td>${inv.phone}</td><td>${inv.type} - ${inv.region}</td><td style="color:#27ae60; font-weight:bold;">${inv.budget || ''}</td><td><small>${inv.note || '-'}</small></td><td class="no-print"><button onclick="editCRMInvestor(${inv.id})">DÜZENLE</button></td></tr>`; 
+            tbody.innerHTML += `<tr><td class="no-print" style="text-align:center;"><input type="checkbox" class="crm-chk" value="${inv.id}"></td><td><b>${inv.name}</b></td><td>${inv.phone}</td><td>${inv.type} - ${inv.region}</td><td style="color:#27ae60; font-weight:bold;">${inv.budget || ''}</td><td><small>${inv.note || '-'}</small></td><td class="no-print"><button onclick="editCRMInvestor(${inv.id})" style="background:#f39c12; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px; white-space:nowrap; font-weight:bold;"><i class="fa-solid fa-pen"></i> DÜZENLE</button></td></tr>`; 
         }); 
     }
     
@@ -1337,7 +1399,35 @@
     function closeModal(id){ document.getElementById(id).style.display='none'; }
     function closeModalOutside(e, id){ if(e.target === document.getElementById(id)) closeModal(id); }
 
-    function renderChecklist(){ const c=document.getElementById('checklistContainer');c.innerHTML='';let u=0;checklist.forEach((item,i)=>{if(!item.checked)u++; const d=document.createElement('div');d.className='checklist-item '+(item.checked?'checked':'');d.innerHTML=`<span onclick="toggleCheck(${i})">${item.text}</span><button class="btn-delete-rec" style="display:block;height:20px;padding:0 5px;" onclick="deleteCheckItem(${i})">Sil</button>`;c.appendChild(d);});document.getElementById('chkBadge').innerText=u;document.getElementById('chkBadge').style.display=u>0?'block':'none';}
+    function renderChecklist(){ 
+        const c=document.getElementById('checklistContainer');
+        c.innerHTML='';
+        let u=0;
+        checklist.forEach((item,i)=>{
+            if(!item.checked)u++; 
+            const d=document.createElement('div');
+            d.className='checklist-item '+(item.checked?'checked':'');
+            d.innerHTML=`
+                <span onclick="toggleCheck(${i})" style="flex:1; cursor:pointer;">${item.text}</span>
+                <div style="display:flex; gap:5px;">
+                    <button class="btn-delete-rec" style="display:block; height:24px; padding:0 8px; background:#3498db; border-radius:3px;" onclick="editCheckItem(${i})" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-delete-rec" style="display:block; height:24px; padding:0 8px; border-radius:3px;" onclick="deleteCheckItem(${i})" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                </div>`;
+            c.appendChild(d);
+        });
+        document.getElementById('chkBadge').innerText=u;
+        document.getElementById('chkBadge').style.display=u>0?'block':'none';
+    }
+    
+    function editCheckItem(i) {
+        const newVal = prompt("Notu düzenleyin:", checklist[i].text);
+        if(newVal !== null && newVal.trim() !== "") {
+            checklist[i].text = newVal;
+            localStorage.setItem('KaracabayRE_CHK_v1', JSON.stringify(checklist));
+            renderChecklist();
+        }
+    }
+    
     function addCheckItem(){ const t=document.getElementById('newCheckItem').value;if(!t)return;checklist.push({text:t,checked:false});localStorage.setItem('KaracabayRE_CHK_v1',JSON.stringify(checklist));document.getElementById('newCheckItem').value='';renderChecklist();}
     function toggleCheck(i){ checklist[i].checked=!checklist[i].checked;localStorage.setItem('KaracabayRE_CHK_v1',JSON.stringify(checklist));renderChecklist();}
     function deleteCheckItem(i){ checklist.splice(i,1);localStorage.setItem('KaracabayRE_CHK_v1',JSON.stringify(checklist));renderChecklist();}
