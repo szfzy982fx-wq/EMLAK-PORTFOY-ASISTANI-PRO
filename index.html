@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.1 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.2 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -240,7 +240,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.1 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.2 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -413,7 +413,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.1 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.2 PRO)</div>
     </div>
 </div>
 
@@ -424,30 +424,55 @@
             <span onclick="closeModal('profileModal')" style="cursor:pointer;font-size:24px;">&times;</span>
         </div>
         <p style="font-size:12px; color:#666; margin-bottom:15px;">Kutucuğunu işaretlediğiniz bilgiler WhatsApp ve PDF imzalarınıza otomatik olarak eklenir.</p>
-        <div class="form-group">
-            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfName" checked> Ad Soyad</label>
+        
+        <div class="form-group" style="margin-bottom:12px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; margin-bottom:4px; text-transform:none;">
+                <input type="checkbox" id="chkProfName" checked style="width:16px; height:16px; margin:0; padding:0; cursor:pointer;"> 
+                <strong style="text-transform:uppercase;">Ad Soyad</strong>
+            </label>
             <input type="text" id="profName" placeholder="Örn: Ad Soyad">
         </div>
-        <div class="form-group">
-            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfTitle" checked> Unvan / Meslek</label>
+        
+        <div class="form-group" style="margin-bottom:12px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; margin-bottom:4px; text-transform:none;">
+                <input type="checkbox" id="chkProfTitle" checked style="width:16px; height:16px; margin:0; padding:0; cursor:pointer;"> 
+                <strong style="text-transform:uppercase;">Unvan / Meslek</strong>
+            </label>
             <input type="text" id="profTitle" placeholder="Örn: Unvan / Meslek">
         </div>
-        <div class="form-group">
-            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfComp" checked> Firma / Marka Adı</label>
+        
+        <div class="form-group" style="margin-bottom:12px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; margin-bottom:4px; text-transform:none;">
+                <input type="checkbox" id="chkProfComp" checked style="width:16px; height:16px; margin:0; padding:0; cursor:pointer;"> 
+                <strong style="text-transform:uppercase;">Firma / Marka Adı</strong>
+            </label>
             <input type="text" id="profCompany" placeholder="Örn: Firma / Marka Adı">
         </div>
-        <div class="form-group">
-            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfPhone" checked> İletişim Numarası</label>
+        
+        <div class="form-group" style="margin-bottom:12px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; margin-bottom:4px; text-transform:none;">
+                <input type="checkbox" id="chkProfPhone" checked style="width:16px; height:16px; margin:0; padding:0; cursor:pointer;"> 
+                <strong style="text-transform:uppercase;">İletişim Numarası</strong>
+            </label>
             <input type="text" id="profPhone" placeholder="Örn: 053X XXX XX XX">
         </div>
-        <div class="form-group">
-            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfEmail" checked> E-Posta Adresi</label>
+        
+        <div class="form-group" style="margin-bottom:12px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; margin-bottom:4px; text-transform:none;">
+                <input type="checkbox" id="chkProfEmail" checked style="width:16px; height:16px; margin:0; padding:0; cursor:pointer;"> 
+                <strong style="text-transform:uppercase;">E-Posta Adresi</strong>
+            </label>
             <input type="text" id="profEmail" placeholder="Örn: ornek@gmail.com">
         </div>
-        <div class="form-group">
-            <label style="display:flex; align-items:center; gap:5px; cursor:pointer;"><input type="checkbox" id="chkProfSocial" checked> Sosyal Medya Hesabı</label>
+        
+        <div class="form-group" style="margin-bottom:12px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; margin-bottom:4px; text-transform:none;">
+                <input type="checkbox" id="chkProfSocial" checked style="width:16px; height:16px; margin:0; padding:0; cursor:pointer;"> 
+                <strong style="text-transform:uppercase;">Sosyal Medya Hesabı</strong>
+            </label>
             <input type="text" id="profSocial" placeholder="Örn: @kullaniciadi">
         </div>
+        
         <button class="btn-save" style="width:100%; margin-top:15px; background:#8e44ad;" onclick="saveProfile()">KAYDET</button>
     </div>
 </div>
@@ -477,7 +502,21 @@
     </div>
 </div>
 
-<div id="checklistModal" class="modal" onclick="closeModalOutside(event, 'checklistModal')"><div class="modal-content tool-modal-content"><div style="display:flex;justify-content:space-between; margin-bottom:15px; border-bottom:2px solid #c0392b; padding-bottom:10px;"><h3 style="color:#c0392b; margin:0;"><i class="fa-solid fa-bell"></i> UNUTMA!</h3><span onclick="closeModal('checklistModal')" style="cursor:pointer;font-size:24px;">&times;</span></div><div style="display:flex; gap:10px; margin-bottom:15px;"><input type="text" id="newCheckItem" placeholder="Hatırlatma ekle..." onkeypress="if(event.key==='Enter') addCheckItem()"><button class="btn-save" style="flex:0; width:60px; background:#c0392b;" onclick="addCheckItem()">EKLE</button></div><div id="checklistContainer" style="max-height:400px; overflow-y:auto; border:1px solid #eee; border-radius:4px;"></div></div></div>
+<div id="checklistModal" class="modal" onclick="closeModalOutside(event, 'checklistModal')">
+    <div class="modal-content tool-modal-content">
+        <div style="display:flex;justify-content:space-between; margin-bottom:15px; border-bottom:2px solid #c0392b; padding-bottom:10px;">
+            <h3 style="color:#c0392b; margin:0;"><i class="fa-solid fa-bell"></i> UNUTMA!</h3>
+            <span onclick="closeModal('checklistModal')" style="cursor:pointer;font-size:24px;">&times;</span>
+        </div>
+        
+        <div style="display:flex; margin-bottom:15px; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <input type="text" id="newCheckItem" placeholder="Hatırlatma ekle..." onkeypress="if(event.key==='Enter') addCheckItem()" style="flex:1; border:none; padding:10px 15px; font-size:14px; outline:none; border-radius:0;">
+            <button class="btn-save" style="border:none; border-radius:0; padding:0 20px; background:#c0392b; color:white; font-weight:bold; cursor:pointer; height:auto; margin:0;" onclick="addCheckItem()">EKLE</button>
+        </div>
+        
+        <div id="checklistContainer" style="max-height:400px; overflow-y:auto; border:1px solid #eee; border-radius:4px;"></div>
+    </div>
+</div>
 
 <div id="crmModal" class="modal" onclick="closeModalOutside(event, 'crmModal')">
     <div class="crm-modal-content">
