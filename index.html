@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.5 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.6 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -167,10 +167,12 @@
         .calc-btn { padding: 12px; font-size: 18px; cursor: pointer; background: #eee; border: none; border-radius: 4px; } 
         .calc-btn.op { background: var(--secondary); color: white; } .calc-btn.eq { background: var(--accent); color: white; grid-column: span 2; }
         .calc-screen { width: 95%; padding: 10px; font-size: 24px; text-align: right; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        .tab-buttons { display: flex; border-bottom: 1px solid #ddd; margin-bottom: 15px; overflow-x: auto; }
-        .tab-btn { flex: 1; padding: 10px; border: none; background: none; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; }
-        .tab-btn.active { border-bottom-color: var(--secondary); color: var(--secondary); font-weight: bold; }
-        .tab-content { display: none; } .tab-content.active { display: block; }
+        .tab-buttons { display: flex; border-bottom: 2px solid #ddd; margin-bottom: 15px; overflow-x: auto; background: #f8f9fa; border-radius: 6px 6px 0 0; }
+        .tab-btn { flex: 1; padding: 12px 10px; border: none; background: transparent; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; color: #7f8c8d; font-weight: bold; transition: all 0.2s; font-size: 13px; }
+        .tab-btn:hover { background: #ecf0f1; color: #34495e; }
+        .tab-btn.active { border-bottom-color: var(--secondary); color: var(--secondary); background: #fff; }
+        .tab-content { display: none; } .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         /* Mini Kat Planı İkonları CSS */
         .plan-group { display: inline-flex; gap: 3px; align-items: center; justify-content: center; width: 40px; margin-right: 5px; }
@@ -247,7 +249,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.5 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.6 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -314,7 +316,12 @@
                 <div class="form-group"><label>Fiyat</label>
                     <div class="currency-group">
                         <input type="text" id="inpPrice" placeholder="5.000.000" oninput="formatCurrency(this)">
-                        <select id="inpCurrency" onchange="formatCurrency(document.getElementById('inpPrice'))"><option value="₺">TL</option><option value="$">USD</option><option value="€">EUR</option><option value="£">GBP</option></select>
+                        <select id="inpCurrency" onchange="formatCurrency(document.getElementById('inpPrice'))">
+                            <option value="₺">TL</option>
+                            <option value="$">USD</option>
+                            <option value="€">EUR</option>
+                            <option value="£">GBP</option>
+                        </select>
                     </div>
                     <div id="instantComm" class="instant-comm-box"></div>
                 </div>
@@ -420,7 +427,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.5 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.6 PRO)</div>
     </div>
 </div>
 
@@ -651,13 +658,17 @@
             <a href="https://www.tcmb.gov.tr/wps/wcm/connect/tr/tcmb+tr/main+page+site+area/bugun" target="_blank" class="tool-btn" style="width:100%; justify-content:center; text-align:center; background:#fef9e7; border:1px solid #f39c12; color:#d35400;"> TCMB Kurlarını Aç </a>
         </div>
         <div class="currency-board">
-            <div class="currency-row">
-                <span class="curr-flag">🇺🇸 USD</span>
-                <div><input type="number" id="usdRate" class="curr-input" style="width:80px; padding:5px; border:1px solid #ddd; border-radius:3px;"></div>
+            <div class="currency-row" style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;">
+                <span class="curr-flag" style="font-size:16px; font-weight:bold;">🇺🇸 USD</span>
+                <div><input type="number" id="usdRate" class="curr-input" style="width:80px; padding:5px; border:1px solid #ddd; border-radius:3px; font-weight:bold;"></div>
             </div>
-            <div class="currency-row">
-                <span class="curr-flag">🇪🇺 EUR</span>
-                <div><input type="number" id="eurRate" class="curr-input" style="width:80px; padding:5px; border:1px solid #ddd; border-radius:3px;"></div>
+            <div class="currency-row" style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;">
+                <span class="curr-flag" style="font-size:16px; font-weight:bold;">🇪🇺 EUR</span>
+                <div><input type="number" id="eurRate" class="curr-input" style="width:80px; padding:5px; border:1px solid #ddd; border-radius:3px; font-weight:bold;"></div>
+            </div>
+            <div class="currency-row" style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;">
+                <span class="curr-flag" style="font-size:16px; font-weight:bold;">🇬🇧 GBP</span>
+                <div><input type="number" id="gbpRate" class="curr-input" style="width:80px; padding:5px; border:1px solid #ddd; border-radius:3px; font-weight:bold;"></div>
             </div>
         </div>
         <hr style="margin:15px 0; border:0; border-top:1px solid #eee;">
@@ -668,6 +679,7 @@
                 <select id="calcCurrType" style="flex:1;">
                     <option value="USD">USD</option>
                     <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
                 </select>
             </div>
         </div>
@@ -1422,13 +1434,26 @@
             const data = await res.json(); 
             if(document.getElementById('usdRate').value === "") document.getElementById('usdRate').value = (1 / data.rates.USD).toFixed(4); 
             if(document.getElementById('eurRate').value === "") document.getElementById('eurRate').value = (1 / data.rates.EUR).toFixed(4); 
-            if(!window.gbpRate) window.gbpRate = (1 / data.rates.GBP).toFixed(4);
+            if(document.getElementById('gbpRate').value === "") document.getElementById('gbpRate').value = (1 / data.rates.GBP).toFixed(4); 
+            window.gbpRate = (1 / data.rates.GBP).toFixed(4);
             formatCurrency(document.getElementById('inpPrice'));
         } catch(e) {} 
     }
     async function fetchCurrency() { await fetchCurrencySilent(); } 
     
-    function calculateCurrencyTotal() { let amount = parsePrice(document.getElementById('calcCurrAmount').value); let type = document.getElementById('calcCurrType').value; let rate = type === 'USD' ? parseFloat(document.getElementById('usdRate').value) : parseFloat(document.getElementById('eurRate').value); if(!amount || !rate) return; document.getElementById('currResText').innerText = (amount * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL"; document.getElementById('currencyTotalRes').style.display = 'block'; }
+    function calculateCurrencyTotal() { 
+        let amount = parsePrice(document.getElementById('calcCurrAmount').value); 
+        let type = document.getElementById('calcCurrType').value; 
+        let rate = 1;
+        if(type === 'USD') rate = parseFloat(document.getElementById('usdRate').value);
+        else if(type === 'EUR') rate = parseFloat(document.getElementById('eurRate').value);
+        else if(type === 'GBP') rate = parseFloat(document.getElementById('gbpRate').value);
+        
+        if(!amount || !rate) return; 
+        document.getElementById('currResText').innerText = (amount * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL"; 
+        document.getElementById('currencyTotalRes').style.display = 'block'; 
+    }
+    
     function switchTab(id) { document.querySelectorAll('.tab-content').forEach(d => d.style.display='none'); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).style.display = 'block'; event.currentTarget.classList.add('active'); }
     
     function calcTapuKomisyon() { 
@@ -1558,7 +1583,7 @@
                     let rate = 1;
                     if(currSymbol === '$') rate = parseFloat(document.getElementById('usdRate').value) || 1;
                     if(currSymbol === '€') rate = parseFloat(document.getElementById('eurRate').value) || 1;
-                    if(currSymbol === '£') rate = parseFloat(window.gbpRate) || 1; 
+                    if(currSymbol === '£') rate = parseFloat(document.getElementById('gbpRate').value) || parseFloat(window.gbpRate) || 1; 
                     
                     let tlComm = comm * rate;
                     let tlCommKdv = commKdv * rate;
