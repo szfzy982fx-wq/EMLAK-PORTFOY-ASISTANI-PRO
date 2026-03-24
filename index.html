@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.4 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.5 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -152,7 +152,7 @@
 
         /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: hidden; }
-        .modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; max-height: 90vh; display: flex; flex-direction: column; overflow-y: auto; }
+        .modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; max-height: 90vh; display: flex; flex-direction: column; overflow-y: auto; scroll-behavior: smooth; }
         .crm-modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
         .tool-modal-content { width: 400px; max-width: 90%; margin: 10% auto; }
         .checklist-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
@@ -172,6 +172,13 @@
         .tab-btn.active { border-bottom-color: var(--secondary); color: var(--secondary); font-weight: bold; }
         .tab-content { display: none; } .tab-content.active { display: block; }
         
+        /* Mini Kat Planı İkonları CSS */
+        .plan-group { display: inline-flex; gap: 3px; align-items: center; justify-content: center; width: 40px; margin-right: 5px; }
+        .plan-box { height: 14px; border-radius: 2px; display: inline-block; }
+        .plan-dukkan { width: 34px; background-color: #8e44ad; } /* Mor Dükkan */
+        .plan-salon { width: 16px; background-color: #e67e22; }  /* Turuncu Salon */
+        .plan-oda { width: 8px; background-color: #3498db; }    /* Mavi Oda */
+
         /* CRM Style */
         .crm-header { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; flex-shrink: 0; }
         .crm-tab { padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 6px; border: 1px solid #eee; background: #f9f9f9; white-space: nowrap; }
@@ -240,7 +247,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.4 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.5 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -359,7 +366,7 @@
             
             <input type="text" list="dl_mahalle_filtre" id="filterNeighborhood" placeholder="Mahalle" onkeyup="renderTable()" style="width:70px;" autocomplete="off"><datalist id="dl_mahalle_filtre"></datalist>
             
-            <input type="text list="dl_oda" id="filterRooms" placeholder="Oda" onkeyup="renderTable()" style="width:50px;" autocomplete="off">
+            <input type="text" list="dl_oda" id="filterRooms" placeholder="Oda" onkeyup="renderTable()" style="width:50px;" autocomplete="off">
             
             <input type="text" id="filterMinPrice" placeholder="Min" oninput="formatCurrency(this); renderTable()" style="width:60px;"> 
             <input type="text" id="filterMaxPrice" placeholder="Max" oninput="formatCurrency(this); renderTable()" style="width:60px;">
@@ -413,7 +420,7 @@
         
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.4 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.5 PRO)</div>
     </div>
 </div>
 
@@ -706,22 +713,22 @@
             <label style="font-size:11px; font-weight:bold; color:#e67e22; margin-bottom:10px; display:block;">DAĞILIM SENARYOSU (Toplam %100 olmalı)</label>
             
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
-                <div style="width:25px; text-align:center; font-size:16px;">🏪</div>
+                <div title="Mağaza/Dükkan" class="plan-group"><div class="plan-box plan-dukkan"></div></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fizMagazaPay" placeholder="% Pay" value="20"></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fizMagazaM2" placeholder="Brüt m²" value="150"></div>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
-                <div style="width:25px; text-align:center; font-size:16px;">🛏️</div>
+                <div title="1+1 Daire" class="plan-group"><div class="plan-box plan-salon"></div><div class="plan-box plan-oda"></div></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fiz11Pay" placeholder="% Pay" value="20"></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fiz11M2" placeholder="Brüt m²" value="55"></div>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
-                <div style="width:25px; text-align:center; font-size:16px;">🛋️</div>
+                <div title="2+1 Daire" class="plan-group"><div class="plan-box plan-salon"></div><div class="plan-box plan-oda"></div><div class="plan-box plan-oda"></div></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fiz21Pay" placeholder="% Pay" value="30"></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fiz21M2" placeholder="Brüt m²" value="85"></div>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
-                <div style="width:25px; text-align:center; font-size:16px;">👑</div>
+                <div title="3+1 Daire" class="plan-group"><div class="plan-box plan-salon"></div><div class="plan-box plan-oda"></div><div class="plan-box plan-oda"></div><div class="plan-box plan-oda"></div></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fiz31Pay" placeholder="% Pay" value="30"></div>
                 <div class="form-group" style="flex:1;"><input type="number" id="fiz31M2" placeholder="Brüt m²" value="120"></div>
             </div>
@@ -1478,6 +1485,11 @@
         let m22 = parseFloat(document.getElementById('fiz21M2').value) || 0;
         let m23 = parseFloat(document.getElementById('fiz31M2').value) || 0;
 
+        let iconM = `<span class="plan-group"><span class="plan-box plan-dukkan"></span></span>`;
+        let icon1 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span></span>`;
+        let icon2 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span></span>`;
+        let icon3 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span></span>`;
+
         let outHtml = `<div style="font-weight:bold; font-size:15px; margin-bottom:5px;">PROJE ÖZETİ:</div>`;
         outHtml += `Toplam Net Emsal Alanı: <b>${netEmsal.toLocaleString('tr-TR')} m²</b><br>`;
         outHtml += `Toplam Brüt İnşaat Alanı (Ortak Alanlar Dahil): <b>${brutInsaat.toLocaleString('tr-TR')} m²</b><br><br>`;
@@ -1485,10 +1497,10 @@
         outHtml += `<div style="font-weight:bold; font-size:15px; margin-bottom:5px;">DAİRE ÇIKTISI:</div>`;
         
         let totalAdet = 0;
-        if(pM > 0 && m2M > 0) { let a = (brutInsaat * (pM/100)) / m2M; totalAdet += a; outHtml += `🎯 <b>~${a.toFixed(1)} Adet</b> Dükkan/Mağaza (${m2M} m²)<br>`; }
-        if(p1 > 0 && m21 > 0) { let a = (brutInsaat * (p1/100)) / m21; totalAdet += a; outHtml += `🎯 <b>~${a.toFixed(1)} Adet</b> 1+1 Daire (${m21} m²)<br>`; }
-        if(p2 > 0 && m22 > 0) { let a = (brutInsaat * (p2/100)) / m22; totalAdet += a; outHtml += `🎯 <b>~${a.toFixed(1)} Adet</b> 2+1 Daire (${m22} m²)<br>`; }
-        if(p3 > 0 && m23 > 0) { let a = (brutInsaat * (p3/100)) / m23; totalAdet += a; outHtml += `🎯 <b>~${a.toFixed(1)} Adet</b> 3+1 Daire (${m23} m²)<br>`; }
+        if(pM > 0 && m2M > 0) { let a = (brutInsaat * (pM/100)) / m2M; totalAdet += a; outHtml += `<div style="margin-bottom:6px;">${iconM} <b>~${a.toFixed(1)} Adet</b> Dükkan/Mağaza (${m2M} m²)</div>`; }
+        if(p1 > 0 && m21 > 0) { let a = (brutInsaat * (p1/100)) / m21; totalAdet += a; outHtml += `<div style="margin-bottom:6px;">${icon1} <b>~${a.toFixed(1)} Adet</b> 1+1 Daire (${m21} m²)</div>`; }
+        if(p2 > 0 && m22 > 0) { let a = (brutInsaat * (p2/100)) / m22; totalAdet += a; outHtml += `<div style="margin-bottom:6px;">${icon2} <b>~${a.toFixed(1)} Adet</b> 2+1 Daire (${m22} m²)</div>`; }
+        if(p3 > 0 && m23 > 0) { let a = (brutInsaat * (p3/100)) / m23; totalAdet += a; outHtml += `<div style="margin-bottom:6px;">${icon3} <b>~${a.toFixed(1)} Adet</b> 3+1 Daire (${m23} m²)</div>`; }
         
         outHtml += `<br><div style="font-weight:bold; font-size:15px; margin-bottom:5px;">MİMARİ VİZYON:</div>`;
         outHtml += `Toplam <b>${Math.round(totalAdet)}</b> Bağımsız Bölüm. `;
@@ -1500,6 +1512,10 @@
 
         document.getElementById('resFizibilite').innerHTML = outHtml;
         document.getElementById('resFizibilite').style.display = 'block'; 
+        
+        setTimeout(() => {
+            document.getElementById('resFizibilite').scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 100);
     }
     
     function calcEmlakVergisi() { 
