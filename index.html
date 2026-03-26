@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.8 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.9 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -150,11 +150,12 @@
         .crm-action-bar { display:flex; gap:10px; margin-bottom:10px; background:#e8f4f8; padding:10px; border-radius:6px; align-items:center; border: 1px dashed #3498db; flex-wrap: wrap; }
         .hidden-row { display: none !important; }
 
-        /* Modals */
+        /* Modals & Layout Fixes */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: hidden; }
-        .modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; max-height: 90vh; display: flex; flex-direction: column; overflow-y: auto; scroll-behavior: smooth; }
-        .crm-modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
-        .tool-modal-content { width: 400px; max-width: 90%; margin: 10% auto; }
+        .modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; max-height: 90vh; display: flex; flex-direction: column; overflow-y: auto; scroll-behavior: smooth; box-sizing: border-box; }
+        .crm-modal-content { background: white; margin: 2% auto; padding: 20px; width: 95%; border-radius: 8px; position: relative; height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
+        .tool-modal-content { width: 400px; max-width: 90%; margin: 5% auto; max-height: 85vh; overflow-y: auto; box-sizing: border-box; }
+        
         .checklist-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
         .checklist-item.checked span { text-decoration: line-through; color: #aaa; }
 
@@ -190,6 +191,7 @@
         .crm-input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
         .crm-buttons { display: flex; gap: 10px; margin-top: 15px; }
         .crm-table-container { overflow-x: auto; }
+        .crm-table { width: 100%; min-width: 700px; border-collapse: collapse; }
         
         .print-only { display: none; }
         #printProfileFooter { display: none; text-align: left; margin-top: 30px; border-top: 2px solid #333; padding-top: 15px; font-size: 14px; }
@@ -249,7 +251,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.8 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.9 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -377,7 +379,7 @@
             
             <input type="text" list="dl_mahalle_filtre" id="filterNeighborhood" placeholder="Mahalle" onkeyup="renderTable()" style="width:70px;" autocomplete="off"><datalist id="dl_mahalle_filtre"></datalist>
             
-            <input type="text list="dl_oda" id="filterRooms" placeholder="Oda" onkeyup="renderTable()" style="width:50px;" autocomplete="off">
+            <input type="text" list="dl_oda" id="filterRooms" placeholder="Oda" onkeyup="renderTable()" style="width:50px;" autocomplete="off">
             
             <input type="text" id="filterMinPrice" placeholder="Min" oninput="formatCurrency(this); renderTable()" style="width:60px;"> 
             <input type="text" id="filterMaxPrice" placeholder="Max" oninput="formatCurrency(this); renderTable()" style="width:60px;">
@@ -437,7 +439,7 @@
         <div id="printExtraReport" class="print-only"></div>
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.8 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.9 PRO)</div>
     </div>
 </div>
 
@@ -593,7 +595,7 @@
                         <thead>
                             <tr>
                                 <th width="20" class="no-print"><input type="checkbox" onchange="toggleAllCRMSelections(this)"></th>
-                                <th width="20%">Ad Soyad</th><th width="15%">Telefon</th><th width="20%">Talep / Bölge</th><th width="15%">Bütçe</th><th width="20%">Notlar</th><th width="10%" class="no-print">İşlem</th>
+                                <th width="20%">Ad Soyad</th><th width="15%">Telefon</th><th width="20%">Talep / Bölge</th><th width="15%">Bütçe</th><th width="20%">Notlar</th><th width="10%" class="no-print" style="text-align:center;">İşlem</th>
                             </tr>
                         </thead>
                         <tbody id="investorTableBody"></tbody>
@@ -619,7 +621,7 @@
                 </div>
                 <div class="crm-table-container">
                     <table class="crm-table">
-                        <thead><tr><th width="18%">Ad Soyad</th><th width="14%">Meslek/Şehir</th><th width="13%">Telefon</th><th width="12%">Yakınlık</th><th width="10%">Son Arama</th><th width="13%">Durum</th><th width="20%">İşlem</th></tr></thead>
+                        <thead><tr><th width="18%">Ad Soyad</th><th width="14%">Meslek/Şehir</th><th width="13%">Telefon</th><th width="12%">Yakınlık</th><th width="10%">Son Arama</th><th width="13%">Durum</th><th width="20%" style="text-align:center;">İşlem</th></tr></thead>
                         <tbody id="networkTableBody"></tbody>
                     </table>
                 </div>
@@ -743,23 +745,23 @@
             
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
                 <div title="Mağaza/Dükkan" class="plan-group"><div class="plan-box plan-dukkan"></div></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fizMagazaPay" placeholder="% Pay" value="20" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fizMagazaM2" placeholder="Brüt m²" value="150" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fizMagazaPay" placeholder="% Pay" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fizMagazaM2" placeholder="Brüt m²" oninput="hideFizRes();"></div>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
                 <div title="1+1 Daire" class="plan-group"><div class="plan-box plan-salon"></div><div class="plan-box plan-oda"></div></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fiz11Pay" placeholder="% Pay" value="20" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fiz11M2" placeholder="Brüt m²" value="55" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fiz11Pay" placeholder="% Pay" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fiz11M2" placeholder="Brüt m²" oninput="hideFizRes();"></div>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
                 <div title="2+1 Daire" class="plan-group"><div class="plan-box plan-salon"></div><div class="plan-box plan-oda"></div><div class="plan-box plan-oda"></div></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fiz21Pay" placeholder="% Pay" value="30" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fiz21M2" placeholder="Brüt m²" value="85" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fiz21Pay" placeholder="% Pay" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fiz21M2" placeholder="Brüt m²" oninput="hideFizRes();"></div>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
                 <div title="3+1 Daire" class="plan-group"><div class="plan-box plan-salon"></div><div class="plan-box plan-oda"></div><div class="plan-box plan-oda"></div><div class="plan-box plan-oda"></div></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fiz31Pay" placeholder="% Pay" value="30" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><input type="number" id="fiz31M2" placeholder="Brüt m²" value="120" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fiz31Pay" placeholder="% Pay" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="fiz31M2" placeholder="Brüt m²" oninput="hideFizRes();"></div>
             </div>
             
             <div style="display:flex; gap:10px; margin-top:10px;">
@@ -889,7 +891,7 @@
     let userProfile = { name: "", title: "", company: "", web: "", phone: "", email: "", social: "", nameChk: true, titleChk: true, compChk: true, webChk: true, phoneChk: true, emailChk: true, socialChk: true };
     
     let alarmTime = null;
-    let currentFizReportText = ""; // Kopyalama butonu için
+    let currentFizReportText = ""; 
 
     try { const sC = localStorage.getItem('KaracabayRE_CRM_v19'); if(sC) crmData = JSON.parse(sC); } catch(e){}
     try { const sP = localStorage.getItem('KaracabayRE_EST_DB_v19'); if(sP) portfolio = JSON.parse(sP); } catch(e){}
@@ -1054,7 +1056,6 @@
         tS.innerHTML = ''; fT.innerHTML = '<option value="all">Tüm Tür</option>';
         typeList.forEach(t=>{tS.innerHTML+=`<option>${t}</option>`;fT.innerHTML+=`<option>${t}</option>`;});
         
-        // CRM Talep Tipi Senkronizasyonu
         const invT=document.getElementById('invType');
         invT.innerHTML='';
         typeList.forEach(t=>{invT.innerHTML+=`<option>${t}</option>`;});
@@ -1166,7 +1167,7 @@
     function toggleAllSelections(source) { const checkboxes = document.querySelectorAll('#tableBody input[type="checkbox"]'); checkboxes.forEach(cb => { cb.checked = source.checked; toggleRowSelection(cb); }); }
     function toggleRowSelection(checkbox) { const row = checkbox.closest('tr'); if(checkbox.checked) row.classList.add('row-selected'); else row.classList.remove('row-selected'); }
     
-    // --- YAZDIRMA (SÜREÇ DAHİL) ---
+    // --- YAZDIRMA (SÜREÇ DAHİL VE REF GİZLİ) ---
     function printSelected() { 
         const selectedCount = document.querySelectorAll('#tableBody tr.row-selected').length; 
         if(selectedCount === 0) { alert("⚠️ Yazdırılacak kayıt seçiniz."); return; } 
@@ -1189,7 +1190,8 @@
                         const item = portfolio.find(p => p.id === id);
                         if(item && item.process && item.process.trim() !== "") {
                             hasNotes = true;
-                            reportHtml += `<div style='margin-bottom:25px;'><h4 style='margin-bottom:8px; color:#c0392b;'>${item.status} ${item.type} - ${item.district} / ${item.neighborhood} (Ref: ${item.ref || 'Belirtilmemiş'})</h4><p style='white-space:pre-wrap; font-size:13px; line-height:1.5; border-left:4px solid #c0392b; padding-left:15px; margin:0;'>${item.process}</p></div>`;
+                            // REF (Müşteri) gizliliği eklendi.
+                            reportHtml += `<div style='margin-bottom:25px;'><h4 style='margin-bottom:8px; color:#c0392b;'>${item.status} ${item.type} - ${item.district} / ${item.neighborhood}</h4><p style='white-space:pre-wrap; font-size:13px; line-height:1.5; border-left:4px solid #c0392b; padding-left:15px; margin:0;'>${item.process}</p></div>`;
                         }
                     }
                 }
@@ -1214,7 +1216,7 @@
         }, 100); 
     }
     
-    // PORTFÖY WP PAYLAŞIMI (SÜREÇ DAHİL)
+    // PORTFÖY WP PAYLAŞIMI (ORAN VE NET M2 EKLENTİSİ)
     function sendSelectedToWhatsapp() { 
         const selectedCheckboxes = document.querySelectorAll('#tableBody tr.row-selected input[type="checkbox"]'); 
         if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } 
@@ -1233,10 +1235,22 @@
                     const item = portfolio.find(p => p.id === id); 
                     if(item) { 
                         const cityToUse = (filterCityVal !== 'all') ? filterCityVal : (item.city || 'Antalya'); 
-                        const netInfo = item.net ? ` | Net: ${item.net} m²` : ''; 
+                        
+                        let m2Info = item.gross ? item.gross + ' m²' : '';
+                        if (item.net) m2Info += ' (Net: ' + item.net + ' m²)';
+                        
+                        let oranInfo = (item.status === 'Kat Karşılığı' && item.floorCount) ? ' | Oran/Kat: ' + item.floorCount : '';
+                        
                         msg += ">> " + item.status + " " + item.type + "\n";
                         msg += ">> " + cityToUse + " / " + item.district + " / " + item.neighborhood + "\n";
-                        if(item.rooms) msg += ">> " + item.rooms + netInfo + "\n";
+                        
+                        let line3 = "";
+                        if(item.rooms) line3 += item.rooms;
+                        if(m2Info) line3 += (line3 ? " | " : "") + m2Info;
+                        if(oranInfo) line3 += oranInfo;
+                        
+                        if(line3) msg += ">> " + line3 + "\n";
+                        
                         msg += ">> " + item.price + " " + (item.currency||'₺') + "\n";
                         
                         if(includeProcess && item.process && item.process.trim() !== "") {
@@ -1468,7 +1482,7 @@
     function renderInvestors() { 
         const tbody = document.getElementById('investorTableBody'); tbody.innerHTML = ''; 
         crmData.investors.forEach(inv => { 
-            tbody.innerHTML += `<tr><td class="no-print" style="text-align:center;"><input type="checkbox" class="crm-chk" value="${inv.id}"></td><td><b>${inv.name}</b></td><td>${inv.phone}</td><td>${inv.type} - ${inv.region}</td><td style="color:#27ae60; font-weight:bold;">${inv.budget || ''}</td><td><small>${inv.note || '-'}</small></td><td class="no-print"><button onclick="editCRMInvestor(${inv.id})" style="background:#f39c12; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px; white-space:nowrap; font-weight:bold;"><i class="fa-solid fa-pen"></i> DÜZENLE</button></td></tr>`; 
+            tbody.innerHTML += `<tr><td class="no-print" style="text-align:center;"><input type="checkbox" class="crm-chk" value="${inv.id}"></td><td><b>${inv.name}</b></td><td>${inv.phone}</td><td>${inv.type} - ${inv.region}</td><td style="color:#27ae60; font-weight:bold;">${inv.budget || ''}</td><td><small>${inv.note || '-'}</small></td><td class="no-print" style="text-align:center;"><button onclick="editCRMInvestor(${inv.id})" style="background:#f39c12; color:white; border:none; padding:6px 10px; border-radius:3px; cursor:pointer; font-size:13px;" title="Düzenle"><i class="fa-solid fa-pen"></i></button></td></tr>`; 
         }); 
     }
     
@@ -1477,7 +1491,7 @@
         crmData.network.forEach(net => { 
             let lastCallDate = new Date(net.lastCall || today); let diffTime = Math.abs(today - lastCallDate); let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); let statusBadge = ''; 
             if(diffDays >= 45) { statusBadge = `<span class="badge-crm-danger"><i class="fa-solid fa-phone"></i> ARA</span>`; } else { statusBadge = `<span class="badge-crm-safe">${diffDays} Gün Oldu</span>`; } 
-            tbody.innerHTML += ` <tr> <td><b>${net.name}</b></td> <td>${net.job}<br><small>${net.city}</small></td> <td>${net.phone}</td> <td>${net.relation}</td> <td>${net.lastCall}</td> <td style="text-align:center;">${statusBadge}</td> <td style="display:flex; gap:5px; justify-content:center; flex-wrap:wrap;"> <button onclick="resetNetworkTimer(${net.id})" style="background:#3498db; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px; white-space:nowrap;"><i class="fa-solid fa-phone"></i> GÖRÜŞTÜM</button> <button onclick="editCRMNetwork(${net.id})" style="background:#f39c12; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; font-size:11px; white-space:nowrap;"><i class="fa-solid fa-pen"></i> DÜZENLE</button> </td> </tr>`; 
+            tbody.innerHTML += ` <tr> <td><b>${net.name}</b></td> <td>${net.job}<br><small>${net.city}</small></td> <td>${net.phone}</td> <td>${net.relation}</td> <td>${net.lastCall}</td> <td style="text-align:center;">${statusBadge}</td> <td style="display:flex; gap:5px; justify-content:center; flex-wrap:wrap;"> <button onclick="resetNetworkTimer(${net.id})" style="background:#3498db; color:white; border:none; padding:6px 10px; border-radius:3px; cursor:pointer; font-size:13px;" title="Görüşüldü İşaretle"><i class="fa-solid fa-phone"></i></button> <button onclick="editCRMNetwork(${net.id})" style="background:#f39c12; color:white; border:none; padding:6px 10px; border-radius:3px; cursor:pointer; font-size:13px;" title="Düzenle"><i class="fa-solid fa-pen"></i></button> </td> </tr>`; 
         }); 
     }
     function resetNetworkTimer(id) { if(confirm("Görüşme yapıldı olarak işaretlensin mi? Tarih bugün olacak.")) { const idx = crmData.network.findIndex(n => n.id === id); if(idx > -1) { crmData.network[idx].lastCall = new Date().toISOString().split('T')[0]; saveCRM(); renderNetwork(); } } }
@@ -1573,14 +1587,14 @@
         document.getElementById('fizTaks').value = '';
         document.getElementById('fizKat').value = '';
         document.getElementById('fizOrtak').value = '25';
-        document.getElementById('fizMagazaPay').value = '20';
-        document.getElementById('fizMagazaM2').value = '150';
-        document.getElementById('fiz11Pay').value = '20';
-        document.getElementById('fiz11M2').value = '55';
-        document.getElementById('fiz21Pay').value = '30';
-        document.getElementById('fiz21M2').value = '85';
-        document.getElementById('fiz31Pay').value = '30';
-        document.getElementById('fiz31M2').value = '120';
+        document.getElementById('fizMagazaPay').value = '';
+        document.getElementById('fizMagazaM2').value = '';
+        document.getElementById('fiz11Pay').value = '';
+        document.getElementById('fiz11M2').value = '';
+        document.getElementById('fiz21Pay').value = '';
+        document.getElementById('fiz21M2').value = '';
+        document.getElementById('fiz31Pay').value = '';
+        document.getElementById('fiz31M2').value = '';
         hideFizRes();
     }
 
