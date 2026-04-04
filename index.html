@@ -104,9 +104,9 @@
         .btn-delete-rec { background: var(--danger); color: white; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold; display: none; height: 42px; }
         .btn-cancel { background: #7f8c8d; color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; display: none; margin-left: auto; }
 
-        /* Tablo ve Rozetler */
+        /* Tablo ve Rozetler (Sticky Header Eklendi) */
         table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 12px; table-layout: fixed; }
-        th { background: #34495e; color: white; padding: 8px 4px; text-align: left; vertical-align: middle; word-wrap: break-word; font-size: 11px; }
+        th { background: #34495e; color: white; padding: 8px 4px; text-align: left; vertical-align: middle; word-wrap: break-word; font-size: 11px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 2px rgba(0,0,0,0.1); }
         td { padding: 6px 4px; border-bottom: 1px solid #eee; vertical-align: top; word-wrap: break-word; }
         tr:hover { background: #f9f9f9; }
         tr.row-sold { background-color: #fff5f5; color: #999; }
@@ -126,12 +126,38 @@
         .link-maps { background-color: #27ae60; color: white; } .link-dosya { background-color: #95a5a6; border: 1px solid #7f8c8d; }
 
         /* Filtre ve Gizlilik Modu */
-        .filter-bar { background: var(--primary); padding: 12px; border-radius: 6px; display: flex; gap: 8px; flex-wrap: wrap; color: white; align-items: center; }
+        .filter-bar { background: var(--primary); padding: 12px; border-radius: 6px; display: flex; gap: 8px; flex-wrap: wrap; color: white; align-items: center; position: relative; z-index: 11; }
         .filter-bar input, .filter-bar select { padding: 6px; border: none; border-radius: 4px; color: #333; font-size: 12px; }
         .btn-clear-filter { background: #95a5a6; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: auto; }
         .btn-print-selected { background: #8e44ad; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; display:flex; align-items:center; gap:5px; font-size: 11px; }
         .btn-whatsapp-selected { background: var(--whatsapp); color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; display:flex; align-items:center; gap:5px; font-size: 11px; }
         .btn-excel { background: #217346; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; display:flex; align-items:center; gap:5px; font-size: 11px; }
+
+        /* Yukarı Çık Butonu (Back to Top) */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9990;
+            transition: all 0.3s ease;
+        }
+        .back-to-top:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
 
         /* GİZLİLİK MODU CSS */
         body.privacy-active th:nth-child(7),
@@ -216,7 +242,7 @@
             #printProfileFooter { display: block !important; }
             
             table { width: 100%; border-collapse: collapse; font-size: 10px; border: 1px solid #ccc; }
-            th { background-color: #f1f1f1 !important; color: black !important; border: 1px solid #ccc; padding: 5px; text-transform: uppercase; font-weight: 800; }
+            th { background-color: #f1f1f1 !important; color: black !important; border: 1px solid #ccc; padding: 5px; text-transform: uppercase; font-weight: 800; position: static !important; }
             td { border: 1px solid #ccc; padding: 5px; vertical-align: top; }
             tr { page-break-inside: avoid; }
             thead { display: table-header-group !important; }
@@ -441,6 +467,10 @@
         <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.12 PRO)</div>
     </div>
 </div>
+
+<button id="btnBackToTop" class="back-to-top no-print" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Yukarı Çık">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
 
 <div id="profileModal" class="modal" onclick="closeModalOutside(event, 'profileModal')">
     <div class="modal-content tool-modal-content">
@@ -731,7 +761,7 @@
         <div id="tabFizibilite" class="tab-content">
             <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="flex:1;">
-                    <label>Tapu Arsa (m²)</label>
+                    <label>Tapu (m²)</label>
                     <input type="text" id="fizArsa" placeholder="Örn: 1000" oninput="formatCurrency(this); hideFizRes();">
                     <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:10px; color:#e67e22; margin-top:4px; font-weight:bold; text-transform:none;">
                         <input type="checkbox" id="chkAdvancedFiz" onchange="toggleAdvancedFiz()" style="margin:0;"> 📐 Çap ve Çekme Payı Gir
@@ -830,6 +860,16 @@
 </div>
 
 <script>
+    // --- YUKARI ÇIK BUTONU GÖRÜNÜRLÜK KONTROLÜ ---
+    window.addEventListener('scroll', function() {
+        const btn = document.getElementById('btnBackToTop');
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            btn.style.display = "flex";
+        } else {
+            btn.style.display = "none";
+        }
+    });
+
     // --- GÜVENLİK KİLİT SİSTEMİ ---
     const SECRET_SALT = "oKrCbY2015*";
     let deviceID = localStorage.getItem('karacabay_device_id');
@@ -1695,7 +1735,7 @@
         let isAdvanced = document.getElementById('chkAdvancedFiz').checked;
         
         if(!arsaHam || !emsal || !taks || !kat) {
-             document.getElementById('resFizibilite').innerHTML = "<span style='color:red;'>Lütfen Tapu Arsa m², KAKS (Emsal), TAKS ve Gabari değerlerini eksiksiz giriniz.</span>";
+             document.getElementById('resFizibilite').innerHTML = "<span style='color:red;'>Lütfen Tapu (m²), KAKS (Emsal), TAKS ve Gabari değerlerini eksiksiz giriniz.</span>";
              document.getElementById('resFizibilite').style.display = 'block';
              document.getElementById('btnCopyFiz').style.display = 'none';
              return;
