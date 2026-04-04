@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EMLAK PORTFÖY ASİSTANI - v75.10 PRO</title>
+    <title>EMLAK PORTFÖY ASİSTANI - v75.11 PRO</title>
     
     <link rel="icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="https://ykaracabay-source.github.io/emlakasistani/logo.jpg">
@@ -117,7 +117,7 @@
         .kat-karsiligi { background: #8e44ad !important; } .kentsel-donusum { background: #2c3e50 !important; }
         .badge-own { background: var(--secondary); } .badge-shared { background: var(--shared); }
         
-        /* TAKSİ SARISI ROZET (Daire, Arsa, vs) */
+        /* TAKSİ SARISI ROZET */
         .type-badge-yellow { background-color: #FFCC00; color: #000; font-weight: 900; padding: 4px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 10px; text-transform: uppercase; border: 1px solid #D4AC0D; }
         
         .direct-link-btn { display: inline-block; background-color: #3498db; color: white; text-decoration: none; padding: 3px 6px; border-radius: 3px; font-size: 10px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-weight: 600; }
@@ -133,11 +133,10 @@
         .btn-whatsapp-selected { background: var(--whatsapp); color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; display:flex; align-items:center; gap:5px; font-size: 11px; }
         .btn-excel { background: #217346; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; display:flex; align-items:center; gap:5px; font-size: 11px; }
 
-        /* GİZLİLİK MODU CSS (PORTFÖY İÇİN) */
+        /* GİZLİLİK MODU CSS */
         body.privacy-active th:nth-child(7),
         body.privacy-active td:nth-child(7) { display: none !important; }
 
-        /* CRM GİZLİLİK MODU CSS (CRM İÇİN 2. VE 3. SÜTUN) */
         body.crm-privacy-active #crmTableTarget th:nth-child(2),
         body.crm-privacy-active #crmTableTarget td:nth-child(2),
         body.crm-privacy-active #crmTableTarget th:nth-child(3),
@@ -251,7 +250,7 @@
             <div class="app-title-group" style="display: flex; align-items: center; gap: 15px;">
                 <img src="https://ykaracabay-source.github.io/emlakasistani/logo.jpg" alt="Karacabay Logo" class="header-logo">
                 <div>
-                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.10 PRO</span></h1>
+                    <h1>EMLAK PORTFÖY ASİSTANI <span style="font-size:12px; color:#fff; background-color:#8e44ad; padding:2px 8px; border-radius:10px; vertical-align:middle;">v75.11 PRO</span></h1>
                     <div class="app-subtitle">Profesyonel Emlak Yönetim Sistemi</div>
                 </div>
             </div>
@@ -439,7 +438,7 @@
         <div id="printExtraReport" class="print-only"></div>
         <div id="printProfileFooter"></div>
         
-        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.10 PRO)</div>
+        <div class="legal-footer" style="margin-top:20px; font-size:12px; color:#aaa; text-align:center;">Yerel Veri Tabanı (v75.11 PRO)</div>
     </div>
 </div>
 
@@ -732,8 +731,8 @@
         <div id="tabFizibilite" class="tab-content">
             <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="flex:1;">
-                    <label>Arsa (m²)</label>
-                    <input type="text" id="fizArsa" oninput="formatCurrency(this); hideFizRes();">
+                    <label>Gerçek Tapu Arsa (m²)</label>
+                    <input type="text" id="fizArsa" placeholder="Örn: 1000" oninput="formatCurrency(this); hideFizRes();">
                     <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:10px; color:#e67e22; margin-top:4px; font-weight:bold; text-transform:none;">
                         <input type="checkbox" id="chkAdvancedFiz" onchange="toggleAdvancedFiz()" style="margin:0;"> 📐 Çap ve Çekme Payı Gir
                     </label>
@@ -744,18 +743,19 @@
             
             <div id="advancedFizPanel" style="display:none; background:#fff8e1; border:1px dashed #f39c12; padding:10px; border-radius:4px; margin-bottom:10px;">
                 <div style="display:flex; gap:10px; margin-bottom:5px;">
-                    <div class="form-group" style="flex:1;"><label>Cephe (m)</label><input type="number" id="fizCephe" placeholder="Örn: 20" oninput="autoCalcArsa(); hideFizRes();"></div>
-                    <div class="form-group" style="flex:1;"><label>Derinlik (m)</label><input type="number" id="fizDerinlik" placeholder="Örn: 50" oninput="autoCalcArsa(); hideFizRes();"></div>
+                    <div class="form-group" style="flex:1;"><label>Ort. Cephe (m)</label><input type="number" id="fizCephe" placeholder="Örn: 20" oninput="hideFizRes();"></div>
+                    <div class="form-group" style="flex:1;"><label>Ort. Derinlik (m)</label><input type="number" id="fizDerinlik" placeholder="Örn: 50" oninput="hideFizRes();"></div>
                 </div>
                 <div style="display:flex; gap:10px;">
                     <div class="form-group" style="flex:1;"><label>Ön/Arka Çekme (m)</label><input type="number" id="fizCekmeOnArka" placeholder="Örn: 5" oninput="hideFizRes();"></div>
                     <div class="form-group" style="flex:1;"><label>Yan Çekmeler (m)</label><input type="number" id="fizCekmeYan" placeholder="Örn: 3" oninput="hideFizRes();"></div>
                 </div>
+                <div style="font-size:10px; color:#555; margin-top:5px; font-style:italic;">* Ortalama cephe ve derinlik, arsanın geometrik formunu anlamak için kullanılır. Toplam alan için üstteki Gerçek Tapu m²'si baz alınır.</div>
             </div>
 
             <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="flex:1;"><label>Gabari (Kat)</label><input type="number" id="fizKat" placeholder="5" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><label>Ortak Alan Payı (%)</label><input type="number" id="fizOrtak" value="25" title="Merdiven, Asansör, Şaft vb." oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><label>Ortak Alan Payı (%)</label><input type="number" id="fizOrtak" value="25" title="Merdiven, Asansör, Balkon vb." oninput="hideFizRes();"></div>
             </div>
             
             <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0 10px 0;">
@@ -1592,31 +1592,11 @@
         document.getElementById('resTapu').style.display = 'block'; 
     }
     
-    // --- YENİ FİZİBİLİTE SİSTEMİ (ÇEKME PAYLARI VE UX) ---
+    // --- YENİ FİZİBİLİTE SİSTEMİ (ÇEKME PAYLARI, TAPU m2 ve UX) ---
     function toggleAdvancedFiz() {
         const isAdvanced = document.getElementById('chkAdvancedFiz').checked;
         document.getElementById('advancedFizPanel').style.display = isAdvanced ? 'block' : 'none';
-        const arsaInput = document.getElementById('fizArsa');
-        if(isAdvanced) {
-            arsaInput.readOnly = true;
-            arsaInput.style.backgroundColor = '#eee';
-            autoCalcArsa();
-        } else {
-            arsaInput.readOnly = false;
-            arsaInput.style.backgroundColor = '';
-        }
         hideFizRes();
-    }
-
-    function autoCalcArsa() {
-        const cephe = parseFloat(document.getElementById('fizCephe').value) || 0;
-        const derinlik = parseFloat(document.getElementById('fizDerinlik').value) || 0;
-        if(cephe > 0 && derinlik > 0) {
-            const area = cephe * derinlik;
-            document.getElementById('fizArsa').value = area.toLocaleString('tr-TR');
-        } else {
-            document.getElementById('fizArsa').value = '';
-        }
     }
     
     function hideFizRes() {
@@ -1673,7 +1653,7 @@
         let isAdvanced = document.getElementById('chkAdvancedFiz').checked;
         
         if(!arsa || !emsal || !taks || !kat) {
-             document.getElementById('resFizibilite').innerHTML = "<span style='color:red;'>Lütfen Arsa m², KAKS (Emsal), TAKS ve Gabari değerlerini eksiksiz giriniz.</span>";
+             document.getElementById('resFizibilite').innerHTML = "<span style='color:red;'>Lütfen Gerçek Tapu Arsa m², KAKS (Emsal), TAKS ve Gabari değerlerini eksiksiz giriniz.</span>";
              document.getElementById('resFizibilite').style.display = 'block';
              document.getElementById('btnCopyFiz').style.display = 'none';
              return;
@@ -1735,8 +1715,16 @@
         if (gabariIleYapilabilen < maxEmsalHakki) {
             kullanilabilirEmsal = gabariIleYapilabilen;
             yananEmsal = maxEmsalHakki - gabariIleYapilabilen;
+            
+            let ustKatSayisi = Math.max(1, kat - 1);
+            let gerekenCikmaPerKat = yananEmsal / ustKatSayisi;
+            
             uyariHtml += `<div style="color:#c0392b; font-weight:bold; margin-top:5px; padding:5px; border-left:3px solid #c0392b; background:#fff5f5;">⚠️ UYARI: Gabari (${kat} Kat) ve taban sınırları nedeniyle en fazla ${gabariIleYapilabilen.toLocaleString('tr-TR')} m² inşaat yapabiliyorsunuz. Emsal hakkınızın ${yananEmsal.toLocaleString('tr-TR')} m²'si boşa gidiyor (yanıyor)!</div>`;
+            uyariHtml += `<div style="color:#34495e; font-size:13px; font-weight:bold; margin-top:5px; padding:8px; border-left:3px solid #3498db; background:#ebf5fb;">💡 MİMARİ ÇÖZÜM & UYARI: Yanan ${yananEmsal.toLocaleString('tr-TR')} m² emsal hakkınızı tam verimle kullanabilmek için, üst katlarda (zemin hariç ${ustKatSayisi} kat) kat başına ortalama <b>${gerekenCikmaPerKat.toLocaleString('tr-TR', {maximumFractionDigits:1})} m² "çıkma" (kapalı/açık konsol, balkon vb.)</b> yapılması matematiksel olarak gereklidir. <br><i style="font-weight:normal; font-size:11px;">* Lütfen ilgili belediyenin imar planı notlarında bu büyüklükte bir çıkma izniniz olup olmadığını kontrol ediniz.</i></div>`;
+            
             uyariText += `⚠️ UYARI: Gabari (${kat} Kat) ve taban sınırları nedeniyle en fazla ${gabariIleYapilabilen.toLocaleString('tr-TR')} m² inşaat yapabiliyorsunuz. Emsal hakkınızın ${yananEmsal.toLocaleString('tr-TR')} m²'si boşa gidiyor (yanıyor)!\n`;
+            uyariText += `💡 MİMARİ ÇÖZÜM & UYARI: Yanan ${yananEmsal.toLocaleString('tr-TR')} m² emsal hakkınızı tam verimle kullanabilmek için, üst katlarda (zemin hariç ${ustKatSayisi} kat) kat başına ortalama ${gerekenCikmaPerKat.toLocaleString('tr-TR', {maximumFractionDigits:1})} m² "çıkma" (kapalı/açık konsol, balkon vb.) yapılması matematiksel olarak gereklidir. Lütfen ilgili belediyenin imar planı notlarında bu büyüklükte bir çıkma izniniz olup olmadığını kontrol ediniz.\n`;
+            
         } else if (gabariIleYapilabilen > maxEmsalHakki) {
             uyariHtml += `<div style="color:#27ae60; font-weight:bold; margin-top:5px; padding:5px; border-left:3px solid #27ae60; background:#eafaf1;">✅ BİLGİ: Gabari ve taban oranınız emsal hakkınızı (${maxEmsalHakki.toLocaleString('tr-TR')} m²) tam verimle kullanmak için yeterlidir.</div>`;
             uyariText += `✅ BİLGİ: Gabari ve taban oranınız emsal hakkınızı (${maxEmsalHakki.toLocaleString('tr-TR')} m²) tam verimle kullanmak için yeterlidir.\n`;
@@ -1767,21 +1755,18 @@
 
         let textReport = `📌 PROJE ÖN FİZİBİLİTE RAPORU\n\n`;
         textReport += `--- GİRİŞ PARAMETRELERİ ---\n`;
+        textReport += `Gerçek Tapu Arsa: ${arsa.toLocaleString('tr-TR')} m²\n`;
         if(isAdvanced) {
-            textReport += `Arsa Ölçüleri: Cephe ${cephe}m x Derinlik ${derinlik}m (Toplam: ${arsa.toLocaleString('tr-TR')} m²)\n`;
+            textReport += `Ortalama Ölçüler: Cephe ${cephe}m x Derinlik ${derinlik}m\n`;
             textReport += `Çekme Payları: Ön/Arka: ${cOnArka}m | Yanlar: ${cYan}m\n`;
-        } else {
-            textReport += `Arsa: ${arsa.toLocaleString('tr-TR')} m²\n`;
         }
         textReport += `Emsal (KAKS): ${emsal}  |  TAKS: ${taks}\n`;
         textReport += `Gabari: ${kat} Kat  |  Ortak Alan: %${ortak}\n\n`;
         
         textReport += `--- MİMARİ SINIRLAR VE ANALİZ ---\n`;
+        textReport += `Yasal Maks. Taban Oturumu (TAKS): ${maxTaban.toLocaleString('tr-TR')} m²\n`;
         if(isAdvanced) {
-            textReport += `Yasal Maks. Taban Oturumu (TAKS): ${maxTaban.toLocaleString('tr-TR')} m²\n`;
             textReport += `Fiziki Net Oturum Alanı: ${fizikiOturumAlani.toLocaleString('tr-TR')} m²\n`;
-        } else {
-            textReport += `Maks. Taban Oturumu (TAKS): ${maxTaban.toLocaleString('tr-TR')} m²\n`;
         }
         textReport += `Toplam Net İnşaat: ${kullanilabilirEmsal.toLocaleString('tr-TR')} m²\n`;
         textReport += `Toplam Brüt İnşaat: ${brutInsaat.toLocaleString('tr-TR')} m²\n\n`;
@@ -1789,15 +1774,14 @@
         textReport += `--- DAĞILIM VE DAİRE ÇIKTISI ---\n`;
 
         let outHtml = `<div style="font-weight:bold; font-size:15px; margin-bottom:5px; color:#2c3e50;">--- MİMARİ SINIRLAR VE ANALİZ ---</div>`;
+        outHtml += `Gerçek Tapu Arsa: <b>${arsa.toLocaleString('tr-TR')} m²</b> | Gabari: <b>${kat} Kat</b><br>`;
         if(isAdvanced) {
-            outHtml += `Arsa Ölçüleri: <b>Cephe ${cephe}m x Derinlik ${derinlik}m</b> (Toplam: ${arsa.toLocaleString('tr-TR')} m²)<br>`;
-            outHtml += `Çekme Payları: <b>Ön/Arka: ${cOnArka}m | Yanlar: ${cYan}m</b><br>`;
-            outHtml += `Gabari: <b>${kat} Kat</b><br><br>`;
-            outHtml += `Yasal Maks. Taban Oturumu (TAKS): <b>${maxTaban.toLocaleString('tr-TR')} m²</b><br>`;
+            outHtml += `Ortalama Ölçüler: <b>Cephe ${cephe}m x Derinlik ${derinlik}m</b><br>`;
+            outHtml += `Çekme Payları: <b>Ön/Arka: ${cOnArka}m | Yanlar: ${cYan}m</b><br><br>`;
+        }
+        outHtml += `Yasal Maks. Taban Oturumu (TAKS): <b>${maxTaban.toLocaleString('tr-TR')} m²</b><br>`;
+        if(isAdvanced) {
             outHtml += `Fiziki Net Oturum Alanı: <b style="color:#2980b9;">${fizikiOturumAlani.toLocaleString('tr-TR')} m²</b><br>`;
-        } else {
-            outHtml += `Arsa: <b>${arsa.toLocaleString('tr-TR')} m²</b> | Gabari: <b>${kat} Kat</b><br>`;
-            outHtml += `Maksimum Taban Oturumu (TAKS): <b>${maxTaban.toLocaleString('tr-TR')} m²</b><br>`;
         }
         outHtml += `Toplam Net İnşaat (Kullanılabilir): <b>${kullanilabilirEmsal.toLocaleString('tr-TR')} m²</b><br>`;
         outHtml += `Toplam Brüt İnşaat (Ortak Alan Dahil): <b>${brutInsaat.toLocaleString('tr-TR')} m²</b><br>`;
