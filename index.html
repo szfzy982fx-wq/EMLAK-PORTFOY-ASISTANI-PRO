@@ -947,7 +947,7 @@
     const floorList = ["Giriş Altı Kot 4", "Giriş Altı Kot 3", "Giriş Altı Kot 2", "Giriş Altı Kot 1", "Bodrum Kat", "Zemin Kat", "Bahçe Katı", "Bahçe Dubleksi", "Giriş Katı", "Yüksek Giriş", "Müstakil", "Villa Tipi", "Çatı Katı"];
     for (let i = 1; i <= 30; i++) { floorList.push(i.toString()); } floorList.push("30+"); floorList.push("Çatı Dubleks");
     const antalyaData = { "Akseki": ["Merkez"], "Aksu": ["Merkez","Altıntaş","Kundu","Pınarlı","Macun"], "Alanya": ["Merkez","Mahmutlar","Avsallar","Oba","Kestel"], "Demre": ["Merkez"], "Döşemealtı": ["Merkez","Yeniköy","Yeşilbayır","Altınkale"], "Elmalı": ["Merkez"], "Finike": ["Merkez"], "Gazipaşa": ["Merkez"], "Gündoğmuş": ["Merkez"], "İbradı": ["Merkez"], "Kaş": ["Merkez","Kalkan"], "Kemer": ["Merkez","Göynük","Beldibi","Tekirova"], "Kepez": ["Merkez","Varsak","Sütçüler","Gülveren","Kültür"], "Konyaaltı": ["Merkez","Liman","Hurma","Uncalı","Gürsu","Sarısu"], "Korkuteli": ["Merkez"], "Kumluca": ["Merkez","Mavikent","Adrasan"], "Manavgat": ["Merkez","Side","Sorgun","Ilıca"], "Muratpaşa": ["Merkez","Lara","Fener","Şirinyalı","Kırcami","Meltem"], "Serik": ["Merkez","Belek","Kadriye","Boğazkent"] };
-    const turkiyeData = { "Adana": [], "Adıyaman": [], "Afyonkarahisar": [], "Ağrı": [], "Aksaray": [], "Amasya": [], "Ankara": ["Çankaya","Keçiören","Yenimahalle","Mamak","Etimesgut","Sincan","Altındağ","Pursaklar","Gölbaşı"], "Antalya": Object.keys(antalyaData).sort(), "Ardahan": [], "Artvin": [], "Aydın": [], "Balıkesir": [], "Bartın": [], "Batman": [], "Bayburt": [], "Bilecik": [], "Bingöl": [], "Bitlis": [], "Bolu": [], "Burdur": [], "Bursa": [], "Çanakkale": [], "Çankırı": [], "Çorum": [], "Denizli": [], "Diyarbakır": [], "Düzce": [], "Edirne": [], "Elazığ": [], "Erzincan": [], "Erzurum": [], "Eskişehir": [], "Gaziantep": [], "Giresun": [], "Gümüşhane": [], "Hakkari": [], "Hatay": [], "Iğdır": [], "Isparta": [], "İstanbul": ["Esenyurt","Küçükçekmece","Bağcılar","Ümraniye","Pendik","Bahçelievler","Üsküdar","Kadıköy","Kartal","Gaziosmanpaşa","Şişli","Beşiktaş","Sarıyer","Fatih"], "İzmir": ["Buca","Karabağlar","Bornova","Karşıyaka","Konak","Bayraklı","Çiğli","Menemen","Torbalı"], "Kahramanmaraş": [], "Karabük": [], "Karaman": [], "Kars": [], "Kastamonu": [], "Kayseri": [], "Kırıkkale": [], "Kırklareli": [], "Kırşehir": [], "Kilis": [], "Kocaeli": [], "Konya": [], "Kütahya": [], "Malatya": [], "Manisa": [], "Mardin": [], "Mersin": [], "Muğla": ["Bodrum","Fethiye","Marmaris","Datça","Menteşe","Milas"], "Muş": [], "Nevşehir": [], "Niğde": [], "Ordu": [], "Osmaniye": [], "Rize": [], "Sakarya": [], "Samsun": [], "Siirt": [], "Sinop": [], "Sivas": [], "Şanlıurfa": [], "Şırnak": [], "Tekirdağ": [], "Tokat": [], "Trabzon": [], "Tunceli": [], "Uşak": [], "Van": [], "Yalova": [], "Yozgat": [], "Zonguldak": [] };
+    const turkiyeData = { "Adana": [], "Adıyaman": [], "Afyonkarahisar": [], "Ağrı": [], "Aksaray": [], "Aamasya": [], "Ankara": ["Çankaya","Keçiören","Yenimahalle","Mamak","Etimesgut","Sincan","Altındağ","Pursaklar","Gölbaşı"], "Antalya": Object.keys(antalyaData).sort(), "Ardahan": [], "Artvin": [], "Aydın": [], "Balıkesir": [], "Bartın": [], "Batman": [], "Bayburt": [], "Bilecik": [], "Bingöl": [], "Bitlis": [], "Bolu": [], "Burdur": [], "Bursa": [], "Çanakkale": [], "Çankırı": [], "Çorum": [], "Denizli": [], "Diyarbakır": [], "Düzce": [], "Edirne": [], "Elazığ": [], "Erzincan": [], "Erzurum": [], "Eskişehir": [], "Gaziantep": [], "Giresun": [], "Gümüşhane": [], "Hakkari": [], "Hatay": [], "Iğdır": [], "Isparta": [], "İstanbul": ["Esenyurt","Küçükçekmece","Bağcılar","Ümraniye","Pendik","Bahçelievler","Üsküdar","Kadıköy","Kartal","Gaziosmanpaşa","Şişli","Beşiktaş","Sarıyer","Fatih"], "İzmir": ["Buca","Karabağlar","Bornova","Karşıyaka","Konak","Bayraklı","Çiğli","Menemen","Torbalı"], "Kahramanmaraş": [], "Karabük": [], "Karaman": [], "Kars": [], "Kastamonu": [], "Kayseri": [], "Kırıkkale": [], "Kırklareli": [], "Kırşehir": [], "Kilis": [], "Kocaeli": [], "Konya": [], "Kütahya": [], "Malatya": [], "Manisa": [], "Mardin": [], "Mersin": [], "Muğla": ["Bodrum","Fethiye","Marmaris","Datça","Menteşe","Milas"], "Muş": [], "Nevşehir": [], "Niğde": [], "Ordu": [], "Osmaniye": [], "Rize": [], "Sakarya": [], "Samsun": [], "Siirt": [], "Sinop": [], "Sivas": [], "Şanlıurfa": [], "Şırnak": [], "Tekirdağ": [], "Tokat": [], "Trabzon": [], "Tunceli": [], "Uşak": [], "Van": [], "Yalova": [], "Yozgat": [], "Zonguldak": [] };
     const typeList = ["Daire","Villa","Proje","Arsa","İşyeri","Depo","Devre Mülk","Turistik Tesis","Otel","Komple Bina","Bahçe","Tarla","Zeytinlik"];
     const odaListesi = ["Stüdyo (1+0)", "1+1", "1.5+1", "2+0", "2+1", "2.5+1", "2+2", "3+0", "3+1", "3.5+1", "3+2", "3+3", "4+0", "4+1", "4.5+1", "4.5+2", "4+2", "4+3", "4+4", "5+1", "5.5+1", "5+2", "5+3", "5+4", "6+1", "6+2", "6.5+1", "6+3", "6+4", "7+1", "7+2", "7+3", "8+1", "8+2", "8+3", "8+4", "9+1", "9+2", "9+3", "9+4", "9+5", "9+6", "10+1", "10+2", "10 Üzeri"];
     const oranListesi = ["%30", "%35", "%40", "%45", "%50", "Yarı Yarıya", "1 Katlı", "2 Katlı", "3 Katlı", "4 Katlı", "5 Katlı", "Müstakil"];
@@ -1818,6 +1818,7 @@
         }
 
         let m2M = parseFloat(document.getElementById('fizMagazaM2').value) || 0;
+        let icM = parseFloat(document.getElementById('fizMagazaIcBrut').value) || 0;
         if(pM > 0 && m2M > aktifTaban) {
             uyariHtml += `<div style="color:#c0392b; font-weight:bold; margin-top:5px; padding:5px; border-left:3px solid #c0392b; background:#fff5f5;">⚠️ UYARI: Zemin kata planladığınız Mağaza/Dükkan büyüklüğü (${m2M} m²), maksimum oturum alanını (${aktifTaban.toLocaleString('tr-TR')} m²) aşıyor. Mimari olarak bu tek parça yapılamaz!</div>`;
             uyariText += `⚠️ UYARI: Zemin kata planladığınız Mağaza/Dükkan büyüklüğü (${m2M} m²), maksimum oturum alanını (${aktifTaban.toLocaleString('tr-TR')} m²) aşıyor. Mimari olarak bu tek parça yapılamaz!\n`;
@@ -1826,16 +1827,29 @@
         let brutInsaat = kullanilabilirEmsal * (1 + (ortak / 100));
 
         let m21 = parseFloat(document.getElementById('fiz11M2').value) || 0;
+        let ic1 = parseFloat(document.getElementById('fiz11IcBrut').value) || 0;
+        
         let m22 = parseFloat(document.getElementById('fiz21M2').value) || 0;
+        let ic2 = parseFloat(document.getElementById('fiz21IcBrut').value) || 0;
+        
         let m23 = parseFloat(document.getElementById('fiz31M2').value) || 0;
+        let ic3 = parseFloat(document.getElementById('fiz31IcBrut').value) || 0;
 
         let iconM = `<span class="plan-group"><span class="plan-box plan-dukkan"></span></span>`;
         let icon1 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span></span>`;
         let icon2 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span></span>`;
         let icon3 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span></span>`;
 
-        let disclaimerHtml = `<div style="margin-top:15px; font-size:11px; color:#7f8c8d; border-top:1px dashed #ccc; padding-top:10px;">⚠️ <b>YASAL UYARI:</b> Bu rapor, girilen ön verilere dayanarak matematiksel bir öngörü ve fikir vermek amacıyla hazırlanmıştır. Kesin ve resmi bir mimari proje, onay belgesi veya ekspertiz niteliği taşımaz. Kesin sonuçlar için yetkili bir mimar tarafından avan proje çizilmesi gerekmektedir.</div>`;
-        let disclaimerText = `\n⚠️ YASAL UYARI: Bu rapor, girilen ön verilere dayanarak matematiksel bir öngörü ve fikir vermek amacıyla hazırlanmıştır. Kesin ve resmi bir mimari proje, onay belgesi veya ekspertiz niteliği taşımaz. Kesin sonuçlar için yetkili bir mimar tarafından avan proje çizilmesi gerekmektedir.\n`;
+        let gizliEmsalHtml = `
+        <div style="font-weight:bold; font-size:14px; margin-top:15px; color:#8e44ad;">--- 💎 GİZLİ EMSALLER ---</div>
+        <div style="font-size:13px; margin-bottom:5px;"><b>1. Kot Farkı Avantajı:</b> Arazinin topografik yapısından doğabilecek kot farkları bu hesaba katılmamıştır. Kot müsaitliğini (Plankote haritası ve ilgili belediyenin İmar Plan Notlarından) kontrol ediniz.</div>
+        <div style="font-size:13px; margin-bottom:10px;"><b>2. Çatı Dubleks Potansiyeli:</b> Bu hesaplama normal katlar üzerinden yapılmıştır. En üst katların Çatı Dubleks olarak planlanması durumunda, mimari planlamaya göre bağımsız bölüm hacmi ve sayısı artış gösterebilecektir.</div>
+        `;
+
+        let gizliEmsalText = `\n--- 💎 GİZLİ EMSALLER ---\n1. Kot Farkı Avantajı: Arazinin topografik yapısından doğabilecek kot farkları bu hesaba katılmamıştır. Kot müsaitliğini (Plankote haritası ve ilgili belediyenin İmar Plan Notlarından) kontrol ediniz.\n2. Çatı Dubleks Potansiyeli: Bu hesaplama normal katlar üzerinden yapılmıştır. En üst katların Çatı Dubleks olarak planlanması durumunda, mimari planlamaya göre bağımsız bölüm hacmi ve sayısı artış gösterebilecektir.\n`;
+
+        let disclaimerHtml = `<div style="margin-top:10px; font-size:11px; color:#7f8c8d; border-top:1px dashed #ccc; padding-top:10px;">⚠️ <b>YASAL UYARI:</b> Bu rapor, matematiksel bir öngörü ve fikir vermek amacıyla hazırlanmıştır. Kesin sonuçlar için yetkili bir mimar tarafından avan proje çizilmesi gerekmektedir.</div>`;
+        let disclaimerText = `\n⚠️ YASAL UYARI: Bu rapor, matematiksel bir öngörü ve fikir vermek amacıyla hazırlanmıştır. Kesin sonuçlar için yetkili bir mimar tarafından avan proje çizilmesi gerekmektedir.\n`;
 
         let textReport = `📌 PROJE ÖN FİZİBİLİTE RAPORU\n\n`;
         textReport += `--- GİRİŞ PARAMETRELERİ ---\n`;
@@ -1885,28 +1899,32 @@
         
         let totalAdet = 0;
         if(pM > 0 && m2M > 0) { let a = (brutInsaat * (pM/100)) / m2M; totalAdet += a; 
-            outHtml += `<div style="margin-bottom:6px;">${iconM} <b>~${a.toFixed(1)} Adet</b> Dükkan/Mağaza (${m2M} m² Brüt)</div>`; 
-            textReport += `▪ ~${a.toFixed(1)} Adet Dükkan/Mağaza (${m2M} m² Brüt)\n`;
+            let icStr = icM > 0 ? ` / ${icM} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${iconM} <b>~${a.toFixed(1)} Adet</b> Dükkan/Mağaza (${m2M} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet Dükkan/Mağaza (${m2M} m² Brüt${icStr})\n`;
         }
         if(p1 > 0 && m21 > 0) { let a = (brutInsaat * (p1/100)) / m21; totalAdet += a; 
-            outHtml += `<div style="margin-bottom:6px;">${icon1} <b>~${a.toFixed(1)} Adet</b> 1+1 Daire (${m21} m² Brüt)</div>`; 
-            textReport += `▪ ~${a.toFixed(1)} Adet 1+1 Daire (${m21} m² Brüt)\n`;
+            let icStr = ic1 > 0 ? ` / ${ic1} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${icon1} <b>~${a.toFixed(1)} Adet</b> 1+1 Daire (${m21} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet 1+1 Daire (${m21} m² Brüt${icStr})\n`;
         }
         if(p2 > 0 && m22 > 0) { let a = (brutInsaat * (p2/100)) / m22; totalAdet += a; 
-            outHtml += `<div style="margin-bottom:6px;">${icon2} <b>~${a.toFixed(1)} Adet</b> 2+1 Daire (${m22} m² Brüt)</div>`; 
-            textReport += `▪ ~${a.toFixed(1)} Adet 2+1 Daire (${m22} m² Brüt)\n`;
+            let icStr = ic2 > 0 ? ` / ${ic2} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${icon2} <b>~${a.toFixed(1)} Adet</b> 2+1 Daire (${m22} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet 2+1 Daire (${m22} m² Brüt${icStr})\n`;
         }
         if(p3 > 0 && m23 > 0) { let a = (brutInsaat * (p3/100)) / m23; totalAdet += a; 
-            outHtml += `<div style="margin-bottom:6px;">${icon3} <b>~${a.toFixed(1)} Adet</b> 3+1 Daire (${m23} m² Brüt)</div>`; 
-            textReport += `▪ ~${a.toFixed(1)} Adet 3+1 Daire (${m23} m² Brüt)\n`;
+            let icStr = ic3 > 0 ? ` / ${ic3} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${icon3} <b>~${a.toFixed(1)} Adet</b> 3+1 Daire (${m23} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet 3+1 Daire (${m23} m² Brüt${icStr})\n`;
         }
         
         let perKatText = kat > 0 ? (totalAdet / kat).toFixed(1) : 0;
         outHtml += `<br><div style="font-weight:bold; font-size:14px; margin-bottom:5px; background:#f0f9ff; padding:8px; border-radius:4px; border:1px solid #3498db;">Toplam <b>${Math.round(totalAdet)}</b> Bağımsız Bölüm.<br>Projeye göre her katta ortalama <b>${Math.round(perKatText)}</b> bölüm planlanabilir.</div>`;
-        outHtml += disclaimerHtml;
+        outHtml += gizliEmsalHtml + disclaimerHtml;
         
         textReport += `\n> Toplam ${Math.round(totalAdet)} Bağımsız Bölüm.\n> Projeye göre her katta ortalama ${Math.round(perKatText)} bölüm planlanabilir.\n`;
-        textReport += disclaimerText;
+        textReport += gizliEmsalText + disclaimerText;
 
         document.getElementById('resFizibilite').innerHTML = outHtml;
         document.getElementById('resFizibilite').style.display = 'block'; 
