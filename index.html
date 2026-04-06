@@ -104,7 +104,7 @@
         .btn-delete-rec { background: var(--danger); color: white; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold; display: none; height: 42px; }
         .btn-cancel { background: #7f8c8d; color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; display: none; margin-left: auto; }
 
-        /* Tablo ve Rozetler */
+        /* Tablo ve Rozetler (Sticky Header Eklendi) */
         table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 12px; table-layout: fixed; }
         th { background: #34495e; color: white; padding: 8px 4px; text-align: left; vertical-align: middle; word-wrap: break-word; font-size: 11px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 2px rgba(0,0,0,0.1); }
         td { padding: 6px 4px; border-bottom: 1px solid #eee; vertical-align: top; word-wrap: break-word; }
@@ -117,6 +117,7 @@
         .kat-karsiligi { background: #8e44ad !important; } .kentsel-donusum { background: #2c3e50 !important; }
         .badge-own { background: var(--secondary); } .badge-shared { background: var(--shared); }
         
+        /* TAKSİ SARISI ROZET */
         .type-badge-yellow { background-color: #FFCC00; color: #000; font-weight: 900; padding: 4px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 10px; text-transform: uppercase; border: 1px solid #D4AC0D; }
         
         .direct-link-btn { display: inline-block; background-color: #3498db; color: white; text-decoration: none; padding: 3px 6px; border-radius: 3px; font-size: 10px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-weight: 600; }
@@ -785,7 +786,13 @@
 
             <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="flex:1;"><label>Gabari (Kat)</label><input type="number" id="fizKat" placeholder="5" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><label>Üst Kat Çıkma/Ortak (%)</label><input type="number" id="fizOrtak" value="25" title="Sadece üst katlara uygulanacak çıkma ve ortak alan katsayısı" oninput="updateAllBrut(); hideFizRes();"></div>
+                <div class="form-group" style="flex:1;">
+                    <label>Ortak Alan / Çıkma (%)</label>
+                    <input type="number" id="fizOrtak" value="25" title="Merdiven, Asansör, Çıkmalar vb." oninput="updateAllBrut(); hideFizRes();">
+                    <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:10px; color:#2980b9; margin-top:4px; font-weight:bold; text-transform:none;" title="Zemini sabit tutup payı sadece üst katlara ekler.">
+                        <input type="checkbox" id="chkSahaFormulu" checked onchange="hideFizRes();" style="margin:0;"> 🏗️ Saha Formülü (Zemin Sabit)
+                    </label>
+                </div>
             </div>
             
             <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0 10px 0;">
@@ -857,6 +864,7 @@
         </div>
     </div>
 </div>
+
 <script>
     // --- YUKARI ÇIK BUTONU GÖRÜNÜRLÜK KONTROLÜ ---
     window.addEventListener('scroll', function() {
@@ -1258,6 +1266,7 @@
                         const item = portfolio.find(p => p.id === id);
                         if(item && item.process && item.process.trim() !== "") {
                             hasNotes = true;
+                            // REF (Müşteri) gizliliği eklendi.
                             reportHtml += `<div style='margin-bottom:25px;'><h4 style='margin-bottom:8px; color:#c0392b;'>${item.status} ${item.type} - ${item.district} / ${item.neighborhood}</h4><p style='white-space:pre-wrap; font-size:13px; line-height:1.5; border-left:4px solid #c0392b; padding-left:15px; margin:0;'>${item.process}</p></div>`;
                         }
                     }
@@ -1283,7 +1292,7 @@
         }, 100); 
     }
     
-    // PORTFÖY WP PAYLAŞIMI
+    // PORTFÖY WP PAYLAŞIMI (ORAN VE NET M2 EKLENTİSİ)
     function sendSelectedToWhatsapp() { 
         const selectedCheckboxes = document.querySelectorAll('#tableBody tr.row-selected input[type="checkbox"]'); 
         if(selectedCheckboxes.length === 0) { alert("Lütfen portföy seçin."); return; } 
@@ -1690,6 +1699,7 @@
         document.getElementById('fizTaks').value = '';
         document.getElementById('fizKat').value = '';
         document.getElementById('fizOrtak').value = '25';
+        if(document.getElementById('chkSahaFormulu')) document.getElementById('chkSahaFormulu').checked = true;
         
         ['fizMagaza', 'fiz11', 'fiz21', 'fiz31'].forEach(prefix => {
             document.getElementById(prefix+'Pay').value = '';
@@ -1821,15 +1831,19 @@
             uyariText += `⚠️ UYARI: Zemin kata planladığınız Mağaza/Dükkan büyüklüğü (${m2M} m²), maksimum oturum alanını (${aktifTaban.toLocaleString('tr-TR')} m²) aşıyor. Mimari olarak bu tek parça yapılamaz!\n`;
         }
 
-        // --- YENİ MÜTEAHHİT BRÜT HESABI (SAHA FORMÜLÜ) ---
-        // 1. Zemin Kat (TAKS) ayrılır
+        let isSahaFormulu = document.getElementById('chkSahaFormulu').checked;
         let zeminKati = aktifTaban;
-        // 2. Üst katlara kalan alan (Emsalden zemin düşülür)
         let ustKatlarNet = Math.max(0, kullanilabilirEmsal - zeminKati);
-        // 3. Sadece üst katlara Çıkma/Ortak Alan katsayısı eklenir
-        let ustKatlarBrut = ustKatlarNet * (1 + (ortak / 100));
-        // 4. Nihai Toplam Brüt
-        let brutInsaat = zeminKati + ustKatlarBrut;
+        let ustKatlarBrut = 0;
+        let brutInsaat = 0;
+
+        if (isSahaFormulu) {
+            ustKatlarBrut = ustKatlarNet * (1 + (ortak / 100));
+            brutInsaat = zeminKati + ustKatlarBrut;
+        } else {
+            ustKatlarBrut = ustKatlarNet * (1 + (ortak / 100));
+            brutInsaat = kullanilabilirEmsal * (1 + (ortak / 100));
+        }
 
         let m21 = parseFloat(document.getElementById('fiz11M2').value) || 0;
         let ic1 = parseFloat(document.getElementById('fiz11IcBrut').value) || 0;
@@ -1870,7 +1884,7 @@
             textReport += `Çekme Payları: Ön/Arka: ${cOnArka}m | Yanlar: ${cYan}m\n`;
         }
         textReport += `Emsal (KAKS): ${emsal}  |  TAKS: ${taks}\n`;
-        textReport += `Gabari: ${kat} Kat  |  Üst Kat Çıkma/Ortak Alan: %${ortak}\n\n`;
+        textReport += `Gabari: ${kat} Kat  |  Ortak Alan: %${ortak}\n\n`;
         
         textReport += `--- MİMARİ SINIRLAR VE ANALİZ ---\n`;
         textReport += `Yasal Maks. Taban Oturumu (TAKS): ${maxTaban.toLocaleString('tr-TR')} m²\n`;
@@ -1878,10 +1892,12 @@
             textReport += `Fiziki Net Oturum Alanı: ${fizikiOturumAlani.toLocaleString('tr-TR')} m²\n`;
         }
         textReport += `Toplam Net İnşaat: ${kullanilabilirEmsal.toLocaleString('tr-TR')} m²\n`;
-        textReport += `\n>> BRÜT İNŞAAT HESAP DETAYI (Saha Formülü):\n`;
-        textReport += `   - Zemin Kat (Çıkmasız Sabit TAKS): ${zeminKati.toLocaleString('tr-TR')} m²\n`;
-        textReport += `   - Üst Katlar Net Alanı: ${ustKatlarNet.toLocaleString('tr-TR')} m²\n`;
-        textReport += `   - Üst Katlar Brüt (Ortak/Çıkma %${ortak} eklendiğinde): ${ustKatlarBrut.toLocaleString('tr-TR')} m²\n`;
+        if (isSahaFormulu) {
+            textReport += `\n>> BRÜT İNŞAAT HESAP DETAYI (Saha Formülü):\n`;
+            textReport += `   - Zemin Kat (Sabit TAKS): ${zeminKati.toLocaleString('tr-TR')} m²\n`;
+            textReport += `   - Üst Katlar Net: ${ustKatlarNet.toLocaleString('tr-TR')} m²\n`;
+            textReport += `   - Üst Katlar Brüt (%${ortak} eklendi): ${ustKatlarBrut.toLocaleString('tr-TR')} m²\n`;
+        }
         textReport += `Toplam Brüt İnşaat: ${brutInsaat.toLocaleString('tr-TR')} m²\n\n`;
         textReport += `${uyariText}\n`;
         textReport += `--- DAĞILIM VE DAİRE ÇIKTISI ---\n`;
@@ -1901,16 +1917,19 @@
             outHtml += `Fiziki Net Oturum Alanı: <b style="color:#2980b9;">${fizikiOturumAlani.toLocaleString('tr-TR')} m²</b><br>`;
         }
         outHtml += `Toplam Net İnşaat (Kullanılabilir): <b>${kullanilabilirEmsal.toLocaleString('tr-TR')} m²</b><br>`;
-        
-        // HESAP DETAYI TABLOSU EKLENDİ
-        outHtml += `<div style="font-size:12px; margin-top:8px; margin-bottom:8px; padding:10px; border-left:3px solid #8e44ad; background:#f5eef8; border-radius:4px;">`;
-        outHtml += `<b style="color:#8e44ad;">🏗️ BRÜT İNŞAAT HESAP DETAYI (Saha Formülü):</b><br>`;
-        outHtml += `• Zemin Kat (Çıkmasız Sabit TAKS): <b>${zeminKati.toLocaleString('tr-TR')} m²</b><br>`;
-        outHtml += `• Üst Katlar Net Alanı: <b>${ustKatlarNet.toLocaleString('tr-TR')} m²</b><br>`;
-        outHtml += `• Üst Katlar Brüt (Ortak/Çıkma <span style="color:#e67e22">%${ortak}</span> eklendiğinde): <b>${ustKatlarBrut.toLocaleString('tr-TR')} m²</b><br>`;
-        outHtml += `</div>`;
 
-        outHtml += `Toplam Brüt İnşaat (Zemin + Üst Katlar Brüt): <b style="color:#c0392b; font-size:15px;">${brutInsaat.toLocaleString('tr-TR')} m²</b><br>`;
+        if (isSahaFormulu) {
+            outHtml += `<div style="font-size:12px; margin-top:8px; margin-bottom:8px; padding:10px; border-left:3px solid #8e44ad; background:#f5eef8; border-radius:4px;">`;
+            outHtml += `<b style="color:#8e44ad;">🏗️ BRÜT İNŞAAT HESAP DETAYI (Saha Formülü):</b><br>`;
+            outHtml += `• Zemin Kat (Sabit TAKS): <b>${zeminKati.toLocaleString('tr-TR')} m²</b><br>`;
+            outHtml += `• Üst Katlar Net Alanı: <b>${ustKatlarNet.toLocaleString('tr-TR')} m²</b><br>`;
+            outHtml += `• Üst Katlar Brüt (Ortak/Çıkma <span style="color:#e67e22">%${ortak}</span> eklendi): <b>${ustKatlarBrut.toLocaleString('tr-TR')} m²</b><br>`;
+            outHtml += `</div>`;
+            outHtml += `Toplam Brüt İnşaat (Zemin + Üst Katlar Brüt): <b style="color:#c0392b; font-size:15px;">${brutInsaat.toLocaleString('tr-TR')} m²</b><br>`;
+        } else {
+            outHtml += `Toplam Brüt İnşaat (Tüm Emsal %${ortak} artırıldı): <b style="color:#c0392b; font-size:15px;">${brutInsaat.toLocaleString('tr-TR')} m²</b><br>`;
+        }
+
         outHtml += uyariHtml + `<br>`;
         
         outHtml += `<div style="font-weight:bold; font-size:15px; margin-bottom:5px; color:#2c3e50;">--- DAĞILIM VE DAİRE ÇIKTISI ---</div>`;
