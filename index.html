@@ -104,7 +104,7 @@
         .btn-delete-rec { background: var(--danger); color: white; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold; display: none; height: 42px; }
         .btn-cancel { background: #7f8c8d; color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; display: none; margin-left: auto; }
 
-        /* Tablo ve Rozetler (Sticky Header Eklendi) */
+        /* Tablo ve Rozetler */
         table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 12px; table-layout: fixed; }
         th { background: #34495e; color: white; padding: 8px 4px; text-align: left; vertical-align: middle; word-wrap: break-word; font-size: 11px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 2px rgba(0,0,0,0.1); }
         td { padding: 6px 4px; border-bottom: 1px solid #eee; vertical-align: top; word-wrap: break-word; }
@@ -117,7 +117,6 @@
         .kat-karsiligi { background: #8e44ad !important; } .kentsel-donusum { background: #2c3e50 !important; }
         .badge-own { background: var(--secondary); } .badge-shared { background: var(--shared); }
         
-        /* TAKSİ SARISI ROZET */
         .type-badge-yellow { background-color: #FFCC00; color: #000; font-weight: 900; padding: 4px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 10px; text-transform: uppercase; border: 1px solid #D4AC0D; }
         
         .direct-link-btn { display: inline-block; background-color: #3498db; color: white; text-decoration: none; padding: 3px 6px; border-radius: 3px; font-size: 10px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-weight: 600; }
@@ -858,7 +857,6 @@
         </div>
     </div>
 </div>
-
 <script>
     // --- YUKARI ÇIK BUTONU GÖRÜNÜRLÜK KONTROLÜ ---
     window.addEventListener('scroll', function() {
@@ -1833,4 +1831,223 @@
         // 4. Nihai Toplam Brüt
         let brutInsaat = zeminKati + ustKatlarBrut;
 
-        let m21 = parseFloat(document.getElementById
+        let m21 = parseFloat(document.getElementById('fiz11M2').value) || 0;
+        let ic1 = parseFloat(document.getElementById('fiz11IcBrut').value) || 0;
+        
+        let m22 = parseFloat(document.getElementById('fiz21M2').value) || 0;
+        let ic2 = parseFloat(document.getElementById('fiz21IcBrut').value) || 0;
+        
+        let m23 = parseFloat(document.getElementById('fiz31M2').value) || 0;
+        let ic3 = parseFloat(document.getElementById('fiz31IcBrut').value) || 0;
+
+        let iconM = `<span class="plan-group"><span class="plan-box plan-dukkan"></span></span>`;
+        let icon1 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span></span>`;
+        let icon2 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span></span>`;
+        let icon3 = `<span class="plan-group"><span class="plan-box plan-salon"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span><span class="plan-box plan-oda"></span></span>`;
+
+        let gizliEmsalHtml = `
+        <div style="font-weight:bold; font-size:14px; margin-top:15px; color:#8e44ad;">--- 💎 GİZLİ EMSALLER ---</div>
+        <div style="font-size:13px; margin-bottom:5px;"><b>1. Kot Farkı Avantajı:</b> Arazinin topografik yapısından doğabilecek kot farkları bu hesaba katılmamıştır. Kot müsaitliğini (Plankote haritası ve ilgili belediyenin İmar Plan Notlarından) kontrol ediniz.</div>
+        <div style="font-size:13px; margin-bottom:10px;"><b>2. Çatı Dubleks Potansiyeli:</b> Bu hesaplama normal katlar üzerinden yapılmıştır. En üst katların Çatı Dubleks olarak planlanması durumunda, mimari planlamaya göre bağımsız bölüm hacmi ve sayısı artış gösterebilecektir.</div>
+        `;
+
+        let gizliEmsalText = `\n--- 💎 GİZLİ EMSALLER ---\n1. Kot Farkı Avantajı: Arazinin topografik yapısından doğabilecek kot farkları bu hesaba katılmamıştır. Kot müsaitliğini (Plankote haritası ve ilgili belediyenin İmar Plan Notlarından) kontrol ediniz.\n2. Çatı Dubleks Potansiyeli: Bu hesaplama normal katlar üzerinden yapılmıştır. En üst katların Çatı Dubleks olarak planlanması durumunda, mimari planlamaya göre bağımsız bölüm hacmi ve sayısı artış gösterebilecektir.\n`;
+
+        let disclaimerHtml = `<div style="margin-top:10px; font-size:11px; color:#7f8c8d; border-top:1px dashed #ccc; padding-top:10px;">⚠️ <b>YASAL UYARI:</b> Bu rapor, matematiksel bir öngörü ve fikir vermek amacıyla hazırlanmıştır. Kesin sonuçlar için yetkili bir mimar tarafından avan proje çizilmesi gerekmektedir.</div>`;
+        let disclaimerText = `\n⚠️ YASAL UYARI: Bu rapor, matematiksel bir öngörü ve fikir vermek amacıyla hazırlanmıştır. Kesin sonuçlar için yetkili bir mimar tarafından avan proje çizilmesi gerekmektedir.\n`;
+
+        let textReport = `📌 PROJE ÖN FİZİBİLİTE RAPORU\n\n`;
+        textReport += `--- GİRİŞ PARAMETRELERİ ---\n`;
+        textReport += `Tapu Arsa: ${arsaHam.toLocaleString('tr-TR')} m²\n`;
+        if (terkOrani > 0) {
+            textReport += `Yola Terk (DOP): %${terkOrani}  |  Net İmar Parseli: ${arsa.toLocaleString('tr-TR')} m²\n`;
+        } else {
+            textReport += `Net İmar Parseli: ${arsa.toLocaleString('tr-TR')} m²\n`;
+        }
+        
+        if(isAdvanced) {
+            textReport += `Ortalama Ölçüler: Cephe ${cephe}m x Derinlik ${derinlik}m\n`;
+            textReport += `Çekme Payları: Ön/Arka: ${cOnArka}m | Yanlar: ${cYan}m\n`;
+        }
+        textReport += `Emsal (KAKS): ${emsal}  |  TAKS: ${taks}\n`;
+        textReport += `Gabari: ${kat} Kat  |  Üst Kat Çıkma/Ortak Alan: %${ortak}\n\n`;
+        
+        textReport += `--- MİMARİ SINIRLAR VE ANALİZ ---\n`;
+        textReport += `Yasal Maks. Taban Oturumu (TAKS): ${maxTaban.toLocaleString('tr-TR')} m²\n`;
+        if(isAdvanced) {
+            textReport += `Fiziki Net Oturum Alanı: ${fizikiOturumAlani.toLocaleString('tr-TR')} m²\n`;
+        }
+        textReport += `Toplam Net İnşaat: ${kullanilabilirEmsal.toLocaleString('tr-TR')} m²\n`;
+        textReport += `\n>> BRÜT İNŞAAT HESAP DETAYI (Saha Formülü):\n`;
+        textReport += `   - Zemin Kat (Çıkmasız Sabit TAKS): ${zeminKati.toLocaleString('tr-TR')} m²\n`;
+        textReport += `   - Üst Katlar Net Alanı: ${ustKatlarNet.toLocaleString('tr-TR')} m²\n`;
+        textReport += `   - Üst Katlar Brüt (Ortak/Çıkma %${ortak} eklendiğinde): ${ustKatlarBrut.toLocaleString('tr-TR')} m²\n`;
+        textReport += `Toplam Brüt İnşaat: ${brutInsaat.toLocaleString('tr-TR')} m²\n\n`;
+        textReport += `${uyariText}\n`;
+        textReport += `--- DAĞILIM VE DAİRE ÇIKTISI ---\n`;
+
+        let outHtml = `<div style="font-weight:bold; font-size:15px; margin-bottom:5px; color:#2c3e50;">--- MİMARİ SINIRLAR VE ANALİZ ---</div>`;
+        outHtml += `Tapu Arsa: <b>${arsaHam.toLocaleString('tr-TR')} m²</b> | Gabari: <b>${kat} Kat</b><br>`;
+        if (terkOrani > 0) {
+            outHtml += `Yola Terk (DOP): <b style="color:#c0392b;">%${terkOrani}</b> | Net İmar Parseli: <b style="color:#27ae60;">${arsa.toLocaleString('tr-TR')} m²</b><br>`;
+        }
+        
+        if(isAdvanced) {
+            outHtml += `Ortalama Ölçüler: <b>Cephe ${cephe}m x Derinlik ${derinlik}m</b><br>`;
+            outHtml += `Çekme Payları: <b>Ön/Arka: ${cOnArka}m | Yanlar: ${cYan}m</b><br><br>`;
+        }
+        outHtml += `Yasal Maks. Taban Oturumu (TAKS): <b>${maxTaban.toLocaleString('tr-TR')} m²</b><br>`;
+        if(isAdvanced) {
+            outHtml += `Fiziki Net Oturum Alanı: <b style="color:#2980b9;">${fizikiOturumAlani.toLocaleString('tr-TR')} m²</b><br>`;
+        }
+        outHtml += `Toplam Net İnşaat (Kullanılabilir): <b>${kullanilabilirEmsal.toLocaleString('tr-TR')} m²</b><br>`;
+        
+        // HESAP DETAYI TABLOSU EKLENDİ
+        outHtml += `<div style="font-size:12px; margin-top:8px; margin-bottom:8px; padding:10px; border-left:3px solid #8e44ad; background:#f5eef8; border-radius:4px;">`;
+        outHtml += `<b style="color:#8e44ad;">🏗️ BRÜT İNŞAAT HESAP DETAYI (Saha Formülü):</b><br>`;
+        outHtml += `• Zemin Kat (Çıkmasız Sabit TAKS): <b>${zeminKati.toLocaleString('tr-TR')} m²</b><br>`;
+        outHtml += `• Üst Katlar Net Alanı: <b>${ustKatlarNet.toLocaleString('tr-TR')} m²</b><br>`;
+        outHtml += `• Üst Katlar Brüt (Ortak/Çıkma <span style="color:#e67e22">%${ortak}</span> eklendiğinde): <b>${ustKatlarBrut.toLocaleString('tr-TR')} m²</b><br>`;
+        outHtml += `</div>`;
+
+        outHtml += `Toplam Brüt İnşaat (Zemin + Üst Katlar Brüt): <b style="color:#c0392b; font-size:15px;">${brutInsaat.toLocaleString('tr-TR')} m²</b><br>`;
+        outHtml += uyariHtml + `<br>`;
+        
+        outHtml += `<div style="font-weight:bold; font-size:15px; margin-bottom:5px; color:#2c3e50;">--- DAĞILIM VE DAİRE ÇIKTISI ---</div>`;
+        
+        let totalAdet = 0;
+        if(pM > 0 && m2M > 0) { let a = (brutInsaat * (pM/100)) / m2M; totalAdet += a; 
+            let icStr = icM > 0 ? ` / ${icM} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${iconM} <b>~${a.toFixed(1)} Adet</b> Dükkan/Mağaza (${m2M} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet Dükkan/Mağaza (${m2M} m² Brüt${icStr})\n`;
+        }
+        if(p1 > 0 && m21 > 0) { let a = (brutInsaat * (p1/100)) / m21; totalAdet += a; 
+            let icStr = ic1 > 0 ? ` / ${ic1} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${icon1} <b>~${a.toFixed(1)} Adet</b> 1+1 Daire (${m21} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet 1+1 Daire (${m21} m² Brüt${icStr})\n`;
+        }
+        if(p2 > 0 && m22 > 0) { let a = (brutInsaat * (p2/100)) / m22; totalAdet += a; 
+            let icStr = ic2 > 0 ? ` / ${ic2} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${icon2} <b>~${a.toFixed(1)} Adet</b> 2+1 Daire (${m22} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet 2+1 Daire (${m22} m² Brüt${icStr})\n`;
+        }
+        if(p3 > 0 && m23 > 0) { let a = (brutInsaat * (p3/100)) / m23; totalAdet += a; 
+            let icStr = ic3 > 0 ? ` / ${ic3} m² İç Brüt` : '';
+            outHtml += `<div style="margin-bottom:6px;">${icon3} <b>~${a.toFixed(1)} Adet</b> 3+1 Daire (${m23} m² Brüt${icStr})</div>`; 
+            textReport += `▪ ~${a.toFixed(1)} Adet 3+1 Daire (${m23} m² Brüt${icStr})\n`;
+        }
+        
+        let perKatText = kat > 0 ? (totalAdet / kat).toFixed(1) : 0;
+        outHtml += `<br><div style="font-weight:bold; font-size:14px; margin-bottom:5px; background:#f0f9ff; padding:8px; border-radius:4px; border:1px solid #3498db;">Toplam <b>${Math.round(totalAdet)}</b> Bağımsız Bölüm.<br>Projeye göre her katta ortalama <b>${Math.round(perKatText)}</b> bölüm planlanabilir.</div>`;
+        outHtml += gizliEmsalHtml + disclaimerHtml;
+        
+        textReport += `\n> Toplam ${Math.round(totalAdet)} Bağımsız Bölüm.\n> Projeye göre her katta ortalama ${Math.round(perKatText)} bölüm planlanabilir.\n`;
+        textReport += gizliEmsalText + disclaimerText;
+
+        document.getElementById('resFizibilite').innerHTML = outHtml;
+        document.getElementById('resFizibilite').style.display = 'block'; 
+        
+        currentFizReportText = textReport;
+        document.getElementById('btnCopyFiz').style.display = 'block';
+        
+        setTimeout(() => {
+            document.getElementById('resFizibilite').scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 100);
+    }
+    
+    function calcEmlakVergisi() { 
+        let rawVal = document.getElementById('calcVergiDeger').value;
+        let val = parsePrice(rawVal); 
+        let rate = parseFloat(document.getElementById('calcVergiType').value); 
+        if(!val || val <= 0) {
+            document.getElementById('resVergi').innerHTML = "<span style='color:red;'>Lütfen rayiç bedel giriniz.</span>";
+            document.getElementById('resVergi').style.display = 'block';
+            return; 
+        }
+        document.getElementById('resVergi').innerHTML = `Yıllık Vergi Tutarı: <strong style='color:#27ae60; font-size:1.2em;'>${(val*rate).toLocaleString('tr-TR')} TL</strong>`; 
+        document.getElementById('resVergi').style.display = 'block'; 
+    }
+
+    function parsePrice(p) { 
+        if (!p) return 0; 
+        let clean = p.toString().trim().replace(/\./g, '').replace(/,/g, '.');
+        let val = parseFloat(clean);
+        return isNaN(val) ? 0 : val;
+    }
+    
+    function formatCurrency(input) { 
+        let v = input.value.replace(/\D/g, ''); 
+        if(v) {
+            let val = parseFloat(v);
+            input.value = val.toLocaleString('tr-TR'); 
+            if(input.id === 'inpPrice') {
+                let comm = val * 0.02;
+                let kdvRate = globalVAT / 100;
+                let commKdv = comm * (1 + kdvRate);
+                
+                const currSymbol = document.getElementById('inpCurrency').value;
+                let commBox = document.getElementById('instantComm');
+                commBox.style.display = 'block';
+                
+                if(currSymbol === '₺') {
+                    commBox.innerHTML = `Hizmet Bedeli (%2): ${comm.toLocaleString('tr-TR')} ₺ <span style="color:#7f8c8d; font-weight:normal;">(+KDV %${globalVAT}: ${commKdv.toLocaleString('tr-TR')} ₺)</span>`;
+                } else {
+                    let rate = 1;
+                    if(currSymbol === '$') rate = parseFloat(document.getElementById('usdRate').value) || 1;
+                    if(currSymbol === '€') rate = parseFloat(document.getElementById('eurRate').value) || 1;
+                    if(currSymbol === '£') rate = parseFloat(document.getElementById('gbpRate').value) || parseFloat(window.gbpRate) || 1; 
+                    
+                    let tlComm = comm * rate;
+                    let tlCommKdv = commKdv * rate;
+                    
+                    commBox.innerHTML = `Hizmet Bedeli (%2): ${comm.toLocaleString('tr-TR')} ${currSymbol} <br><span style="color:#2c3e50; font-weight:900;">(TL Karşılığı: ${tlComm.toLocaleString('tr-TR', {maximumFractionDigits:0})} ₺ <span style="color:#7f8c8d; font-weight:normal;">+KDV: ${tlCommKdv.toLocaleString('tr-TR', {maximumFractionDigits:0})} ₺</span>)</span>`;
+                }
+            }
+        } else { 
+            input.value = ''; 
+            if(input.id === 'inpPrice') document.getElementById('instantComm').style.display='none';
+        } 
+    }
+    
+    function formatPhone(input) { let v = input.value.replace(/\D/g,''); if(v.length>1)v=v.substring(0,1)==='0'?v.substring(1):v; let f=v.match(/^(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/); if(f) input.value=!f[2]?f[1]:'0 ('+f[1]+') '+f[2]+(f[3]?' '+f[3]:'')+(f[4]?' '+f[4]:''); }
+    function autoResize(textarea) { textarea.style.height='auto'; textarea.style.height=textarea.scrollHeight+'px'; }
+    function openModal(id){ document.getElementById(id).style.display='block'; }
+    function closeModal(id){ document.getElementById(id).style.display='none'; }
+    function closeModalOutside(e, id){ if(e.target === document.getElementById(id)) closeModal(id); }
+
+    function renderChecklist(){ 
+        const c=document.getElementById('checklistContainer');
+        c.innerHTML='';
+        let u=0;
+        checklist.forEach((item,i)=>{
+            if(!item.checked)u++; 
+            const d=document.createElement('div');
+            d.className='checklist-item '+(item.checked?'checked':'');
+            d.innerHTML=`
+                <span onclick="toggleCheck(${i})" style="flex:1; cursor:pointer;">${item.text}</span>
+                <div style="display:flex; gap:5px;">
+                    <button class="btn-delete-rec" style="display:block; height:24px; padding:0 8px; background:#3498db; border-radius:3px;" onclick="editCheckItem(${i})" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-delete-rec" style="display:block; height:24px; padding:0 8px; border-radius:3px;" onclick="deleteCheckItem(${i})" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                </div>`;
+            c.appendChild(d);
+        });
+        document.getElementById('chkBadge').innerText=u;
+        document.getElementById('chkBadge').style.display=u>0?'block':'none';
+    }
+    
+    function editCheckItem(i) {
+        const newVal = prompt("Notu düzenleyin:", checklist[i].text);
+        if(newVal !== null && newVal.trim() !== "") {
+            checklist[i].text = newVal;
+            localStorage.setItem('KaracabayRE_CHK_v1', JSON.stringify(checklist));
+            renderChecklist();
+        }
+    }
+    
+    function addCheckItem(){ const t=document.getElementById('newCheckItem').value;if(!t)return;checklist.push({text:t,checked:false});localStorage.setItem('KaracabayRE_CHK_v1',JSON.stringify(checklist));document.getElementById('newCheckItem').value='';renderChecklist();}
+    function toggleCheck(i){ checklist[i].checked=!checklist[i].checked;localStorage.setItem('KaracabayRE_CHK_v1',JSON.stringify(checklist));renderChecklist();}
+    function deleteCheckItem(i){ checklist.splice(i,1);localStorage.setItem('KaracabayRE_CHK_v1',JSON.stringify(checklist));renderChecklist();}
+    function deleteFromForm() { if(confirm("Kayıt silinsin mi?")) { portfolio = portfolio.filter(p => p.id !== editingId); saveToDisk(); renderTable(); resetForm(); } }
+</script>
+</body>
+</html>
