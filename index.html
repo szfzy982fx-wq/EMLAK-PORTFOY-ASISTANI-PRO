@@ -148,6 +148,10 @@
         .bilgi-baloncusu::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #2c3e50 transparent transparent transparent; }
         .info-ikon-kapsayici:hover .bilgi-baloncusu, .info-ikon-kapsayici.aktif .bilgi-baloncusu { visibility: visible; opacity: 1; }
 
+        /* SAĞA HİZALI BALONCUKLAR İÇİN DÜZELTME (TAŞMAYI ÖNLER) */
+        .info-ikon-kapsayici.sag-hizali .bilgi-baloncusu { left: auto; right: -5px; transform: none; }
+        .info-ikon-kapsayici.sag-hizali .bilgi-baloncusu::after { left: auto; right: 10px; margin-left: 0; }
+
         /* GİZLİLİK MODU CSS */
         body.privacy-active th:nth-child(7), body.privacy-active td:nth-child(7) { display: none !important; }
         body.crm-privacy-active #crmTableTarget th:nth-child(2), body.crm-privacy-active #crmTableTarget td:nth-child(2), body.crm-privacy-active #crmTableTarget th:nth-child(3), body.crm-privacy-active #crmTableTarget td:nth-child(3) { display: none !important; }
@@ -291,7 +295,7 @@
             <button class="tool-btn btn-calc" onclick="openModal('currencyModal'); fetchCurrency();"><i class="fa-solid fa-money-bill-transfer"></i> DÖVİZ</button>
             <button class="tool-btn btn-calc" onclick="openModal('realEstateCalcModal')"><i class="fa-solid fa-file-invoice"></i> EMLAK</button>
             <a href="https://parselsorgu.tkgm.gov.tr/" target="_blank" class="tool-btn btn-link"><i class="fa-solid fa-map-location-dot"></i> TKGM</a>
-            <button class="tool-btn btn-link" onclick="openModal('eImarModal'); renderImarButtons();"><i class="fa-solid fa-city"></i> BELEDİYE</button>
+            <button class="tool-btn btn-link" onclick="openModal('eImarModal'); renderImarButtons();"><i class="fa-solid fa-link"></i> BAĞLANTILAR</button>
         </div>
 
         <div class="input-panel">
@@ -522,16 +526,23 @@
 <div id="eImarModal" class="modal" onclick="closeModalOutside(event, 'eImarModal')">
     <div class="modal-content tool-modal-content" style="width:500px;">
         <div style="display:flex;justify-content:space-between; margin-bottom:15px; border-bottom:2px solid #e67e22; padding-bottom:10px;">
-            <h3 style="color:#e67e22; margin:0;"><i class="fa-solid fa-city"></i> İmar ve Belediye</h3>
+            <h3 style="color:#e67e22; margin:0;"><i class="fa-solid fa-link"></i> Bağlantılar (Hızlı Menü)</h3>
             <span onclick="closeModal('eImarModal')" style="cursor:pointer;font-size:24px;">&times;</span>
         </div>
-        <div style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px;"><i class="fa-solid fa-star"></i> KAYITLI BELEDİYELER:</div>
-        <div id="imarListContainer" class="imar-list-container"></div>
+        <div style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px;"><i class="fa-solid fa-star"></i> KAYITLI BAĞLANTILAR:</div>
+        <div id="imarListContainer" class="imar-list-container" style="grid-template-columns: 1fr;"></div>
         <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px solid #ddd;">
-            <div style="font-size:12px; font-weight:bold; color:#333; margin-bottom:10px;"><i class="fa-solid fa-magnifying-glass"></i> LİNK EKLE</div>
+            <div style="font-size:12px; font-weight:bold; color:#333; margin-bottom:10px;"><i class="fa-solid fa-plus"></i> YENİ BAĞLANTI EKLE</div>
             <div style="display:flex; gap:5px; margin-bottom:10px;">
-                <input type="text" id="imarCityInput" placeholder="İl" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;">
-                <input type="text" id="imarDistInput" placeholder="İlçe" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                <input type="text" id="imarCityInput" placeholder="Açıklama / İl" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                <input type="text" id="imarDistInput" placeholder="Ad / İlçe" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                <select id="imarTypeSelect" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                    <option value="belediye">🏢 Belediye / İmar</option>
+                    <option value="satis">🔑 İlan / Satış</option>
+                    <option value="resmi">🏛️ Resmi Kurum</option>
+                    <option value="sosyal">📱 Sosyal Medya</option>
+                    <option value="diger">🔗 Diğer Link</option>
+                </select>
             </div>
             <div style="margin-bottom:10px;">
                 <input type="text" id="imarUrlInput" placeholder="Link (https://...)" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;">
@@ -742,7 +753,7 @@
                 </div>
                 <div class="form-group" style="flex:1;"><label>Terk/DOP (%) <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Belediyenin yol, yeşil alan vb. için arsadan bedelsiz keseceği orandır.</span></span></label><input type="number" step="0.1" id="fizTerk" placeholder="Örn: 35" oninput="hideFizRes();"></div>
                 <div class="form-group" style="flex:1;"><label>KAKS (Emsal) <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Arsa üzerine yapılabilecek toplam net kapalı inşaat alanını belirleyen katsayıdır.</span></span></label><input type="number" step="0.1" id="fizEmsal" placeholder="1.5" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><label>TAKS <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Bina oturum alanının (tabanının) arsaya oranıdır.</span></span></label><input type="number" step="0.01" id="fizTaks" placeholder="0.30" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><label>TAKS <span class="info-ikon-kapsayici sag-hizali"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Bina oturum alanının (tabanının) arsaya oranıdır.</span></span></label><input type="number" step="0.01" id="fizTaks" placeholder="0.30" oninput="hideFizRes();"></div>
             </div>
             
             <div id="advancedFizPanel" style="display:none; background:#fff8e1; border:1px dashed #f39c12; padding:10px; border-radius:4px; margin-bottom:10px;">
@@ -759,7 +770,7 @@
 
             <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="flex:1;"><label>Gabari (Kat) <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">İmar durumunda izin verilen maksimum kat sayısıdır.</span></span></label><input type="number" id="fizKat" placeholder="5" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><label>ORTAK ALAN / ÇKS % <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Merdiven, asansör gibi ortak alanlar ile emsal harici (ÇKS) kapalı/açık çıkmaların net inşaata eklenme oranıdır.</span></span></label><input type="number" id="fizOrtak" value="25" oninput="updateAllBrut(); hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><label>ORTAK ALAN / ÇKS % <span class="info-ikon-kapsayici sag-hizali"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Merdiven, asansör gibi ortak alanlar ile emsal harici (ÇKS) kapalı/açık çıkmaların net inşaata eklenme oranıdır.</span></span></label><input type="number" id="fizOrtak" value="25" oninput="updateAllBrut(); hideFizRes();"></div>
             </div>
             
             <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0 10px 0;">
@@ -1234,11 +1245,63 @@
         r.readAsText(f, 'UTF-8');
     }
 
-    function initImarLinks() { if (imarLinks.length === 0) { const defaults = [ {name: "Muratpaşa (Resmi)", url: "https://muratpasa-bld.gov.tr/"}, {name: "Muratpaşa (Alt)", url: "https://www.muratpasa.bel.tr/"}, {name: "Kepez", url: "https://www.kepez-bld.gov.tr/"}, {name: "Konyaaltı", url: "https://www.konyaalti.bel.tr/"}, {name: "Döşemealtı", url: "https://dosemealti.bel.tr/"}, {name: "Aksu", url: "https://www.aksu.bel.tr/"}, {name: "Alanya", url: "https://www.alanya.bel.tr/"} ]; imarLinks = defaults; localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); } }
-    function renderImarButtons() { const container = document.getElementById('imarListContainer'); container.innerHTML = ''; imarLinks.forEach((link, index) => { const div = document.createElement('div'); div.style.display = 'flex'; div.style.alignItems = 'center'; div.innerHTML = ` <button class="btn-imar-select" style="flex:1;" onclick="window.open('${link.url}', '_blank')"> ${link.name} <i class="fa-solid fa-arrow-up-right-from-square"></i> </button> <button class="btn-imar-delete" onclick="deleteImarLink(${index})" title="Sil"><i class="fa-solid fa-trash"></i></button> `; container.appendChild(div); }); }
-    function addImarLink() { const city = document.getElementById('imarCityInput').value; const dist = document.getElementById('imarDistInput').value; const url = document.getElementById('imarUrlInput').value; if(!url) { alert("Link yapıştırın."); return; } let name = dist ? (city ? `${dist} (${city})` : dist) : (city || "Yeni Link"); imarLinks.push({ name: name, url: url }); localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); renderImarButtons(); document.getElementById('imarUrlInput').value = ''; }
-    function deleteImarLink(index) { if(confirm("Silinsin mi?")) { imarLinks.splice(index, 1); localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); renderImarButtons(); } }
-    function searchGoogleImar() { const dist = document.getElementById('imarDistInput').value; if(!dist) { alert("İlçe yazın."); return; } window.open(`https://www.google.com/search?q=${encodeURIComponent(dist + ' belediyesi imar durumu')}`, '_blank'); }
+    function initImarLinks() { 
+        if (imarLinks.length === 0) { 
+            const defaults = [ 
+                {name: "Muratpaşa (Resmi)", url: "https://muratpasa-bld.gov.tr/", type: "belediye"}, 
+                {name: "Kepez", url: "https://www.kepez-bld.gov.tr/", type: "belediye"}, 
+                {name: "Konyaaltı", url: "https://www.konyaalti.bel.tr/", type: "belediye"} 
+            ]; 
+            imarLinks = defaults; 
+            localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); 
+        } 
+    }
+    
+    function renderImarButtons() { 
+        const container = document.getElementById('imarListContainer'); 
+        container.innerHTML = ''; 
+        imarLinks.forEach((link, index) => { 
+            let iconHtml = '🏢';
+            if(link.type === 'satis') iconHtml = '🔑';
+            else if(link.type === 'resmi') iconHtml = '🏛️';
+            else if(link.type === 'sosyal') iconHtml = '📱';
+            else if(link.type === 'diger') iconHtml = '🔗';
+            else if(link.type === 'belediye') iconHtml = '🏢';
+            
+            const div = document.createElement('div'); 
+            div.style.display = 'flex'; 
+            div.style.alignItems = 'center'; 
+            div.innerHTML = ` <button class="btn-imar-select" style="flex:1;" onclick="window.open('${link.url}', '_blank')"> <span style="font-size:14px; margin-right:5px;">${iconHtml}</span> ${link.name} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px; opacity:0.7;"></i> </button> <button class="btn-imar-delete" onclick="deleteImarLink(${index})" title="Sil"><i class="fa-solid fa-trash"></i></button> `; 
+            container.appendChild(div); 
+        }); 
+    }
+    
+    function addImarLink() { 
+        const city = document.getElementById('imarCityInput').value; 
+        const dist = document.getElementById('imarDistInput').value; 
+        const url = document.getElementById('imarUrlInput').value; 
+        const type = document.getElementById('imarTypeSelect').value;
+        if(!url) { alert("Link yapıştırın."); return; } 
+        let name = dist ? (city ? `${dist} (${city})` : dist) : (city || "Yeni Bağlantı"); 
+        imarLinks.push({ name: name, url: url, type: type }); 
+        localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); 
+        renderImarButtons(); 
+        document.getElementById('imarUrlInput').value = ''; 
+    }
+    
+    function deleteImarLink(index) { 
+        if(confirm("Silinsin mi?")) { 
+            imarLinks.splice(index, 1); 
+            localStorage.setItem('KaracabayRE_IMAR_v1', JSON.stringify(imarLinks)); 
+            renderImarButtons(); 
+        } 
+    }
+    
+    function searchGoogleImar() { 
+        const dist = document.getElementById('imarDistInput').value; 
+        if(!dist) { alert("Arama için 'Ad / İlçe' kısmını doldurun."); return; } 
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(dist + ' belediyesi imar durumu')}`, '_blank'); 
+    }
 
     function handleCityChange(citySelectId, districtElemId, datalistId) { const city = document.getElementById(citySelectId).value; const distElem = document.getElementById(districtElemId); document.getElementById(datalistId).innerHTML = ''; if(districtElemId === 'filterDistrict') { distElem.innerHTML = '<option value="all">İlçe</option>'; if (city !== "all" && turkiyeData[city]) { turkiyeData[city].sort().forEach(d => { const opt = document.createElement('option'); opt.value = d; opt.innerText = d; distElem.appendChild(opt); }); } } else { distElem.value = ''; const dl = document.getElementById('dl_ilce_ekle'); dl.innerHTML = ''; if (turkiyeData[city]) { turkiyeData[city].sort().forEach(d => { const opt = document.createElement('option'); opt.value = d; dl.appendChild(opt); }); } } }
     function loadMahalleler(citySelectId, districtElemId, datalistId) { const city = document.getElementById(citySelectId).value; const district = document.getElementById(districtElemId).value; const dl = document.getElementById(datalistId); dl.innerHTML = ''; if(city === "Antalya" && antalyaData[district]) { antalyaData[district].sort().forEach(m=>{ let o=document.createElement('option'); o.value=m; dl.appendChild(o); }); } }
