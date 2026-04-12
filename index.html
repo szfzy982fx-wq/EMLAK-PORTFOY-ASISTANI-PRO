@@ -113,7 +113,13 @@
         tr.row-rented { background-color: #fcf8e3; color: #777; }
         tr.row-selected { background-color: #d1f2eb !important; }
         .badge { padding: 2px 4px; border-radius: 3px; color: white; font-size: 9px; font-weight: bold; display:inline-block; margin-bottom: 2px; }
-        .satilik { background: #27ae60; } .kiralik { background: #e67e22; } .kirmizi-etiket { background: var(--sold) !important; } 
+        .satilik { background: #27ae60; } 
+        .kiralik { background: #e67e22; } 
+        .satilik-esyali { background: #2ecc71; }
+        .kiralik-esyali { background: #f39c12; }
+        .devren-satilik { background: #16a085; }
+        .devren-kiralik { background: #d35400; }
+        .kirmizi-etiket { background: var(--sold) !important; } 
         .kat-karsiligi { background: #8e44ad !important; } .kentsel-donusum { background: #2c3e50 !important; }
         .badge-own { background: var(--secondary); } .badge-shared { background: var(--shared); }
         
@@ -296,7 +302,20 @@
             <div class="form-grid">
                 <div class="form-group"><label>PORTFÖY SAHİBİ</label><select id="inpOwnership"><option>BANA AİT</option><option>PAYLAŞIMLI</option></select></div>
                 <div class="form-group"><label>Menkul Cinsi</label><select id="inpType"></select></div>
-                <div class="form-group"><label>İşlem Türü</label><select id="inpStatus"><option>Satılık</option><option>Kiralık</option><option>Devren</option><option>Kat Karşılığı</option><option>Kentsel Dönüşüm</option><option style="color:red; font-weight:bold;">Satıldı</option><option style="color:red; font-weight:bold;">Kiralandı</option></select></div>
+                <div class="form-group"><label>İşlem Türü</label>
+                    <select id="inpStatus">
+                        <option>Satılık</option>
+                        <option>Kiralık</option>
+                        <option>Satılık Eşyalı</option>
+                        <option>Kiralık Eşyalı</option>
+                        <option>Devren Satılık</option>
+                        <option>Devren Kiralık</option>
+                        <option>Kat Karşılığı</option>
+                        <option>Kentsel Dönüşüm</option>
+                        <option style="color:red; font-weight:bold;">Satıldı</option>
+                        <option style="color:red; font-weight:bold;">Kiralandı</option>
+                    </select>
+                </div>
                 <div class="form-group"><label>İL</label><select id="inpCity" onchange="handleCityChange('inpCity', 'inpDistrict', 'dl_mahalle_ekle')"><option value="Antalya">Antalya</option></select></div>
                 <div class="form-group">
                     <label>İlçe</label>
@@ -362,7 +381,19 @@
             <span><i class="fa-solid fa-magnifying-glass"></i></span> <input type="text" id="searchBox" placeholder="Ara..." onkeyup="renderTable()" style="width:90px;">
             <select id="filterOwnership" onchange="renderTable()"><option value="all">Tüm</option><option>BANA AİT</option><option>PAYLAŞIMLI</option></select>
             <select id="filterType" onchange="renderTable()"><option value="all">Tüm Tür</option></select>
-            <select id="filterStatus" onchange="renderTable()"><option value="all">Durum</option><option>Satılık</option><option>Kiralık</option><option>Devren</option><option>Kat Karşılığı</option><option>Kentsel Dönüşüm</option><option style="color:red;">Satıldı</option><option style="color:red;">Kiralandı</option></select>
+            <select id="filterStatus" onchange="renderTable()">
+                <option value="all">Durum</option>
+                <option>Satılık</option>
+                <option>Kiralık</option>
+                <option>Satılık Eşyalı</option>
+                <option>Kiralık Eşyalı</option>
+                <option>Devren Satılık</option>
+                <option>Devren Kiralık</option>
+                <option>Kat Karşılığı</option>
+                <option>Kentsel Dönüşüm</option>
+                <option style="color:red;">Satıldı</option>
+                <option style="color:red;">Kiralandı</option>
+            </select>
             <select id="filterCity" onchange="handleCityChange('filterCity', 'filterDistrict', 'dl_mahalle_filtre'); renderTable();"></select>
             <select id="filterDistrict" onchange="loadMahalleler('filterCity', 'filterDistrict', 'dl_mahalle_filtre'); renderTable();"><option value="all">İlçe</option></select>
             <input type="text" list="dl_mahalle_filtre" id="filterNeighborhood" placeholder="Mahalle" onkeyup="renderTable()" style="width:70px;" autocomplete="off"><datalist id="dl_mahalle_filtre"></datalist>
@@ -720,15 +751,15 @@
                     <div class="form-group" style="flex:1;"><label>Ort. Derinlik (m)</label><input type="number" id="fizDerinlik" placeholder="Örn: 50" oninput="hideFizRes();"></div>
                 </div>
                 <div style="display:flex; gap:10px;">
-                    <div class="form-group" style="flex:1;"><label>Ön/Arka Çekme (m)</label><input type="number" id="fizCekmeOnArka" placeholder="Örn: 5" oninput="hideFizRes();"></div>
-                    <div class="form-group" style="flex:1;"><label>Yan Çekmeler (m)</label><input type="number" id="fizCekmeYan" placeholder="Örn: 3" oninput="hideFizRes();"></div>
+                    <div class="form-group" style="flex:1;"><label>Ön/Arka Çekme (m)</label><input type="number" id="fizCekmeOnArka" placeholder="Ön/Arka Çekme Toplam" oninput="hideFizRes();"></div>
+                    <div class="form-group" style="flex:1;"><label>Yan Çekmeler (m)</label><input type="number" id="fizCekmeYan" placeholder="Yan Çekmeler Toplam" oninput="hideFizRes();"></div>
                 </div>
                 <div style="font-size:10px; color:#555; margin-top:5px; font-style:italic;">* Ortalama cephe ve derinlik, arsanın geometrik formunu anlamak için kullanılır. Toplam alan için üstteki Gerçek Tapu m²'si baz alınır.</div>
             </div>
 
             <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="flex:1;"><label>Gabari (Kat) <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">İmar durumunda izin verilen maksimum kat sayısıdır.</span></span></label><input type="number" id="fizKat" placeholder="5" oninput="hideFizRes();"></div>
-                <div class="form-group" style="flex:1;"><label>Ortak Alan (%) <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Merdiven, asansör gibi satılamayan ancak maliyete giren ortak alanların net inşaata eklenme oranıdır.</span></span></label><input type="number" id="fizOrtak" value="25" oninput="updateAllBrut(); hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><label>ORTAK ALAN / ÇKS % <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Merdiven, asansör gibi ortak alanlar ile emsal harici (ÇKS) kapalı/açık çıkmaların net inşaata eklenme oranıdır.</span></span></label><input type="number" id="fizOrtak" value="25" oninput="updateAllBrut(); hideFizRes();"></div>
             </div>
             
             <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0 10px 0;">
@@ -803,6 +834,19 @@
 </div>
 
 <script>
+    // --- TÜRKÇE KARAKTER DUYARLI KÜÇÜLTME FONKSİYONU ---
+    function toTRLower(str) {
+        if (!str) return '';
+        return str.replace(/İ/g, 'i')
+                  .replace(/I/g, 'ı')
+                  .replace(/Ş/g, 'ş')
+                  .replace(/Ğ/g, 'ğ')
+                  .replace(/Ü/g, 'ü')
+                  .replace(/Ö/g, 'ö')
+                  .replace(/Ç/g, 'ç')
+                  .toLowerCase();
+    }
+
     // --- YUKARI ÇIK BUTONU GÖRÜNÜRLÜK KONTROLÜ ---
     window.addEventListener('scroll', function() {
         const btn = document.getElementById('btnBackToTop');
@@ -1064,8 +1108,8 @@
         const targetTypes = ["Daire", "Villa", "Arsa", "İşyeri"];
         portfolio.forEach(p => {
             let cat = targetTypes.includes(p.type) ? p.type : "Diğer";
-            if (p.status === "Satılık") stats[cat].s++; else if (p.status === "Kiralık") stats[cat].k++;
-            if (p.status === "Satılık" || p.status === "Kiralık") stats[cat].total++;
+            if (p.status.includes("Satılık")) stats[cat].s++; else if (p.status.includes("Kiralık")) stats[cat].k++;
+            if (p.status.includes("Satılık") || p.status.includes("Kiralık")) stats[cat].total++;
         });
         const container = document.getElementById('detailedStats'); container.innerHTML = '';
         Object.keys(stats).forEach(cat => {
@@ -1091,7 +1135,11 @@
 
     function updateDashboard() {
         let satilik = 0, kiralik = 0, satildi = 0;
-        portfolio.forEach(p => { if (p.status === 'Satılık') satilik++; else if (p.status === 'Kiralık') kiralik++; else if (p.status === 'Satıldı' || p.status === 'Kiralandı') satildi++; });
+        portfolio.forEach(p => { 
+            if (p.status.includes('Satılık')) satilik++; 
+            else if (p.status.includes('Kiralık')) kiralik++; 
+            else if (p.status === 'Satıldı' || p.status === 'Kiralandı') satildi++; 
+        });
         document.getElementById('countSatilik').innerText = satilik; document.getElementById('countKiralik').innerText = kiralik; document.getElementById('countSatildi').innerText = satildi; document.getElementById('countTotal').innerText = portfolio.length; renderDetailedStats();
     }
 
@@ -1110,7 +1158,7 @@
         typeList.forEach(t=>{invT.innerHTML+=`<option>${t}</option>`;});
         invT.innerHTML+=`<option>Yatırımlık</option>`;
 
-        const fL = document.getElementById('inpFloor'); fL.innerHTML = '<option value="">SEÇİNİZ</option>'; floorList.forEach(f => { const opt = document.createElement('option'); opt.value = f; opt.innerText = f; fL.appendChild(opt); });
+        const fL = document.getElementById('inpFloor'); fL.innerHTML = '<option value="">SEÇİNİZ</option>'; floorList.forEach(f => { const opt = document.createElement('option'); opt.value = f; fL.appendChild(opt); });
         
         const dlOda = document.getElementById('dl_oda');
         dlOda.innerHTML = '';
@@ -1355,11 +1403,11 @@
 
     function renderTable() {
         const tbody = document.getElementById('tableBody'); tbody.innerHTML = '';
-        const term = document.getElementById('searchBox').value.toLowerCase();
-        const fOwn = document.getElementById('filterOwnership').value; const fStatus = document.getElementById('filterStatus').value; const fType = document.getElementById('filterType').value; const fCity = document.getElementById('filterCity').value; const fDist = document.getElementById('filterDistrict').value; const fNeigh = document.getElementById('filterNeighborhood').value.toLowerCase(); const fRoom = document.getElementById('filterRooms').value.toLowerCase(); const minP = parsePrice(document.getElementById('filterMinPrice').value); const maxP = parsePrice(document.getElementById('filterMaxPrice').value);
+        const term = toTRLower(document.getElementById('searchBox').value);
+        const fOwn = document.getElementById('filterOwnership').value; const fStatus = document.getElementById('filterStatus').value; const fType = document.getElementById('filterType').value; const fCity = document.getElementById('filterCity').value; const fDist = document.getElementById('filterDistrict').value; const fNeigh = toTRLower(document.getElementById('filterNeighborhood').value); const fRoom = toTRLower(document.getElementById('filterRooms').value); const minP = parsePrice(document.getElementById('filterMinPrice').value); const maxP = parsePrice(document.getElementById('filterMaxPrice').value);
         const fSort = document.getElementById('filterSort').value; 
 
-        const filtered = portfolio.filter(item => { const txt = (item.district + item.neighborhood + item.ref + item.phone + item.desc + item.type + (item.city||'') + (item.process||'')).toLowerCase(); const p = parsePrice(item.price); const own = item.ownership || 'BANA AİT'; const roomVal = (item.rooms || '').toLowerCase(); const cityVal = item.city || "Antalya"; return txt.includes(term) && ((fOwn === 'all') || (own === fOwn)) && ((fType === 'all') || (item.type === fType)) && ((fStatus === 'all') || (item.status === fStatus)) && ((fCity === 'all') || (cityVal === fCity)) && ((fDist === 'all') || (item.district === fDist)) && (fNeigh === '' || item.neighborhood.toLowerCase().includes(fNeigh)) && (fRoom === '' || roomVal.includes(fRoom)) && (minP === 0 || p >= minP) && (maxP === 0 || p <= maxP); });
+        const filtered = portfolio.filter(item => { const txt = toTRLower(item.district + item.neighborhood + item.ref + item.phone + item.desc + item.type + (item.city||'') + (item.process||'')); const p = parsePrice(item.price); const own = item.ownership || 'BANA AİT'; const roomVal = toTRLower(item.rooms || ''); const cityVal = item.city || "Antalya"; return txt.includes(term) && ((fOwn === 'all') || (own === fOwn)) && ((fType === 'all') || (item.type === fType)) && ((fStatus === 'all') || (item.status === fStatus)) && ((fCity === 'all') || (cityVal === fCity)) && ((fDist === 'all') || (item.district === fDist)) && (fNeigh === '' || toTRLower(item.neighborhood).includes(fNeigh)) && (fRoom === '' || roomVal.includes(fRoom)) && (minP === 0 || p >= minP) && (maxP === 0 || p <= maxP); });
         
         filtered.sort((a, b) => { 
             if (fSort === 'asc') return parsePrice(a.price) - parsePrice(b.price);
@@ -1372,7 +1420,17 @@
         });
 
         filtered.forEach(item => { 
-            let badgeClass = item.status.includes('Satıldı')||item.status.includes('Kiralandı') ? 'kirmizi-etiket' : (item.status==='Kiralık'?'kiralik':(item.status==='Kat Karşılığı'?'kat-karsiligi':(item.status==='Kentsel Dönüşüm'?'kentsel-donusum':'satilik'))); 
+            let badgeClass = '';
+            if (item.status.includes('Satıldı') || item.status.includes('Kiralandı')) badgeClass = 'kirmizi-etiket';
+            else if (item.status === 'Kat Karşılığı') badgeClass = 'kat-karsiligi';
+            else if (item.status === 'Kentsel Dönüşüm') badgeClass = 'kentsel-donusum';
+            else if (item.status === 'Devren Satılık') badgeClass = 'devren-satilik';
+            else if (item.status === 'Devren Kiralık') badgeClass = 'devren-kiralik';
+            else if (item.status === 'Kiralık Eşyalı') badgeClass = 'kiralik-esyali';
+            else if (item.status === 'Satılık Eşyalı') badgeClass = 'satilik-esyali';
+            else if (item.status === 'Kiralık') badgeClass = 'kiralik';
+            else badgeClass = 'satilik'; // default for Satılık
+            
             let rowClass = item.status === 'Satıldı' ? 'row-sold' : (item.status === 'Kiralandı' ? 'row-rented' : ''); 
             
             let floorInfo = "";
@@ -1731,8 +1789,8 @@
             cOnArka = parseFloat(document.getElementById('fizCekmeOnArka').value) || 0;
             cYan = parseFloat(document.getElementById('fizCekmeYan').value) || 0;
             
-            kalanCephe = Math.max(0, cephe - (cYan * 2));
-            kalanDerinlik = Math.max(0, derinlik - (cOnArka * 2));
+            kalanCephe = Math.max(0, cephe - cYan);
+            kalanDerinlik = Math.max(0, derinlik - cOnArka);
             fizikiOturumAlani = kalanCephe * kalanDerinlik;
         }
 
@@ -1832,7 +1890,7 @@
             textReport += `Fiziki Net Oturum Alanı: ${fizikiOturumAlani.toLocaleString('tr-TR')} m²\n`;
         }
         textReport += `Toplam Net İnşaat: ${kullanilabilirEmsal.toLocaleString('tr-TR')} m²\n`;
-        textReport += `Toplam Brüt İnşaat: ${brutInsaat.toLocaleString('tr-TR')} m²\n\n`;
+        textReport += `TİA (Toplam İnşaat Alanı): ${brutInsaat.toLocaleString('tr-TR')} m²\n\n`;
         textReport += `${uyariText}\n`;
         textReport += `--- DAĞILIM VE DAİRE ÇIKTISI ---\n`;
 
@@ -1851,7 +1909,7 @@
             outHtml += `Fiziki Net Oturum Alanı: <b style="color:#2980b9;">${fizikiOturumAlani.toLocaleString('tr-TR')} m²</b><br>`;
         }
         outHtml += `Toplam Net İnşaat (Kullanılabilir): <b>${kullanilabilirEmsal.toLocaleString('tr-TR')} m²</b><br>`;
-        outHtml += `Toplam Brüt İnşaat (Ortak Alan Dahil): <b>${brutInsaat.toLocaleString('tr-TR')} m²</b><br>`;
+        outHtml += `TİA (Toplam İnşaat Alanı): <b>${brutInsaat.toLocaleString('tr-TR')} m²</b><br>`;
         outHtml += uyariHtml + `<br>`;
         
         outHtml += `<div style="font-weight:bold; font-size:15px; margin-bottom:5px; color:#2c3e50;">--- DAĞILIM VE DAİRE ÇIKTISI ---</div>`;
