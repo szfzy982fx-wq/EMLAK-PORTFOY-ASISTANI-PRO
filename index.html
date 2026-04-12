@@ -152,6 +152,10 @@
         .info-ikon-kapsayici.sag-hizali .bilgi-baloncusu { left: auto; right: -5px; transform: none; }
         .info-ikon-kapsayici.sag-hizali .bilgi-baloncusu::after { left: auto; right: 10px; margin-left: 0; }
 
+        /* SOLA HİZALI BALONCUKLAR İÇİN DÜZELTME (TAŞMAYI ÖNLER) */
+        .info-ikon-kapsayici.sol-hizali .bilgi-baloncusu { left: -5px; transform: none; }
+        .info-ikon-kapsayici.sol-hizali .bilgi-baloncusu::after { left: 10px; margin-left: 0; }
+
         /* GİZLİLİK MODU CSS */
         body.privacy-active th:nth-child(7), body.privacy-active td:nth-child(7) { display: none !important; }
         body.crm-privacy-active #crmTableTarget th:nth-child(2), body.crm-privacy-active #crmTableTarget td:nth-child(2), body.crm-privacy-active #crmTableTarget th:nth-child(3), body.crm-privacy-active #crmTableTarget td:nth-child(3) { display: none !important; }
@@ -530,7 +534,7 @@
             <span onclick="closeModal('eImarModal')" style="cursor:pointer;font-size:24px;">&times;</span>
         </div>
         <div style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px;"><i class="fa-solid fa-star"></i> KAYITLI BAĞLANTILAR:</div>
-        <div id="imarListContainer" class="imar-list-container" style="grid-template-columns: 1fr;"></div>
+        <div id="imarListContainer" class="imar-list-container"></div>
         <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px solid #ddd;">
             <div style="font-size:12px; font-weight:bold; color:#333; margin-bottom:10px;"><i class="fa-solid fa-plus"></i> YENİ BAĞLANTI EKLE</div>
             <div style="display:flex; gap:5px; margin-bottom:10px;">
@@ -745,7 +749,7 @@
         <div id="tabFizibilite" class="tab-content">
             <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="flex:1;">
-                    <label>Tapu (m²) <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Arsanın tapuda yazan toplam yüzölçümüdür. Yola terk işlemi varsa hesaplamada net parsel alanı kullanılır.</span></span></label>
+                    <label>Tapu (m²) <span class="info-ikon-kapsayici sol-hizali"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Arsanın tapuda yazan toplam yüzölçümüdür. Yola terk işlemi varsa hesaplamada net parsel alanı kullanılır.</span></span></label>
                     <input type="text" id="fizArsa" placeholder="Örn: 1000" oninput="formatCurrency(this); hideFizRes();">
                     <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:10px; color:#e67e22; margin-top:4px; font-weight:bold; text-transform:none;">
                         <input type="checkbox" id="chkAdvancedFiz" onchange="toggleAdvancedFiz()" style="margin:0;"> 📐 Çap ve Çekme Payı Gir
@@ -769,7 +773,7 @@
             </div>
 
             <div style="display:flex; gap:10px; margin-bottom:10px;">
-                <div class="form-group" style="flex:1;"><label>Gabari (Kat) <span class="info-ikon-kapsayici"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">İmar durumunda izin verilen maksimum kat sayısıdır.</span></span></label><input type="number" id="fizKat" placeholder="5" oninput="hideFizRes();"></div>
+                <div class="form-group" style="flex:1;"><label>Gabari (Kat) <span class="info-ikon-kapsayici sol-hizali"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">İmar durumunda izin verilen maksimum kat sayısıdır.</span></span></label><input type="number" id="fizKat" placeholder="5" oninput="hideFizRes();"></div>
                 <div class="form-group" style="flex:1;"><label>ORTAK ALAN / ÇKS % <span class="info-ikon-kapsayici sag-hizali"><i class="fa-solid fa-circle-info"></i><span class="bilgi-baloncusu">Merdiven, asansör gibi ortak alanlar ile emsal harici (ÇKS) kapalı/açık çıkmaların net inşaata eklenme oranıdır.</span></span></label><input type="number" id="fizOrtak" value="25" oninput="updateAllBrut(); hideFizRes();"></div>
             </div>
             
@@ -1271,7 +1275,16 @@
             const div = document.createElement('div'); 
             div.style.display = 'flex'; 
             div.style.alignItems = 'center'; 
-            div.innerHTML = ` <button class="btn-imar-select" style="flex:1;" onclick="window.open('${link.url}', '_blank')"> <span style="font-size:14px; margin-right:5px;">${iconHtml}</span> ${link.name} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px; opacity:0.7;"></i> </button> <button class="btn-imar-delete" onclick="deleteImarLink(${index})" title="Sil"><i class="fa-solid fa-trash"></i></button> `; 
+            div.style.overflow = 'hidden'; /* Ana kapsayıcıdan taşmayı önler */
+            
+            div.innerHTML = ` 
+                <button class="btn-imar-select" style="flex:1; min-width:0;" onclick="window.open('${link.url}', '_blank')"> 
+                    <span style="font-size:14px; margin-right:5px; flex-shrink:0;">${iconHtml}</span> 
+                    <span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:left;">${link.name}</span> 
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px; opacity:0.7; flex-shrink:0; margin-left:5px;"></i> 
+                </button> 
+                <button class="btn-imar-delete" style="flex-shrink:0;" onclick="deleteImarLink(${index})" title="Sil"><i class="fa-solid fa-trash"></i></button> 
+            `; 
             container.appendChild(div); 
         }); 
     }
