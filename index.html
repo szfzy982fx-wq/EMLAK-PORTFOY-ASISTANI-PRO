@@ -142,19 +142,9 @@
         .back-to-top { position: fixed; bottom: 30px; right: 30px; background-color: var(--primary); color: white; border: 2px solid #fff; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9990; transition: all 0.3s ease; }
         .back-to-top:hover { background-color: var(--accent); transform: translateY(-5px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
 
-        /* --- YENİ EKLENEN: (i) BİLGİ BALONCUKLARI --- */
-        .info-ikon-kapsayici { position: relative; display: inline-block; cursor: pointer; margin-left: 5px; color: #e67e22; font-weight: bold; font-size: 14px; }
-        .bilgi-baloncusu { visibility: hidden; width: 260px; background-color: #2c3e50; color: #ecf0f1; text-align: left; border-radius: 6px; padding: 12px; position: absolute; z-index: 9999; bottom: 150%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 11px; font-weight: normal; box-shadow: 0 6px 12px rgba(0,0,0,0.4); pointer-events: none; text-transform: none; line-height: 1.5; }
-        .bilgi-baloncusu::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #2c3e50 transparent transparent transparent; }
-        .info-ikon-kapsayici:hover .bilgi-baloncusu, .info-ikon-kapsayici.aktif .bilgi-baloncusu { visibility: visible; opacity: 1; }
-
-        /* SAĞA HİZALI BALONCUKLAR İÇİN DÜZELTME (TAŞMAYI ÖNLER) */
-        .info-ikon-kapsayici.sag-hizali .bilgi-baloncusu { left: auto; right: -5px; transform: none; }
-        .info-ikon-kapsayici.sag-hizali .bilgi-baloncusu::after { left: auto; right: 15px; margin-left: 0; }
-
-        /* SOLA HİZALI BALONCUKLAR İÇİN DÜZELTME (TAŞMAYI ÖNLER) */
-        .info-ikon-kapsayici.sol-hizali .bilgi-baloncusu { left: -5px; transform: none; }
-        .info-ikon-kapsayici.sol-hizali .bilgi-baloncusu::after { left: 15px; margin-left: 0; }
+        /* --- BİLGİ MODALI BUTONU STİLLERİ --- */
+        .info-btn { cursor: pointer; color: #3498db; margin-left: 5px; font-size: 14px; transition: 0.2s; vertical-align: middle; }
+        .info-btn:hover { color: #2980b9; transform: scale(1.1); }
 
         /* GİZLİLİK MODU CSS */
         body.privacy-active th:nth-child(7), body.privacy-active td:nth-child(7) { display: none !important; }
@@ -242,7 +232,6 @@
             body.print-selected-mode #portfolioTable tbody tr:not(.row-selected) { display: none !important; }
             body.print-selected-mode .select-col-header, body.print-selected-mode .select-col-cell { display: none !important; }
             #lockScreen { display: none !important; }
-            .info-ikon-kapsayici { display: none !important; }
         }
     </style>
 </head>
@@ -750,19 +739,7 @@
             <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:5px;">
                 <label style="font-size:11px; font-weight:bold; color:#2c3e50;">
                     <i class="fa-solid fa-building"></i> ARSA VE KÜTLE VERİLERİ
-                    <span class="info-ikon-kapsayici sag-hizali"><i class="fa-solid fa-circle-info"></i>
-                        <span class="bilgi-baloncusu" style="width:280px;">
-                            <b>Mimari Hesaplama Altyapısı:</b><br>
-                            • <b>Z (Emsal Alanı):</b> Arsa x KAKS<br>
-                            • <b>TA (Taban Alanı):</b> Arsa x TAKS<br>
-                            • <b>KA (Kat Alanı):</b> Z - TA<br>
-                            • <b>TKA (Toplam Kat Alanı):</b> KA x Çarpan (ÇKS/Ortak)<br><br>
-                            <b>TİA (Toplam İnşaat Alanı) Formülleri:</b><br>
-                            • <b>0.50m:</b> TİA = TKA + TA<br>
-                            • <b>2.50m:</b> TİA = (Z x Çarpan) + TA<br>
-                            • <b>5.50m:</b> TİA = (Z x Çarpan) + (TA x 2)
-                        </span>
-                    </span>
+                    <i class="fa-solid fa-circle-info info-btn" onclick="openInfo('ruhsat')"></i>
                 </label>
             </div>
             
@@ -816,15 +793,7 @@
             <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:5px;">
                 <label style="font-size:11px; font-weight:bold; color:#e67e22;">
                     DAĞILIM SENARYOSU (Satılabilir Alan)
-                    <span class="info-ikon-kapsayici sag-hizali"><i class="fa-solid fa-circle-info"></i>
-                        <span class="bilgi-baloncusu" style="width:260px;">
-                            <b>Satılabilir Alan ve Verimlilik Mantığı:</b><br>
-                            • <b>TİA:</b> Otopark, şaft vb. dahil tüm beton alanıdır (ÇKS ile büyümüş yapı).<br>
-                            • <b>Satılabilir Alan:</b> TİA x Verimlilik Oranı (Örn: %80)<br>
-                            • <b>Kayıp Alan:</b> TİA - Satılabilir Alan (Zorunlu ortak alanlar)<br>
-                            • Aşağıdaki daire hesapları TİA üzerinden değil, <b>Satılabilir Alan</b> üzerinden yapılır.
-                        </span>
-                    </span>
+                    <i class="fa-solid fa-circle-info info-btn" onclick="openInfo('dagilim')"></i>
                 </label>
                 <div style="display:flex; gap:10px;">
                     <div class="form-group" style="margin-bottom:0; width:90px;">
@@ -843,8 +812,8 @@
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
                 <div style="width:40px; margin-right:5px;"></div>
                 <div style="flex:1; font-size:10px; font-weight:bold; color:#7f8c8d; text-transform:uppercase;">Pay (%)</div>
-                <div style="flex:1.5; font-size:10px; font-weight:bold; color:#7f8c8d; text-transform:uppercase;">İç Brüt</div>
-                <div style="flex:1.5; font-size:10px; font-weight:bold; color:#7f8c8d; text-transform:uppercase;">Brüt</div>
+                <div style="flex:1.5; font-size:10px; font-weight:bold; color:#7f8c8d; text-transform:uppercase;">İç Brüt <i class="fa-solid fa-circle-info info-btn" onclick="openInfo('brut')" style="font-size:11px;"></i></div>
+                <div style="flex:1.5; font-size:10px; font-weight:bold; color:#7f8c8d; text-transform:uppercase;">Brüt <i class="fa-solid fa-circle-info info-btn" onclick="openInfo('brut')" style="font-size:11px;"></i></div>
             </div>
 
             <div style="display:flex; gap:10px; margin-bottom:5px; align-items:center;">
@@ -908,6 +877,16 @@
     </div>
 </div>
 
+<div id="infoModal" class="modal" onclick="closeModalOutside(event, 'infoModal')">
+    <div class="modal-content" style="max-width:450px; font-size:13px; line-height:1.6; padding:0; border-radius:8px; overflow:hidden;">
+        <div style="background:#2c3e50; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+            <h3 id="infoModalTitle" style="color:white; margin:0; font-size:16px;"></h3>
+            <span onclick="closeModal('infoModal')" style="cursor:pointer; font-size:24px; color:white;">&times;</span>
+        </div>
+        <div id="infoModalBody" style="padding:20px; color:#333; background:#fdfdfd;"></div>
+    </div>
+</div>
+
 <script>
     // --- TÜRKÇE KARAKTER DUYARLI KÜÇÜLTME FONKSİYONU ---
     function toTRLower(str) {
@@ -930,22 +909,6 @@
         } else {
             btn.style.display = "none";
         }
-    });
-
-    // --- (i) BALONCUKLARI İÇİN MOBİL DESTEK EKLENDİ ---
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.info-ikon-kapsayici').forEach(ikon => {
-            ikon.addEventListener('click', function(e) {
-                document.querySelectorAll('.info-ikon-kapsayici').forEach(diger => {
-                    if (diger !== this) diger.classList.remove('aktif');
-                });
-                this.classList.toggle('aktif');
-                e.stopPropagation();
-            });
-        });
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.info-ikon-kapsayici').forEach(ikon => ikon.classList.remove('aktif'));
-        });
     });
 
     // --- ÖZEL FİZİBİLİTE YAZDIRMA FONKSİYONU ---
@@ -1795,6 +1758,66 @@
         document.getElementById('resTapu').style.display = 'block'; 
     }
     
+    // --- YENİ BİLGİ PENCERELERİ (MODAL) YÖNETİMİ ---
+    function openInfo(type) {
+        let title = "";
+        let body = "";
+        
+        if(type === 'ruhsat') {
+            title = "Mimari Hesaplama Altyapısı";
+            body = `
+                <div style="margin-bottom:15px;">
+                    <h4 style="margin:0 0 5px 0; color:#2980b9;">Temel Değerler:</h4>
+                    <ul style="margin:0; padding-left:20px;">
+                        <li><b>Z (Emsal Alanı):</b> Arsa x KAKS</li>
+                        <li><b>TA (Taban Alanı):</b> Arsa x TAKS</li>
+                        <li><b>KA (Kat Alanı):</b> Z - TA</li>
+                        <li><b>TKA (Toplam Kat Alanı):</b> KA x Çarpan (ÇKS/Ortak)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin:0 0 5px 0; color:#2980b9;">TİA (Toplam İnşaat Alanı) Formülleri:</h4>
+                    <ul style="margin:0; padding-left:20px;">
+                        <li><b>0.50m (Standart):</b> TİA = TKA + TA</li>
+                        <li><b>2.50m:</b> TİA = (Z x Çarpan) + TA</li>
+                        <li><b>5.50m (Bodrumlu):</b> TİA = (Z x Çarpan) + (TA x 2)</li>
+                    </ul>
+                </div>
+            `;
+        } else if(type === 'dagilim') {
+            title = "Satılabilir Alan ve Verimlilik";
+            body = `
+                <ul style="margin:0; padding-left:20px; margin-bottom:15px;">
+                    <li><b>TİA:</b> Otopark, şaft vb. dahil tüm beton alanıdır (ÇKS ile büyümüş yapı).</li>
+                    <li><b>Satılabilir Alan:</b> TİA x Verimlilik Oranı (Örn: %80)</li>
+                    <li><b>Kayıp Alan:</b> TİA - Satılabilir Alan (Zorunlu ortak alanlar)</li>
+                </ul>
+                <div style="background:#e8f4f8; padding:10px; border-radius:4px; font-weight:bold; color:#2c3e50;">
+                    Aşağıdaki daire hesapları TİA üzerinden değil, sadece <span style="color:#e67e22;">Satılabilir Alan</span> üzerinden yapılır.
+                </div>
+            `;
+        } else if(type === 'brut') {
+            title = "İç Brüt ve Satış Brütü";
+            body = `
+                <div style="margin-bottom:15px;">
+                    <h4 style="margin:0 0 5px 0; color:#2980b9;"><i class="fa-solid fa-ruler-combined"></i> İç Brüt (Balkon Dahil)</h4>
+                    <p style="margin:0;">Dairenin dış kapısından içeride kalan tüm alandır. Net kullanım alanına duvar kalınlıkları, kolonlar ve balkonlar dahildir.</p>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <h4 style="margin:0 0 5px 0; color:#2980b9;"><i class="fa-solid fa-building"></i> Satış Brütü</h4>
+                    <p style="margin:0;">İç brüt alana, kat holü, merdiven, asansör gibi ortak alanlardan daireye düşen payın eklenmiş halidir. Satış ve fiyatlandırmaya esas olan ticari alandır.</p>
+                </div>
+                <div style="background:#fef9e7; padding:10px; border-left:3px solid #f39c12; font-style:italic; font-size:12px;">
+                    Not: Bu sistemde, İç Brüt ile Satış Brütü arasındaki fark "Daire İçi Ortak (%)" katsayısı ile otomatik hesaplanmaktadır.
+                </div>
+            `;
+        }
+        
+        document.getElementById('infoModalTitle').innerHTML = `<i class="fa-solid fa-circle-info"></i> ${title}`;
+        document.getElementById('infoModalBody').innerHTML = body;
+        openModal('infoModal');
+    }
+
     // --- YENİ FİZİBİLİTE SİSTEMİ (ÇKS & ORTAK ALAN & SUBASMAN) ---
     function toggleAdvancedFiz() {
         const isAdvanced = document.getElementById('chkAdvancedFiz').checked;
