@@ -961,6 +961,10 @@
 </div>
 
 <script>
+    // --- PENCERE (MODAL) AÇMA KAPATMA KONTROLLERİ ---
+    function openModal(id) { document.getElementById(id).style.display = 'block'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function closeModalOutside(event, id) { if (event.target === document.getElementById(id)) closeModal(id); }
     // --- TÜRKÇE KARAKTER DUYARLI KÜÇÜLTME FONKSİYONU ---
     function toTRLower(str) {
         if (!str) return '';
