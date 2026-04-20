@@ -224,17 +224,26 @@
             #lockScreen { display: none !important; }
         }
 
-        /* Gelişmiş Analiz Modülüne (EH) Özel Stiller (Mevcut iskeleti bozmaz) */
-        .eh-container { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
+        /* Gelişmiş Analiz Modülüne (EH) Özel Stiller */
+        .eh-container { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; position: relative; }
         
-        /* Tab Butonları */
-        .eh-tabs { display: flex; background: #2c3e50; }
+        /* Sabit Sekme (Sticky Tabs) */
+        .eh-tabs { 
+            display: flex; 
+            background: #2c3e50; 
+            position: sticky; 
+            top: -21px; /* Modal padding'ine (20px) yapışması için */
+            z-index: 100; 
+            margin: 0 -20px 20px -20px; 
+            padding: 0 20px; /* İçerikleri modal kenarıyla hizalamak için */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
         .eh-tab-btn { flex: 1; padding: 15px 10px; background: none; border: none; color: #bdc3c7; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .eh-tab-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
         .eh-tab-btn.active { background: #e67e22; color: #fff; }
         
         /* İçerik Alanı */
-        .eh-content { padding: 25px; display: none; }
+        .eh-content { padding: 25px 0; display: none; }
         .eh-content.active { display: block; }
         
         /* Form Elemanları */
@@ -891,9 +900,11 @@
                     <div class="eh-res-row"><span>İndirimli Peşin Alım Fiyatı:</span><strong id="eh_r_pesin">0 ₺</strong></div>
                     <div class="eh-res-row"><span>Vadeli Planın Bugünkü Reel Maliyeti (NPV):</span><strong id="eh_r_npv" style="color:#e67e22;">0 ₺</strong></div>
                     
-                    <div style="text-align:center; margin-top:20px;">
+                    <div id="eh_r_adv_box" style="text-align:center; padding:15px; margin:15px 0; border-top:1px dashed #ddd; border-bottom:1px dashed #ddd;"></div>
+                    
+                    <div style="text-align:center; margin-top:15px;">
                         <span class="eh-hint">BAŞABAŞ OLMASI GEREKEN İNDİRİM ORANI</span>
-                        <div class="eh-highlight" id="eh_r_basabas">% 0</div>
+                        <div class="eh-highlight" id="eh_r_basabas" style="margin-top:5px;">% 0</div>
                     </div>
 
                     <div id="eh_r_kararKutusu" class="eh-verdict"></div>
@@ -927,7 +938,8 @@
                 </div>
             </div>
         </div>
-        </div>
+        
+    </div>
 </div>
 
 <script>
@@ -1135,8 +1147,6 @@
         if(storedVAT) globalVAT = parseFloat(storedVAT);
     }
     
-    // (Eski KDV Oranı Güncelleme Fonksiyonu kaldırıldı, oranlar artık doğrudan hesap modülünde.)
-
     let editingId = null; let crmEditingId = null;
 
     function checkExpiryDates() {
@@ -1682,6 +1692,10 @@
         document.querySelectorAll('.eh-tab-btn').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         evt.currentTarget.classList.add('active');
+        
+        // Modalın en üstüne kaydırma (Sticky Tab'ın pürüzsüz çalışması için)
+        const modalContent = document.querySelector('#advancedEmlakModal .modal-content');
+        if(modalContent) modalContent.scrollTop = 0;
     }
 
     function ehCalcTapu() {
@@ -1791,18 +1805,23 @@
 
         const offerPrice = listPrice * (1 - (currentDiscount / 100));
         const breakEvenRate = (1 - (npv / listPrice)) * 100;
+        const diff = Math.abs(offerPrice - npv);
 
         document.getElementById('eh_r_pesin').innerText = ehFormatter.format(offerPrice);
         document.getElementById('eh_r_npv').innerText = ehFormatter.format(npv);
         document.getElementById('eh_r_basabas').innerText = "% " + breakEvenRate.toFixed(2);
 
+        const advBox = document.getElementById('eh_r_adv_box');
         const verdictBox = document.getElementById('eh_r_kararKutusu');
+        
         if (currentDiscount < breakEvenRate) {
+            advBox.innerHTML = `<span style="font-size:0.9rem; color:#555; font-weight:bold;">NET FİNANSAL AVANTAJ</span><br><strong style="font-size:1.6rem; color:#27ae60; display:block; margin-top:5px;">${ehFormatter.format(diff)}</strong>`;
             verdictBox.className = "eh-verdict eh-v-green";
-            verdictBox.innerHTML = "TAVSİYE: VADELİ ALIN! <br> <span style='font-size:0.9rem; font-weight:normal;'>(Nakit paranızı vadeli mevduatta değerlendirmek daha karlı)</span>";
+            verdictBox.innerHTML = "TAVSİYE: VADELİ ALIN! <br> <span style='font-size:0.9rem; font-weight:normal;'>(Bu tutar, vadeli alımı tercih ettiğinizde cebinizde kalacak paranın bugünkü değeriyle net reel kârıdır.)</span>";
         } else {
+            advBox.innerHTML = `<span style="font-size:0.9rem; color:#555; font-weight:bold;">NET FİNANSAL AVANTAJ</span><br><strong style="font-size:1.6rem; color:#c0392b; display:block; margin-top:5px;">${ehFormatter.format(diff)}</strong>`;
             verdictBox.className = "eh-verdict eh-v-red";
-            verdictBox.innerHTML = "TAVSİYE: PEŞİN ALIN! <br> <span style='font-size:0.9rem; font-weight:normal;'>(İndirim oranı, banka faizinden daha fazla kazandırıyor)</span>";
+            verdictBox.innerHTML = "TAVSİYE: PEŞİN ALIN! <br> <span style='font-size:0.9rem; font-weight:normal;'>(Bu tutar, peşin alımı tercih ettiğinizde cebinizde kalacak paranın bugünkü değeriyle net reel kârıdır.)</span>";
         }
 
         const resBox = document.getElementById('eh_resKarar');
