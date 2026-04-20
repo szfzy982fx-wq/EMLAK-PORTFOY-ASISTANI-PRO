@@ -224,7 +224,7 @@
             #lockScreen { display: none !important; }
         }
 
-        /* Sadece Gelişmiş Analiz Modülüne (EH) Özel Stiller (Mevcut iskeleti bozmaz) */
+        /* Gelişmiş Analiz Modülüne (EH) Özel Stiller (Mevcut iskeleti bozmaz) */
         .eh-container { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
         
         /* Tab Butonları */
@@ -252,8 +252,8 @@
         .eh-btn-outline:hover { border-color: #2c3e50; color: #2c3e50; }
         
         /* Sonuç Alanları */
-        .eh-result-box { background: #f8f9fa; border-left: 4px solid #e67e22; padding: 20px; border-radius: 6px; margin-top: 20px; }
-        .eh-res-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .eh-result-box { background: #f8f9fa; border-left: 4px solid #e67e22; border-radius: 6px; margin-top: 20px; }
+        .eh-res-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
         .eh-res-row strong { color: #2c3e50; font-size: 1.1rem; }
         .eh-highlight { text-align: center; font-size: 1.5rem; font-weight: bold; color: #e67e22; margin: 15px 0; }
         
@@ -325,9 +325,8 @@
             <button class="tool-btn btn-crm" onclick="openCRM()"><i class="fa-solid fa-users"></i> CRM</button>
             <button class="tool-btn btn-calc" onclick="openModal('calcModal')"><i class="fa-solid fa-calculator"></i> HESAP</button>
             <button class="tool-btn btn-calc" onclick="openModal('currencyModal'); fetchCurrency();"><i class="fa-solid fa-money-bill-transfer"></i> DÖVİZ</button>
-            <button class="tool-btn btn-calc" onclick="openModal('realEstateCalcModal')"><i class="fa-solid fa-file-invoice"></i> EMLAK</button>
             
-            <button class="tool-btn" style="background-color: #8e44ad; color: #fff;" onclick="openModal('advancedEmlakModal')"><i class="fa-solid fa-chart-pie"></i> ANALİZ</button>
+            <button class="tool-btn btn-calc" onclick="openModal('advancedEmlakModal')"><i class="fa-solid fa-file-invoice"></i> EMLAK</button>
 
             <a href="fizibilite.html" target="_blank" class="tool-btn" style="background-color: #f39c12; color: #fff; text-decoration: none;"><i class="fa-solid fa-building-circle-check"></i> FİZİBİLİTE</a>
             
@@ -758,55 +757,10 @@
     </div>
 </div>
 
-<div id="realEstateCalcModal" class="modal" onclick="closeModalOutside(event, 'realEstateCalcModal')">
-    <div class="modal-content tool-modal-content">
-        <div style="display:flex;justify-content:space-between; margin-bottom:10px;">
-            <h3><i class="fa-solid fa-file-invoice"></i> Emlak Hesaplamaları</h3><span onclick="closeModal('realEstateCalcModal')" style="cursor:pointer;font-size:24px;">&times;</span>
-        </div>
-        <div class="tab-buttons">
-            <button class="tab-btn active" onclick="switchTab('tabTapu')">Tapu & Kom.</button>
-            <button class="tab-btn" onclick="switchTab('tabVergi')">Vergi</button>
-        </div>
-        
-        <div id="tabTapu" class="tab-content active">
-            <div class="form-group">
-                <label style="color:#e67e22;">KDV Oranı (%)</label>
-                <input type="number" id="calcKDVRate" value="20" style="font-weight:bold;" onchange="saveKDVSetting()">
-            </div>
-            <div class="form-group"><label>Satış Bedeli (TL)</label><input type="text" id="calcPriceComp" placeholder="5.000.000" oninput="formatCurrency(this)"></div>
-            <button class="btn-save" style="width:100%; margin-top:10px;" onclick="calcTapuKomisyon()">HESAPLA</button>
-            <div id="resTapu" style="margin-top:10px; font-size:13px; font-weight:bold; display:none; background:#f9f9f9; padding:10px; border-radius:4px;"></div>
-        </div>
-        
-        <div id="tabVergi" class="tab-content">
-            <div class="form-group">
-                <label>Gayrimenkul Türü & Bölge</label>
-                <select id="calcVergiType" style="font-size:13px; font-weight:bold;">
-                    <optgroup label="BÜYÜKŞEHİR SINIRLARI">
-                        <option value="0.002">Konut (Büyükşehir) - Binde 2</option>
-                        <option value="0.004">İşyeri / Dükkan (Büyükşehir) - Binde 4</option>
-                        <option value="0.006">Arsa (Büyükşehir) - Binde 6</option>
-                        <option value="0.002">Arazi / Tarla (Büyükşehir) - Binde 2</option>
-                    </optgroup>
-                    <optgroup label="DİĞER İLLER (NORMAL)">
-                        <option value="0.001">Konut (Normal Şehir) - Binde 1</option>
-                        <option value="0.002">İşyeri / Dükkan (Normal Şehir) - Binde 2</option>
-                        <option value="0.003">Arsa (Normal Şehir) - Binde 3</option>
-                        <option value="0.001">Arazi / Tarla (Normal Şehir) - Binde 1</option>
-                    </optgroup>
-                </select>
-            </div>
-            <div class="form-group"><label>Rayiç Bedel</label><input type="text" id="calcVergiDeger" placeholder="1.000.000" oninput="formatCurrency(this)"></div>
-            <button class="btn-save" style="width:100%; margin-top:5px;" onclick="calcEmlakVergisi()">HESAPLA</button>
-            <div id="resVergi" style="margin-top:10px; font-weight:bold; display:none; background:#f9f9f9; padding:10px; border-radius:4px;"></div>
-        </div>
-    </div>
-</div>
-
 <div id="advancedEmlakModal" class="modal" onclick="closeModalOutside(event, 'advancedEmlakModal')">
     <div class="modal-content tool-modal-content" style="width: 800px; max-width: 95%;">
         <div style="display:flex;justify-content:space-between; margin-bottom:15px;">
-            <h3 style="color:#2c3e50; margin:0;"><i class="fa-solid fa-chart-pie"></i> Gelişmiş Yatırım & Karar Asistanı</h3>
+            <h3 style="color:#2c3e50; margin:0;"><i class="fa-solid fa-chart-pie"></i> Emlak Yatırım & Karar Asistanı</h3>
             <span onclick="closeModal('advancedEmlakModal')" style="cursor:pointer;font-size:24px;">&times;</span>
         </div>
         
@@ -823,12 +777,52 @@
                     <label>Satış Bedeli (TL)</label>
                     <input type="text" id="eh_tapuBedel" onkeyup="ehFormatCur(this)" placeholder="Örn: 5.000.000">
                 </div>
-                <button class="eh-btn eh-btn-primary" onclick="ehCalcTapu()">Hesapla</button>
                 
-                <div class="eh-result-box" id="eh_resTapu" style="display:none;">
-                    <div class="eh-res-row"><span>Alıcı Tapu Harcı (%2):</span><strong id="eh_t_alici">0 ₺</strong></div>
-                    <div class="eh-res-row"><span>Satıcı Tapu Harcı (%2):</span><strong id="eh_t_satici">0 ₺</strong></div>
-                    <div class="eh-res-row"><span>Emlak Hizmet Bedeli (%2+KDV):</span><strong id="eh_t_komisyon">0 ₺</strong></div>
+                <div class="eh-row">
+                    <div class="eh-col">
+                        <div class="eh-form-group">
+                            <label>Tapu Harcı Oranı (%) <small>(Taraflar için ayrı)</small></label>
+                            <input type="number" id="eh_oran_tapu" value="2" step="0.1">
+                        </div>
+                    </div>
+                    <div class="eh-col">
+                        <div class="eh-form-group">
+                            <label>Hizmet Bedeli Oranı (%)</label>
+                            <input type="number" id="eh_oran_hizmet" value="2" step="0.1">
+                        </div>
+                    </div>
+                    <div class="eh-col">
+                        <div class="eh-form-group">
+                            <label>KDV Oranı (%)</label>
+                            <input type="number" id="eh_oran_kdv" value="20" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="eh-btn eh-btn-primary" onclick="ehCalcTapu()">HESAPLA</button>
+                
+                <div class="eh-result-box" id="eh_resTapu" style="display:none; padding:15px;">
+                    <div class="eh-row">
+                        <div class="eh-col" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #e67e22;">
+                            <h4 style="margin-top:0; color:#d35400; text-align:center; border-bottom:1px solid #eee; padding-bottom:10px;">ALICI MALİYETİ</h4>
+                            <div class="eh-res-row"><span>Tapu Harcı:</span><strong id="eh_t_alici_harc">0 ₺</strong></div>
+                            <div class="eh-res-row"><span>Hizmet Bedeli:</span><strong id="eh_t_alici_hizmet">0 ₺</strong></div>
+                            <div class="eh-res-row"><span>KDV:</span><strong id="eh_t_alici_kdv">0 ₺</strong></div>
+                            <div class="eh-res-row" style="background:#fef9e7; padding:10px; border-radius:4px; margin-top:10px; border-bottom:none;">
+                                <span>GENEL TOPLAM:</span><strong id="eh_t_alici_toplam" style="color:#d35400; font-size:1.2rem;">0 ₺</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="eh-col" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #2980b9;">
+                            <h4 style="margin-top:0; color:#2980b9; text-align:center; border-bottom:1px solid #eee; padding-bottom:10px;">SATICI MALİYETİ</h4>
+                            <div class="eh-res-row"><span>Tapu Harcı:</span><strong id="eh_t_satici_harc">0 ₺</strong></div>
+                            <div class="eh-res-row"><span>Hizmet Bedeli:</span><strong id="eh_t_satici_hizmet">0 ₺</strong></div>
+                            <div class="eh-res-row"><span>KDV:</span><strong id="eh_t_satici_kdv">0 ₺</strong></div>
+                            <div class="eh-res-row" style="background:#ebf5fb; padding:10px; border-radius:4px; margin-top:10px; border-bottom:none;">
+                                <span>GENEL TOPLAM:</span><strong id="eh_t_satici_toplam" style="color:#2980b9; font-size:1.2rem;">0 ₺</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1038,6 +1032,8 @@
         
         // Yeni modül esnek ödeme tablosunu başlatır
         ehAddRow(15, '100.000');
+        // KDV oranını global değişkenden çekip inputa yazdırır
+        document.getElementById('eh_oran_kdv').value = globalVAT;
     };
 
     // --- DEĞİŞKENLER ---
@@ -1137,14 +1133,9 @@
     function loadKDVSetting() {
         const storedVAT = localStorage.getItem('KaracabayRE_VAT_v1');
         if(storedVAT) globalVAT = parseFloat(storedVAT);
-        document.getElementById('calcKDVRate').value = globalVAT;
     }
     
-    function saveKDVSetting() {
-        globalVAT = parseFloat(document.getElementById('calcKDVRate').value);
-        localStorage.setItem('KaracabayRE_VAT_v1', globalVAT);
-        alert("KDV Oranı Güncellendi: %" + globalVAT);
-    }
+    // (Eski KDV Oranı Güncelleme Fonksiyonu kaldırıldı, oranlar artık doğrudan hesap modülünde.)
 
     let editingId = null; let crmEditingId = null;
 
@@ -1633,19 +1624,6 @@
     
     function switchTab(id) { document.querySelectorAll('.tab-content').forEach(d => d.style.display='none'); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).style.display = 'block'; event.currentTarget.classList.add('active'); }
     
-    function calcTapuKomisyon() { 
-        let rawVal = document.getElementById('calcPriceComp').value; let p = parsePrice(rawVal);
-        if(!p || p <= 0) { document.getElementById('resTapu').innerHTML = "<span style='color:red;'>Lütfen geçerli bir satış bedeli giriniz.</span>"; document.getElementById('resTapu').style.display = 'block'; return; }
-        let tapu = p * 0.04; let hizmet = p * 0.02; let kdvRate = globalVAT / 100; let kdv = hizmet * kdvRate; let topHizmet = hizmet + kdv;
-        document.getElementById('resTapu').innerHTML = `Tapu Harcı (%4): <b>${tapu.toLocaleString('tr-TR')} TL</b><br>` + `Hizmet Bedeli (%2): <b>${hizmet.toLocaleString('tr-TR')} TL</b><br>` + `KDV (%${globalVAT}): <b>${kdv.toLocaleString('tr-TR')} TL</b><br>` + `--------------------------<br>` + `TOPLAM KOMİSYON: <b style='color:#c0392b'>${topHizmet.toLocaleString('tr-TR')} TL</b>`; document.getElementById('resTapu').style.display = 'block'; 
-    }
-    
-    function calcEmlakVergisi() { 
-        let rawVal = document.getElementById('calcVergiDeger').value; let val = parsePrice(rawVal); let rate = parseFloat(document.getElementById('calcVergiType').value); 
-        if(!val || val <= 0) { document.getElementById('resVergi').innerHTML = "<span style='color:red;'>Lütfen rayiç bedel giriniz.</span>"; document.getElementById('resVergi').style.display = 'block'; return; }
-        document.getElementById('resVergi').innerHTML = `Yıllık Vergi Tutarı: <strong style='color:#27ae60; font-size:1.2em;'>${(val*rate).toLocaleString('tr-TR')} TL</strong>`; document.getElementById('resVergi').style.display = 'block'; 
-    }
-
     function parsePrice(p) { if (!p) return 0; let clean = p.toString().trim().replace(/\./g, '').replace(/,/g, '.'); let val = parseFloat(clean); return isNaN(val) ? 0 : val; }
     
     function formatCurrency(input) { 
@@ -1684,7 +1662,7 @@
     function deleteCheckItem(i){ checklist.splice(i,1);localStorage.setItem('KaracabayRE_CHK_v1',JSON.stringify(checklist));renderChecklist();}
     function deleteFromForm() { if(confirm("Kayıt silinsin mi?")) { portfolio = portfolio.filter(p => p.id !== editingId); saveToDisk(); renderTable(); resetForm(); } }
 
-    /* YENİ MODÜL JS KODLARI BAŞLANGICI (EH - Emlak Hesaplamaları) */
+    /* --- YENİ MODÜL JS KODLARI BAŞLANGICI (EH - Emlak Hesaplamaları) --- */
     
     const ehFormatter = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 });
     
@@ -1709,10 +1687,34 @@
     function ehCalcTapu() {
         let bedel = ehGetNum('eh_tapuBedel');
         if(bedel === 0) return;
-        document.getElementById('eh_t_alici').innerText = ehFormatter.format(bedel * 0.02);
-        document.getElementById('eh_t_satici').innerText = ehFormatter.format(bedel * 0.02);
-        document.getElementById('eh_t_komisyon').innerText = ehFormatter.format(bedel * 0.02 * 1.20); // %2 + %20 KDV
-        document.getElementById('eh_resTapu').style.display = 'block';
+
+        // İnputlardan değerleri çek, boşsa 0 say
+        let oranTapu = parseFloat(document.getElementById('eh_oran_tapu').value) || 0;
+        let oranHizmet = parseFloat(document.getElementById('eh_oran_hizmet').value) || 0;
+        let oranKdv = parseFloat(document.getElementById('eh_oran_kdv').value) || 0;
+
+        // Matematiği kurgula
+        let tapuHarci = bedel * (oranTapu / 100);
+        let hizmetBedeli = bedel * (oranHizmet / 100);
+        let kdvTutari = hizmetBedeli * (oranKdv / 100);
+        let genelToplam = tapuHarci + hizmetBedeli + kdvTutari;
+
+        // Alıcı için ekrana yazdır
+        document.getElementById('eh_t_alici_harc').innerText = ehFormatter.format(tapuHarci);
+        document.getElementById('eh_t_alici_hizmet').innerText = ehFormatter.format(hizmetBedeli);
+        document.getElementById('eh_t_alici_kdv').innerText = ehFormatter.format(kdvTutari);
+        document.getElementById('eh_t_alici_toplam').innerText = ehFormatter.format(genelToplam);
+
+        // Satıcı için ekrana yazdır (Değerler taraflar için aynı varsayılır)
+        document.getElementById('eh_t_satici_harc').innerText = ehFormatter.format(tapuHarci);
+        document.getElementById('eh_t_satici_hizmet').innerText = ehFormatter.format(hizmetBedeli);
+        document.getElementById('eh_t_satici_kdv').innerText = ehFormatter.format(kdvTutari);
+        document.getElementById('eh_t_satici_toplam').innerText = ehFormatter.format(genelToplam);
+
+        // Ekranı göster ve aşağı kaydır
+        const resBox = document.getElementById('eh_resTapu');
+        resBox.style.display = 'block';
+        resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function ehTogglePlan() {
@@ -1803,7 +1805,9 @@
             verdictBox.innerHTML = "TAVSİYE: PEŞİN ALIN! <br> <span style='font-size:0.9rem; font-weight:normal;'>(İndirim oranı, banka faizinden daha fazla kazandırıyor)</span>";
         }
 
-        document.getElementById('eh_resKarar').style.display = 'block';
+        const resBox = document.getElementById('eh_resKarar');
+        resBox.style.display = 'block';
+        resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function ehCalcAmortisman() {
@@ -1818,7 +1822,10 @@
 
         document.getElementById('eh_a_yil').innerText = amortismanYil.toFixed(1) + " Yıl (" + Math.round(amortismanYil*12) + " Ay)";
         document.getElementById('eh_a_roi').innerText = "% " + roi.toFixed(2);
-        document.getElementById('eh_resAmort').style.display = 'block';
+        
+        const resBox = document.getElementById('eh_resAmort');
+        resBox.style.display = 'block';
+        resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 </script>
 </body>
