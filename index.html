@@ -227,16 +227,16 @@
         /* Gelişmiş Analiz Modülüne (EH) Özel Stiller */
         .eh-container { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; position: relative; }
         
-        /* Sabit Sekme (Sticky Tabs) */
+        /* Sabit Sekme (Sticky Tabs) - GÜNCELLENDİ */
         .eh-tabs { 
             display: flex; 
             background: #2c3e50; 
             position: sticky; 
-            top: -21px; /* Modal padding'ine (20px) yapışması için */
-            z-index: 100; 
+            top: -20px; 
+            z-index: 9999; 
             margin: 0 -20px 20px -20px; 
-            padding: 0 20px; /* İçerikleri modal kenarıyla hizalamak için */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4); 
+            border-bottom: 2px solid #e67e22; 
         }
         .eh-tab-btn { flex: 1; padding: 15px 10px; background: none; border: none; color: #bdc3c7; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .eh-tab-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
@@ -261,7 +261,7 @@
         .eh-btn-outline:hover { border-color: #2c3e50; color: #2c3e50; }
         
         /* Sonuç Alanları */
-        .eh-result-box { background: #f8f9fa; border-left: 4px solid #e67e22; border-radius: 6px; margin-top: 20px; }
+        .eh-result-box { background: #f8f9fa; border-left: 4px solid #e67e22; border-radius: 6px; margin-top: 20px; padding: 15px; }
         .eh-res-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
         .eh-res-row strong { color: #2c3e50; font-size: 1.1rem; }
         .eh-highlight { text-align: center; font-size: 1.5rem; font-weight: bold; color: #e67e22; margin: 15px 0; }
@@ -1726,9 +1726,9 @@
         document.getElementById('eh_t_satici_toplam').innerText = ehFormatter.format(genelToplam);
 
         // Ekranı göster ve aşağı kaydır
-        const resBox = document.getElementById('eh_resTapu');
-        resBox.style.display = 'block';
-        resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const res = document.getElementById('eh_resTapu');
+        res.style.display = 'block';
+        res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function ehTogglePlan() {
@@ -1824,9 +1824,9 @@
             verdictBox.innerHTML = "TAVSİYE: PEŞİN ALIN! <br> <span style='font-size:0.9rem; font-weight:normal;'>(Bu tutar, peşin alımı tercih ettiğinizde cebinizde kalacak paranın bugünkü değeriyle net reel kârıdır.)</span>";
         }
 
-        const resBox = document.getElementById('eh_resKarar');
-        resBox.style.display = 'block';
-        resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const res = document.getElementById('eh_resKarar');
+        res.style.display = 'block';
+        res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function ehCalcAmortisman() {
@@ -1842,9 +1842,9 @@
         document.getElementById('eh_a_yil').innerText = amortismanYil.toFixed(1) + " Yıl (" + Math.round(amortismanYil*12) + " Ay)";
         document.getElementById('eh_a_roi').innerText = "% " + roi.toFixed(2);
         
-        const resBox = document.getElementById('eh_resAmort');
-        resBox.style.display = 'block';
-        resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const res = document.getElementById('eh_resAmort');
+        res.style.display = 'block';
+        res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 </script>
 </body>
