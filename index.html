@@ -166,14 +166,13 @@
         
         .checklist-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
         .checklist-item.checked span { text-decoration: line-through; color: #aaa; }
-
-      /* BAĞLANTILAR PENCERESİ - MODERN DİZAYN */
+/* BAĞLANTILAR PENCERESİ - MODERN & FONKSİYONEL */
 #eImarModal .imar-list-container { 
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
-    max-height: 300px !important; 
-    overflow-y: auto !important; 
+    max-height: 280px !important; 
+    overflow-y: scroll !important; /* Çubuğu her zaman görünür yapar */
     padding: 12px !important; 
     border: 1px solid #e0e0e0 !important; 
     background: #ffffff !important; 
@@ -182,7 +181,7 @@
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.03) !important;
 }
 
-/* Her bir satır (Buton + Silme Butonu Grubu) */
+/* Her bir satır */
 #eImarModal .imar-list-container > div {
     display: flex !important;
     gap: 8px !important;
@@ -190,7 +189,7 @@
     align-items: center !important;
 }
 
-/* Ana Bağlantı Butonu */
+/* Ana Buton */
 #eImarModal .btn-imar-select {
     flex: 1 !important;
     background: #34495e !important;
@@ -202,18 +201,12 @@
     justify-content: space-between !important;
     align-items: center !important;
     font-size: 13px !important;
-    transition: all 0.2s ease !important;
 }
 
-#eImarModal .btn-imar-select:hover {
-    background: #2c3e50 !important;
-    transform: translateX(3px) !important;
-}
-
-/* Silme Butonu (Küçük ve Zarif) */
+/* Silme Butonu */
 #eImarModal .btn-imar-delete {
-    width: 38px !important;
-    height: 38px !important;
+    width: 40px !important;
+    height: 40px !important;
     background: #fff0f0 !important;
     color: #e74c3c !important;
     border: 1px solid #ffdada !important;
@@ -222,19 +215,25 @@
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    transition: 0.2s !important;
 }
 
-#eImarModal .btn-imar-delete:hover {
-    background: #e74c3c !important;
-    color: white !important;
+/* KAYDIRMA ÇUBUĞU GERİ GELDİ (Belirgin Turuncu) */
+#eImarModal .imar-list-container::-webkit-scrollbar { 
+    width: 8px !important; 
+    display: block !important; 
 }
-
-/* Şık Kaydırma Çubuğu */
-#eImarModal .imar-list-container::-webkit-scrollbar { width: 6px !important; }
-#eImarModal .imar-list-container::-webkit-scrollbar-track { background: transparent !important; }
-#eImarModal .imar-list-container::-webkit-scrollbar-thumb { background: #d1d1d1 !important; border-radius: 10px !important; }
-#eImarModal .imar-list-container::-webkit-scrollbar-thumb:hover { background: #e67e22 !important; }
+#eImarModal .imar-list-container::-webkit-scrollbar-track { 
+    background: #f8f9fa !important; 
+    border-radius: 10px !important;
+    border: 1px solid #eee !important;
+}
+#eImarModal .imar-list-container::-webkit-scrollbar-thumb { 
+    background: #e67e22 !important; /* Turuncu renk çubuğu görünür kılar */
+    border-radius: 10px !important;
+}
+#eImarModal .imar-list-container::-webkit-scrollbar-thumb:hover { 
+    background: #d35400 !important; 
+}      
         .btn-imar-select { padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: space-between; }
         .btn-imar-delete { background: #c0392b; color: white; border:none; border-radius: 3px; width: 20px; height: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 5px; }
 
