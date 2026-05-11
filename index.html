@@ -168,21 +168,25 @@
         .checklist-item.checked span { text-decoration: line-through; color: #aaa; }
 
         .imar-list-container { 
-    display: grid; 
-    grid-template-columns: 1fr; /* Sıkışıklığı çözer: Butonları yan yana değil, alt alta genişçe dizer */
-    gap: 8px; 
-    max-height: 250px; 
-    overflow-y: scroll; /* AUTO yerine SCROLL: İçerik az olsa bile çubuk HER ZAMAN görünür */
-    overflow-x: hidden;
-    padding: 10px; 
-    border: 1px solid #ddd; 
-    background: #fcfcfc; 
-    border-radius: 4px; 
-    margin-bottom: 15px; 
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin; /* Firefox tarayıcı desteği */
-    scrollbar-color: #e67e22 #f1f1f1;
+    display: grid !important; 
+    grid-template-columns: 1fr !important; 
+    gap: 8px !important; 
+    max-height: 250px !important; 
+    overflow-y: scroll !important; 
+    overflow-x: hidden !important;
+    padding: 10px !important; 
+    border: 1px solid #ddd !important; 
+    background: #fcfcfc !important; 
+    border-radius: 4px !important; 
+    margin-bottom: 15px !important; 
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #e67e22 #f1f1f1 !important;
 }
+.imar-list-container::-webkit-scrollbar { width: 8px; }
+.imar-list-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+.imar-list-container::-webkit-scrollbar-thumb { background: #e67e22; border-radius: 4px; }
+.imar-list-container::-webkit-scrollbar-thumb:hover { background: #d35400; }
 /* Chrome, Safari ve Edge İçin Turuncu Çubuk */
 .imar-list-container::-webkit-scrollbar { width: 8px; }
 .imar-list-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
