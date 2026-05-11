@@ -166,43 +166,71 @@
         
         .checklist-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
         .checklist-item.checked span { text-decoration: line-through; color: #aaa; }
-/* BAĞLANTILAR - MACBOOK VE SAFARI İÇİN NİHAİ ÇÖZÜM */
+/* BAĞLANTILAR PENCERESİ - ÇUBUK VE DÜZEN GARANTİLİ */
 #eImarModal .imar-list-container { 
     display: flex !important;
     flex-direction: column !important;
-    gap: 10px !important;
+    gap: 8px !important;
     max-height: 250px !important; 
-    overflow-y: scroll !important; /* Alanı kesin olarak ayırır */
-    padding: 15px !important; 
+    overflow-y: scroll !important; 
+    padding: 10px !important; 
+    padding-right: 5px !important; /* Çubuğa alan bırakır */
     border: 1px solid #ddd !important; 
-    background: #ffffff !important; 
+    background: #fff !important; 
     border-radius: 8px !important; 
-    margin-bottom: 20px !important;
-    /* Mac için kaydırma alanını fiziksel olarak genişletir */
-    padding-right: 25px !important; 
 }
 
-/* KAYDIRMA ÇUBUĞU - GÖRÜNÜRLÜK ZORLAMASI */
+/* Satır Düzeni: Buton ve Silme yan yana */
+#eImarModal .imar-list-container > div {
+    display: flex !important;
+    flex-direction: row !important; /* Yan yana diz */
+    align-items: center !important;
+    gap: 5px !important;
+    width: 95% !important; /* Sağdan çubuk için boşluk bırakır */
+}
+
+/* Ana Bağlantı Butonu */
+#eImarModal .btn-imar-select {
+    flex: 1 !important; /* Kalan tüm boşluğu doldurur */
+    background: #34495e !important;
+    color: white !important;
+    padding: 10px !important;
+    border-radius: 6px !important;
+    border: none !important;
+    font-size: 12px !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important; /* Yazı çok uzunsa sığdırır */
+}
+
+/* Silme Butonu (Sağda küçük ve zarif) */
+#eImarModal .btn-imar-delete {
+    width: 35px !important;
+    height: 35px !important;
+    flex-shrink: 0 !important; /* Küçülmesini engeller */
+    background: #fff5f5 !important;
+    color: #e74c3c !important;
+    border: 1px solid #ffcccc !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* KAYDIRMA ÇUBUĞU (Çalışan Versiyon Ayarları) */
 #eImarModal .imar-list-container::-webkit-scrollbar { 
-    width: 14px !important;
+    width: 10px !important;
     display: block !important;
 }
-
 #eImarModal .imar-list-container::-webkit-scrollbar-track { 
-    background: #eeeeee !important; /* Arka planı koyulaştırdık ki yol belli olsun */
+    background: #f1f1f1 !important; 
     border-radius: 10px !important;
-    border: 1px solid #ddd !important;
 }
-
 #eImarModal .imar-list-container::-webkit-scrollbar-thumb { 
-    background-color: #e67e22 !important; /* Canlı Turuncu */
+    background: #e67e22 !important; 
     border-radius: 10px !important;
-    border: 3px solid #eeeeee !important; /* Etrafına boşluk vererek belirginleştirdik */
-    min-height: 40px !important; /* Çubuğun boyunu uzattık */
-}
-
-#eImarModal .imar-list-container::-webkit-scrollbar-thumb:hover { 
-    background-color: #d35400 !important; 
+    border: 2px solid #f1f1f1 !important;
 }
         .btn-imar-select { padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: space-between; }
         .btn-imar-delete { background: #c0392b; color: white; border:none; border-radius: 3px; width: 20px; height: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 5px; }
