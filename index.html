@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -168,11 +167,11 @@
         .checklist-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
         .checklist-item.checked span { text-decoration: line-through; color: #aaa; }
 
-       .imar-list-container { 
-    display: grid !important; 
-    grid-template-columns: 1fr !important; 
-    gap: 8px !important; 
-    max-height: 250px !important; 
+      /* BAĞLANTILAR PENCERESİ KESİN ÇÖZÜM */
+#eImarModal .imar-list-container { 
+    display: block !important; 
+    width: 100% !important;
+    max-height: 280px !important; 
     overflow-y: scroll !important; 
     overflow-x: hidden !important;
     padding: 10px !important; 
@@ -180,14 +179,30 @@
     background: #fcfcfc !important; 
     border-radius: 4px !important; 
     margin-bottom: 15px !important; 
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: thin !important;
-    scrollbar-color: #e67e22 #f1f1f1 !important;
 }
-.imar-list-container::-webkit-scrollbar { width: 8px; }
-.imar-list-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-.imar-list-container::-webkit-scrollbar-thumb { background: #e67e22; border-radius: 4px; }
-.imar-list-container::-webkit-scrollbar-thumb:hover { background: #d35400; }
+
+/* İçindeki her bir bağlantı satırını tam genişlik yap */
+#eImarModal .imar-list-container > div {
+    width: 100% !important;
+    display: block !important;
+    margin-bottom: 8px !important;
+    clear: both !important;
+}
+
+/* Butonun kendisini yay ve ferahlat */
+#eImarModal .btn-imar-select {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 12px !important;
+    box-sizing: border-box !important;
+}
+
+/* Kaydırma Çubuğu Görünürlük Garantisi */
+#eImarModal .imar-list-container::-webkit-scrollbar { width: 10px !important; display: block !important; }
+#eImarModal .imar-list-container::-webkit-scrollbar-track { background: #f1f1f1 !important; }
+#eImarModal .imar-list-container::-webkit-scrollbar-thumb { background: #e67e22 !important; border-radius: 5px !important; }
         .btn-imar-select { padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: space-between; }
         .btn-imar-delete { background: #c0392b; color: white; border:none; border-radius: 3px; width: 20px; height: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 5px; }
 
