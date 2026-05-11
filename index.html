@@ -166,39 +166,39 @@
         
         .checklist-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
         .checklist-item.checked span { text-decoration: line-through; color: #aaa; }
-/* BAĞLANTILAR - SON NOKTA ÇÖZÜMÜ */
+/* BAĞLANTILAR - MACBOOK VE SAFARI İÇİN NİHAİ ÇÖZÜM */
 #eImarModal .imar-list-container { 
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
     max-height: 250px !important; 
-    overflow-y: scroll !important; /* Tarayıcıyı çubuk alanı ayırmaya zorlar */
+    overflow-y: scroll !important; /* Alanı kesin olarak ayırır */
     padding: 15px !important; 
-    border: 2px solid #ddd !important; 
+    border: 1px solid #ddd !important; 
     background: #ffffff !important; 
     border-radius: 8px !important; 
     margin-bottom: 20px !important;
-    box-sizing: border-box !important;
+    /* Mac için kaydırma alanını fiziksel olarak genişletir */
+    padding-right: 25px !important; 
 }
 
-/* KAYDIRMA ÇUBUĞU - MAC VE SAFARI İÇİN ÖZEL ZORLAMA */
+/* KAYDIRMA ÇUBUĞU - GÖRÜNÜRLÜK ZORLAMASI */
 #eImarModal .imar-list-container::-webkit-scrollbar { 
-    width: 14px !important; /* Daha da kalınlaştırdık */
-    height: 14px !important;
+    width: 14px !important;
     display: block !important;
 }
 
 #eImarModal .imar-list-container::-webkit-scrollbar-track { 
-    background: #eeeeee !important; /* Yolun rengini koyulaştırdık */
-    border-radius: 0px !important;
-    display: block !important;
+    background: #eeeeee !important; /* Arka planı koyulaştırdık ki yol belli olsun */
+    border-radius: 10px !important;
+    border: 1px solid #ddd !important;
 }
 
 #eImarModal .imar-list-container::-webkit-scrollbar-thumb { 
-    background-color: #e67e22 !important; /* Turuncu */
-    border-radius: 0px !important; /* Oval değil kare yapalım ki daha net seçilsin */
-    border: 2px solid #eeeeee !important;
-    display: block !important;
+    background-color: #e67e22 !important; /* Canlı Turuncu */
+    border-radius: 10px !important;
+    border: 3px solid #eeeeee !important; /* Etrafına boşluk vererek belirginleştirdik */
+    min-height: 40px !important; /* Çubuğun boyunu uzattık */
 }
 
 #eImarModal .imar-list-container::-webkit-scrollbar-thumb:hover { 
