@@ -167,42 +167,74 @@
         .checklist-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
         .checklist-item.checked span { text-decoration: line-through; color: #aaa; }
 
-      /* BAĞLANTILAR PENCERESİ KESİN ÇÖZÜM */
+      /* BAĞLANTILAR PENCERESİ - MODERN DİZAYN */
 #eImarModal .imar-list-container { 
-    display: block !important; 
-    width: 100% !important;
-    max-height: 280px !important; 
-    overflow-y: scroll !important; 
-    overflow-x: hidden !important;
-    padding: 10px !important; 
-    border: 1px solid #ddd !important; 
-    background: #fcfcfc !important; 
-    border-radius: 4px !important; 
-    margin-bottom: 15px !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    max-height: 300px !important; 
+    overflow-y: auto !important; 
+    padding: 12px !important; 
+    border: 1px solid #e0e0e0 !important; 
+    background: #ffffff !important; 
+    border-radius: 12px !important; 
+    margin-bottom: 20px !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03) !important;
 }
 
-/* İçindeki her bir bağlantı satırını tam genişlik yap */
+/* Her bir satır (Buton + Silme Butonu Grubu) */
 #eImarModal .imar-list-container > div {
+    display: flex !important;
+    gap: 8px !important;
     width: 100% !important;
-    display: block !important;
-    margin-bottom: 8px !important;
-    clear: both !important;
+    align-items: center !important;
 }
 
-/* Butonun kendisini yay ve ferahlat */
+/* Ana Bağlantı Butonu */
 #eImarModal .btn-imar-select {
-    width: 100% !important;
+    flex: 1 !important;
+    background: #34495e !important;
+    color: white !important;
+    padding: 12px 15px !important;
+    border-radius: 8px !important;
+    border: none !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 12px !important;
-    box-sizing: border-box !important;
+    font-size: 13px !important;
+    transition: all 0.2s ease !important;
 }
 
-/* Kaydırma Çubuğu Görünürlük Garantisi */
-#eImarModal .imar-list-container::-webkit-scrollbar { width: 10px !important; display: block !important; }
-#eImarModal .imar-list-container::-webkit-scrollbar-track { background: #f1f1f1 !important; }
-#eImarModal .imar-list-container::-webkit-scrollbar-thumb { background: #e67e22 !important; border-radius: 5px !important; }
+#eImarModal .btn-imar-select:hover {
+    background: #2c3e50 !important;
+    transform: translateX(3px) !important;
+}
+
+/* Silme Butonu (Küçük ve Zarif) */
+#eImarModal .btn-imar-delete {
+    width: 38px !important;
+    height: 38px !important;
+    background: #fff0f0 !important;
+    color: #e74c3c !important;
+    border: 1px solid #ffdada !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
+}
+
+#eImarModal .btn-imar-delete:hover {
+    background: #e74c3c !important;
+    color: white !important;
+}
+
+/* Şık Kaydırma Çubuğu */
+#eImarModal .imar-list-container::-webkit-scrollbar { width: 6px !important; }
+#eImarModal .imar-list-container::-webkit-scrollbar-track { background: transparent !important; }
+#eImarModal .imar-list-container::-webkit-scrollbar-thumb { background: #d1d1d1 !important; border-radius: 10px !important; }
+#eImarModal .imar-list-container::-webkit-scrollbar-thumb:hover { background: #e67e22 !important; }
         .btn-imar-select { padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: space-between; }
         .btn-imar-delete { background: #c0392b; color: white; border:none; border-radius: 3px; width: 20px; height: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 5px; }
 
